@@ -40,12 +40,12 @@ export const TopNav: React.FC<TopNavProps> = ({
   const [showNotifications, setShowNotifications] = useState(false);
 
   return (
-    <header className="h-16 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 md:px-6 flex items-center justify-between sticky top-0 z-30 shadow-sm">
+    <header className="h-16 bg-white/95 backdrop-blur-md border-b border-slate-300 px-4 md:px-6 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
       {/* Left: Operational Mode & Transparency Pill */}
       <div className="flex items-center space-x-2.5 overflow-x-auto no-scrollbar">
         {/* Simulation Transparency Label */}
-        <div className="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200/90 text-emerald-800 text-xs font-mono whitespace-nowrap shrink-0 shadow-xs">
-          <Info className="w-3.5 h-3.5 text-emerald-600" />
+        <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-300 text-slate-800 text-xs font-mono whitespace-nowrap shrink-0 shadow-2xs">
+          <Info className="w-3.5 h-3.5 text-cyan-700" />
           <span className="font-bold hidden sm:inline">Simulation Demo</span>
           <span className="font-bold sm:hidden">Sim</span>
         </div>
@@ -53,23 +53,23 @@ export const TopNav: React.FC<TopNavProps> = ({
         {/* Satellite Sync Status Indicator */}
         <button
           onClick={onOpenSatelliteSync}
-          className={`flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono border transition whitespace-nowrap shrink-0 ${
+          className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-mono font-bold border transition whitespace-nowrap shrink-0 shadow-2xs ${
             isOffline
-              ? 'bg-amber-50 border-amber-300 text-amber-800 animate-pulse'
-              : 'bg-slate-100/90 hover:bg-slate-200/90 border-slate-200 text-slate-700'
+              ? 'bg-amber-50 border-amber-300 text-amber-900 animate-pulse'
+              : 'bg-slate-100 hover:bg-slate-200/90 border-slate-300 text-slate-800'
           }`}
           title="Open Satellite Delta Sync Console"
         >
-          <Wifi className={`w-3.5 h-3.5 ${isOffline ? 'text-amber-600' : 'text-emerald-600 animate-pulse'}`} />
+          <Wifi className={`w-3.5 h-3.5 ${isOffline ? 'text-amber-600' : 'text-emerald-700 animate-pulse'}`} />
           <span>
             {isOffline ? (
-              <strong className="text-amber-700">Offline</strong>
+              <strong className="text-amber-800">Offline</strong>
             ) : (
-              <>Sat-Link: <strong className="text-emerald-700 font-bold">Active</strong></>
+              <>Sat-Link: <strong className="text-emerald-800 font-bold">Active</strong></>
             )}
           </span>
           {pendingQueueCount > 0 && (
-            <span className="px-1.5 py-0.2 rounded-full bg-emerald-600 text-white font-bold text-[10px]">
+            <span className="px-1.5 py-0.2 rounded-full bg-emerald-700 text-white font-bold text-[10px]">
               {pendingQueueCount}
             </span>
           )}
@@ -78,22 +78,22 @@ export const TopNav: React.FC<TopNavProps> = ({
         {/* Scenario Simulation Launcher */}
         <button
           onClick={onOpenDigitalTwin}
-          className="hidden md:flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-mono text-xs shadow-sm shadow-emerald-600/20 transition whitespace-nowrap shrink-0"
+          className="hidden md:flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-mono text-xs font-bold shadow-xs transition whitespace-nowrap shrink-0 border border-slate-900"
           title="Launch Deterministic Scenario Simulation"
         >
-          <PlayCircle className="w-3.5 h-3.5 text-white animate-pulse" />
-          <span className="font-bold">Scenario Sim</span>
+          <PlayCircle className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+          <span>Scenario Sim</span>
         </button>
 
         {/* AI ML Engine Console Launcher */}
         {onOpenMlConsole && (
           <button
             onClick={onOpenMlConsole}
-            className="hidden lg:flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-teal-600 to-cyan-700 hover:from-teal-500 hover:to-cyan-600 text-white font-mono text-xs shadow-sm shadow-teal-600/20 transition whitespace-nowrap shrink-0"
+            className="hidden lg:flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-cyan-700 hover:bg-cyan-800 text-white font-mono text-xs font-bold shadow-xs transition whitespace-nowrap shrink-0 border border-cyan-800"
             title="Open POLARIS ML Predictive Command Console"
           >
-            <Cpu className="w-3.5 h-3.5 text-white animate-pulse" />
-            <span className="font-bold">ML Engine</span>
+            <Cpu className="w-3.5 h-3.5 text-cyan-200 animate-pulse" />
+            <span>ML Engine</span>
           </button>
         )}
       </div>
@@ -103,9 +103,9 @@ export const TopNav: React.FC<TopNavProps> = ({
         {/* Urgent Blizzard SOS Trigger */}
         <button
           onClick={onOpenBlizzardSOS}
-          className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 border border-rose-300 text-rose-700 font-bold text-xs shadow-xs transition animate-pulse whitespace-nowrap"
+          className="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-300 text-rose-800 font-bold text-xs shadow-2xs transition whitespace-nowrap"
         >
-          <ShieldAlert className="w-3.5 h-3.5 text-rose-600" />
+          <ShieldAlert className="w-3.5 h-3.5 text-rose-700 animate-pulse" />
           <span>BLIZZARD SOS</span>
         </button>
 
@@ -113,10 +113,10 @@ export const TopNav: React.FC<TopNavProps> = ({
         <div className="relative">
           <button
             onClick={() => setShowNotifications(!showNotifications)}
-            className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 hover:text-emerald-700 relative transition"
+            className="p-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-300 text-slate-800 hover:text-slate-950 relative transition shadow-2xs"
           >
             <Bell className="w-4 h-4" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-cyan-600 animate-ping" />
           </button>
 
           {showNotifications && (
@@ -128,22 +128,22 @@ export const TopNav: React.FC<TopNavProps> = ({
         <div className="relative">
           <button
             onClick={() => setShowRoleMenu(!showRoleMenu)}
-            className="flex items-center space-x-2 px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-800 text-xs transition"
+            className="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-900 text-xs transition shadow-2xs"
           >
-            <div className="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0 shadow-xs">
+            <div className="w-6 h-6 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-[10px] shrink-0 shadow-xs">
               {user?.name?.[0] || 'U'}
             </div>
             <div className="text-left hidden xl:block">
-              <div className="font-bold text-slate-800 text-[11px] truncate max-w-[120px]">{user?.name}</div>
-              <div className="text-[9px] text-emerald-700 uppercase font-mono font-bold">{user?.role.replace('_', ' ')}</div>
+              <div className="font-bold text-slate-900 text-[11px] truncate max-w-[120px]">{user?.name}</div>
+              <div className="text-[9px] text-cyan-800 uppercase font-mono font-bold">{user?.role.replace('_', ' ')}</div>
             </div>
-            <ChevronDown className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+            <ChevronDown className="w-3.5 h-3.5 text-slate-600 shrink-0" />
           </button>
 
           {showRoleMenu && (
-            <div className="absolute right-0 mt-2 w-72 bg-white border border-slate-200 rounded-xl shadow-2xl p-2 z-50 animate-fadeIn text-slate-800">
-              <div className="px-3 py-2 border-b border-slate-100 text-xs">
-                <div className="font-mono text-[10px] text-slate-500 uppercase font-bold">Switch Active Demo Role:</div>
+            <div className="absolute right-0 mt-2 w-72 bg-white border border-slate-300 rounded-2xl shadow-xl p-2 z-50 animate-fadeIn text-slate-900">
+              <div className="px-3 py-2 border-b border-slate-200 text-xs">
+                <div className="font-mono text-[10px] text-slate-600 uppercase font-bold">Switch Active Demo Role:</div>
               </div>
               
               <div className="py-1 space-y-0.5">
@@ -154,25 +154,25 @@ export const TopNav: React.FC<TopNavProps> = ({
                       switchDemoRole(acc.role);
                       setShowRoleMenu(false);
                     }}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-xs flex items-center justify-between transition ${
+                    className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between transition ${
                       user?.role === acc.role
-                        ? 'bg-emerald-50 text-emerald-800 font-bold border border-emerald-200'
-                        : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
+                        ? 'bg-cyan-50 text-cyan-900 font-bold border border-cyan-300'
+                        : 'text-slate-800 hover:bg-slate-100 hover:text-slate-950'
                     }`}
                   >
                     <div>
                       <div className="font-semibold">{acc.label}</div>
-                      <div className="text-[10px] text-slate-500">{acc.name}</div>
+                      <div className="text-[10px] text-slate-600">{acc.name}</div>
                     </div>
-                    {user?.role === acc.role && <span className="text-emerald-600 text-xs font-bold">●</span>}
+                    {user?.role === acc.role && <span className="text-cyan-700 text-xs font-bold">●</span>}
                   </button>
                 ))}
               </div>
 
-              <div className="pt-2 border-t border-slate-100 mt-1">
+              <div className="pt-2 border-t border-slate-200 mt-1">
                 <button
                   onClick={logout}
-                  className="w-full flex items-center space-x-2 px-3 py-2 rounded-lg text-xs text-rose-600 hover:bg-rose-50 transition font-bold"
+                  className="w-full flex items-center space-x-2 px-3 py-2 rounded-xl text-xs text-rose-700 hover:bg-rose-50 transition font-bold"
                 >
                   <LogOut className="w-3.5 h-3.5" />
                   <span>Logout Session</span>

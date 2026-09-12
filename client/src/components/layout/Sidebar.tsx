@@ -41,22 +41,22 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
 
   return (
     <aside 
-      className={`fixed top-0 left-0 z-40 h-screen transition-all duration-300 bg-white/95 backdrop-blur-xl border-r border-slate-200/90 flex flex-col shadow-lg shadow-slate-200/50 ${
+      className={`fixed top-0 left-0 z-40 h-screen transition-all duration-300 bg-white/95 backdrop-blur-xl border-r border-slate-300 flex flex-col shadow-xs ${
         collapsed ? 'w-20' : 'w-64'
       }`}
     >
       {/* Brand Header */}
-      <div className="h-16 flex items-center justify-between px-4 border-b border-slate-200/80 bg-slate-50/70">
+      <div className="h-16 flex items-center justify-between px-4 border-b border-slate-300 bg-slate-50/90">
         {!collapsed && (
           <div className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-cyan-600 flex items-center justify-center font-black text-white shadow-md shadow-emerald-500/25 text-sm polar-glow-emerald">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-700 to-indigo-700 flex items-center justify-center font-black text-white shadow-sm text-sm">
               🧊
             </div>
             <div>
-              <span className="font-black text-sm tracking-wider text-slate-900 gradient-text-cyan">
+              <span className="font-black text-sm tracking-wider text-slate-900">
                 POLARIS
               </span>
-              <span className="block text-[8.5px] text-emerald-700 font-mono uppercase tracking-widest font-bold">
+              <span className="block text-[8.5px] text-cyan-800 font-mono uppercase tracking-widest font-bold">
                 NCPOR • MoES (Goa)
               </span>
             </div>
@@ -64,14 +64,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
         )}
 
         {collapsed && (
-          <div className="mx-auto w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-600 flex items-center justify-center font-black text-white shadow-md shadow-emerald-500/25 text-sm polar-glow-emerald">
+          <div className="mx-auto w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-700 to-indigo-700 flex items-center justify-center font-black text-white shadow-sm text-sm">
             🧊
           </div>
         )}
 
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-200 transition hidden md:block"
+          className="p-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 hover:text-slate-900 border border-slate-300 transition shadow-2xs hidden md:block"
           title={collapsed ? "Expand Sidebar" : "Collapse Sidebar"}
         >
           {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
