@@ -41,38 +41,38 @@ export const BlizzardModal: React.FC<BlizzardModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-md animate-fadeIn">
-      <div className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-2xl">
-        {/* Header */}
-        <div className="bg-gradient-to-r from-rose-50 via-amber-50 to-rose-50 px-6 py-4 flex items-center justify-between border-b border-slate-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
+      <div className="relative w-full max-w-2xl bg-polar-950 border border-rose-500/50 rounded-2xl overflow-hidden shadow-2xl polar-glow-red">
+        {/* Header with flashing hazard bar */}
+        <div className="bg-gradient-to-r from-rose-900 via-rose-800 to-rose-950 px-6 py-4 flex items-center justify-between border-b border-rose-600/50">
           <div className="flex items-center space-x-3">
-            <div className="p-2.5 rounded-xl bg-rose-100 border border-rose-300 text-rose-700 shadow-sm">
-              <ShieldAlert className="w-6 h-6 animate-pulse" />
+            <div className="p-2 rounded-lg bg-rose-600 text-white animate-pulse">
+              <ShieldAlert className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-lg font-black text-slate-900 uppercase font-mono tracking-wide">
-                Station Blizzard Lockdown & SAR SOS Dispatch
+              <h2 className="text-lg font-extrabold text-white tracking-wide uppercase font-mono">
+                Polar Extreme Blizzard & Emergency Protocol
               </h2>
-              <p className="text-xs text-slate-500 font-medium">
-                Extreme Sub-Zero Emergency Procedures & Tactical Broadcast
+              <p className="text-xs text-rose-200">
+                MoES • Antarctic & Arctic Station Emergency Lockdown Dispatch
               </p>
             </div>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-700 p-2 rounded-xl bg-white border border-slate-200 shadow-sm transition">
+          <button onClick={onClose} className="text-rose-300 hover:text-white p-1.5 rounded-lg bg-rose-950/60">
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="p-6 space-y-6 max-h-[85vh] overflow-y-auto">
+        <div className="p-6 space-y-6">
           {/* Station Selector */}
           <div>
-            <label className="block text-xs font-mono uppercase text-slate-700 font-bold mb-2">
+            <label className="block text-xs font-mono uppercase text-slate-300 mb-2">
               Target Station / Base
             </label>
             <select
               value={selectedStationId}
               onChange={(e) => setSelectedStationId(e.target.value)}
-              className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-xs text-slate-900 font-semibold focus:outline-none focus:border-rose-500 font-mono"
+              className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-rose-500"
             >
               {stations.map(st => (
                 <option key={st.id} value={st.id}>
@@ -84,98 +84,96 @@ export const BlizzardModal: React.FC<BlizzardModalProps> = ({
 
           {/* Blizzard Stage Selector Buttons */}
           <div>
-            <label className="block text-xs font-mono uppercase text-slate-700 font-bold mb-2">
+            <label className="block text-xs font-mono uppercase text-slate-300 mb-2">
               Set Blizzard Alert Level
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <button
                 onClick={() => handleApplyLockdown('NORMAL')}
-                className={`p-3.5 rounded-2xl border text-left transition shadow-sm ${
+                className={`p-3 rounded-xl border text-left transition ${
                   selectedStation?.weather.blizzardLevel === 'NORMAL'
-                    ? 'bg-emerald-50 border-emerald-400 text-emerald-950'
-                    : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
+                    ? 'bg-emerald-950/80 border-emerald-500 text-emerald-200'
+                    : 'bg-polar-900 border-slate-800 text-slate-400 hover:border-slate-700'
                 }`}
               >
-                <div className="font-bold text-xs text-emerald-800">NORMAL</div>
-                <div className="text-[11px] text-slate-500 mt-1">Normal Operations. Clear visibility.</div>
+                <div className="font-bold text-xs">NORMAL</div>
+                <div className="text-[11px] text-slate-400 mt-1">Normal Operations. Clear visibility.</div>
               </button>
 
               <button
                 onClick={() => handleApplyLockdown('STAGE_1_ADVISORY')}
-                className={`p-3.5 rounded-2xl border text-left transition shadow-sm ${
+                className={`p-3 rounded-xl border text-left transition ${
                   selectedStation?.weather.blizzardLevel === 'STAGE_1_ADVISORY' || selectedStation?.weather.blizzardLevel === 'STAGE_2_WARNING'
-                    ? 'bg-amber-50 border-amber-400 text-amber-950'
-                    : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
+                    ? 'bg-amber-950/80 border-amber-500 text-amber-200'
+                    : 'bg-polar-900 border-slate-800 text-slate-400 hover:border-slate-700'
                 }`}
               >
-                <div className="font-bold text-xs text-amber-800">STAGE 1 & 2 WARNING</div>
-                <div className="text-[11px] text-slate-500 mt-1">Gale Winds (&gt;50 km/h). Traverses restricted.</div>
+                <div className="font-bold text-xs text-amber-400">STAGE 1 & 2 WARNING</div>
+                <div className="text-[11px] text-slate-400 mt-1">Gale Winds (&gt;50 km/h). Traverses restricted.</div>
               </button>
 
               <button
                 onClick={() => handleApplyLockdown('STAGE_3_WHITEOUT_LOCKDOWN')}
-                className={`p-3.5 rounded-2xl border text-left transition shadow-sm ${
+                className={`p-3 rounded-xl border text-left transition ${
                   selectedStation?.weather.blizzardLevel === 'STAGE_3_WHITEOUT_LOCKDOWN'
-                    ? 'bg-rose-50 border-rose-500 text-rose-950 animate-pulse'
-                    : 'bg-slate-50 border-rose-200 text-rose-800 hover:bg-rose-50'
+                    ? 'bg-rose-950 border-rose-500 text-rose-200 animate-pulse'
+                    : 'bg-polar-900 border-rose-900/60 text-rose-300 hover:border-rose-500'
                 }`}
               >
-                <div className="font-bold text-xs text-rose-700 flex items-center justify-between">
+                <div className="font-bold text-xs text-rose-400 flex items-center justify-between">
                   <span>STAGE 3 WHITEOUT</span>
                   <AlertTriangle className="w-3.5 h-3.5 animate-bounce" />
                 </div>
-                <div className="text-[11px] text-rose-600/90 mt-1 font-medium">Total Lockdown. Zero visibility. Siren active.</div>
+                <div className="text-[11px] text-rose-300/80 mt-1">Total Lockdown. Zero visibility. Siren active.</div>
               </button>
             </div>
           </div>
 
           {/* Emergency SOS Dispatch Form */}
-          <div className="p-4 rounded-2xl bg-rose-50/70 border border-rose-200 space-y-3 shadow-sm">
-            <h4 className="text-xs font-mono font-bold text-rose-900 uppercase flex items-center space-x-1.5">
-              <ShieldAlert className="w-4 h-4 text-rose-600" />
+          <div className="p-4 rounded-xl bg-rose-950/30 border border-rose-800/40 space-y-3">
+            <h4 className="text-xs font-mono font-bold text-rose-300 uppercase flex items-center space-x-1.5">
+              <ShieldAlert className="w-4 h-4" />
               <span>Broadcast Immediate Search & Rescue (SAR) Distress</span>
             </h4>
 
             <div>
-              <label className="block text-[11px] text-slate-700 font-bold font-mono uppercase mb-1">Incident Title</label>
+              <label className="block text-[11px] text-slate-400 mb-1">Incident Title</label>
               <input
                 type="text"
                 value={sosTitle}
                 onChange={(e) => setSosTitle(e.target.value)}
-                className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-rose-500 font-mono shadow-sm"
+                className="w-full bg-polar-900 border border-slate-700 rounded px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-rose-500"
               />
             </div>
 
             <div>
-              <label className="block text-[11px] text-slate-700 font-bold font-mono uppercase mb-1">Situation Description & Action Directive</label>
+              <label className="block text-[11px] text-slate-400 mb-1">Situation Description & Action Directive</label>
               <textarea
                 value={sosDetails}
                 onChange={(e) => setSosDetails(e.target.value)}
                 rows={2}
-                className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-rose-500 shadow-sm"
+                className="w-full bg-polar-900 border border-slate-700 rounded px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-rose-500"
               />
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-              <div className="flex items-center space-x-3 text-xs font-medium">
-                <span className="text-slate-600">Severity:</span>
-                <label className="flex items-center space-x-1 text-amber-800 cursor-pointer">
+            <div className="flex items-center justify-between pt-2">
+              <div className="flex items-center space-x-3 text-xs">
+                <span className="text-slate-400">Severity:</span>
+                <label className="flex items-center space-x-1 text-amber-300 cursor-pointer">
                   <input
                     type="radio"
                     name="severity"
                     checked={severity === 'Moderate'}
                     onChange={() => setSeverity('Moderate')}
-                    className="text-amber-600"
                   />
                   <span>Moderate</span>
                 </label>
-                <label className="flex items-center space-x-1 text-rose-800 cursor-pointer">
+                <label className="flex items-center space-x-1 text-rose-400 cursor-pointer">
                   <input
                     type="radio"
                     name="severity"
                     checked={severity === 'Critical (Life Threat)'}
                     onChange={() => setSeverity('Critical (Life Threat)')}
-                    className="text-rose-600"
                   />
                   <span>Critical Life Threat</span>
                 </label>
@@ -183,7 +181,7 @@ export const BlizzardModal: React.FC<BlizzardModalProps> = ({
 
               <button
                 onClick={() => handleApplyLockdown('STAGE_3_WHITEOUT_LOCKDOWN')}
-                className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-md shadow-rose-600/25 flex items-center space-x-2 transition"
+                className="px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-lg shadow-rose-600/30 flex items-center space-x-2 transition"
               >
                 <AlertTriangle className="w-4 h-4" />
                 <span>EXECUTE LOCKDOWN & SOS</span>
@@ -192,8 +190,8 @@ export const BlizzardModal: React.FC<BlizzardModalProps> = ({
           </div>
 
           {lockdownTriggered && (
-            <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-semibold flex items-center space-x-2 shadow-sm">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+            <div className="p-3 rounded-lg bg-emerald-950/80 border border-emerald-500/50 text-emerald-200 text-xs flex items-center space-x-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>Lockdown order and SOS broadcasted to all polar stations, vessels, and NCPOR HQ Goa.</span>
             </div>
           )}

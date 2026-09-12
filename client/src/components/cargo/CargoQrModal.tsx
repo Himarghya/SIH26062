@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { polarisApi } from '../../api/services';
 import { QrCode, Search, CheckCircle2, X, ArrowRight, ShieldCheck, Thermometer, Battery } from 'lucide-react';
 
@@ -65,24 +65,24 @@ export const CargoQrModal: React.FC<CargoQrModalProps> = ({ isOpen, onClose, car
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-md animate-fadeIn">
-      <div className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
+      <div className="relative w-full max-w-2xl bg-polar-950 border border-cyan-500/40 rounded-2xl overflow-hidden shadow-2xl polar-glow">
         {/* Header */}
-        <div className="bg-gradient-to-r from-emerald-50 via-teal-50 to-indigo-50 px-6 py-4 flex items-center justify-between border-b border-slate-200">
+        <div className="bg-gradient-to-r from-polar-900 to-polar-850 px-6 py-4 flex items-center justify-between border-b border-cyan-900/50">
           <div className="flex items-center space-x-3">
-            <div className="p-2.5 rounded-xl bg-emerald-100 border border-emerald-300 text-emerald-800 shadow-sm">
+            <div className="p-2 rounded-lg bg-cyan-600/20 border border-cyan-500/50 text-cyan-300">
               <QrCode className="w-6 h-6 animate-pulse" />
             </div>
             <div>
-              <h2 className="text-base font-black text-slate-900 uppercase font-mono tracking-wide">
+              <h2 className="text-base font-bold text-slate-100 uppercase font-mono tracking-wide">
                 Digital Cargo QR / RFID Optical Gateway
               </h2>
-              <p className="text-xs text-slate-500 font-medium">
+              <p className="text-xs text-slate-400">
                 Authorized scanning, cold-chain validation, and status transfer ledger
               </p>
             </div>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-700 p-2 rounded-xl bg-white border border-slate-200 shadow-sm transition">
+          <button onClick={onClose} className="text-slate-400 hover:text-white p-1 rounded bg-polar-850">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -90,7 +90,7 @@ export const CargoQrModal: React.FC<CargoQrModalProps> = ({ isOpen, onClose, car
         <div className="p-6 space-y-5">
           {/* Quick Select Buttons */}
           <div>
-            <label className="block text-[11px] font-mono uppercase text-slate-700 font-bold mb-2">
+            <label className="block text-[11px] font-mono uppercase text-slate-400 mb-2">
               Optical 2D DataMatrix Simulation Tags:
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -98,10 +98,10 @@ export const CargoQrModal: React.FC<CargoQrModalProps> = ({ isOpen, onClose, car
                 <button
                   key={s.code}
                   onClick={() => handleLookup(s.code)}
-                  className="p-3 rounded-2xl bg-slate-50 border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 text-left text-xs transition shadow-sm"
+                  className="p-2.5 rounded-xl bg-polar-900 border border-slate-800 hover:border-cyan-500/50 text-left text-xs transition"
                 >
-                  <div className="font-mono font-bold text-emerald-800">{s.code}</div>
-                  <div className="text-[10px] text-slate-600 truncate mt-0.5 font-medium">{s.name}</div>
+                  <div className="font-mono font-bold text-cyan-400">{s.code}</div>
+                  <div className="text-[10px] text-slate-400 truncate mt-0.5">{s.name}</div>
                 </button>
               ))}
             </div>
@@ -115,51 +115,51 @@ export const CargoQrModal: React.FC<CargoQrModalProps> = ({ isOpen, onClose, car
               placeholder="Enter or scan Barcode (e.g. 890126062002)..."
               value={inputCode}
               onChange={(e) => handleLookup(e.target.value)}
-              className="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-900 font-mono focus:outline-none focus:border-emerald-500 focus:bg-white shadow-sm"
+              className="w-full bg-polar-900 border border-slate-700 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-100 font-mono focus:outline-none focus:border-cyan-500"
             />
           </div>
 
           {/* Scanned Result */}
           {scannedItem ? (
-            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-4 shadow-sm">
+            <div className="p-4 rounded-xl bg-polar-900/90 border border-cyan-800/40 space-y-4">
               <div className="flex items-start justify-between">
                 <div>
                   <div className="flex items-center space-x-2">
-                    <span className="font-mono font-black text-emerald-800 text-sm">{scannedItem.cargo_code || scannedItem.trackingCode}</span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-lg bg-white border border-slate-200 text-slate-700 font-bold">
+                    <span className="font-mono font-extrabold text-cyan-300 text-sm">{scannedItem.cargo_code || scannedItem.trackingCode}</span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300">
                       Barcode: {scannedItem.barcode}
                     </span>
                   </div>
-                  <h4 className="font-bold text-slate-900 text-sm mt-1">{scannedItem.name}</h4>
-                  <p className="text-xs text-slate-600">{scannedItem.category} • {scannedItem.weight_kg ?? scannedItem.weightKg} kg</p>
+                  <h4 className="font-bold text-slate-100 text-sm mt-1">{scannedItem.name}</h4>
+                  <p className="text-xs text-slate-400">{scannedItem.category} • {scannedItem.weight_kg ?? scannedItem.weightKg} kg</p>
                 </div>
 
-                <span className="px-3 py-1 rounded-xl bg-emerald-100 text-emerald-800 border border-emerald-300 font-mono text-xs font-bold">
+                <span className="px-2.5 py-1 rounded bg-blue-950 text-cyan-300 border border-cyan-800 font-mono text-xs font-bold">
                   {scannedItem.status}
                 </span>
               </div>
 
               {/* Cold chain details if active */}
               {(scannedItem.is_cold_chain || scannedItem.isColdChain) && (
-                <div className={`p-3 rounded-xl border flex items-center justify-between text-xs shadow-sm ${
-                  scannedItem.is_temp_violated ? 'bg-rose-50 border-rose-300 text-rose-900' : 'bg-indigo-50 border-indigo-200 text-indigo-950'
+                <div className={`p-3 rounded-lg border flex items-center justify-between text-xs ${
+                  scannedItem.is_temp_violated ? 'bg-rose-950 border-rose-500 text-rose-200' : 'bg-blue-950 border-blue-600 text-blue-200'
                 }`}>
-                  <div className="flex items-center space-x-2 font-medium">
-                    <Thermometer className="w-4 h-4 text-indigo-600" />
+                  <div className="flex items-center space-x-2">
+                    <Thermometer className="w-4 h-4 text-cyan-400" />
                     <span>Core Temp: <strong>{scannedItem.current_temp_c ?? -78.5}°C</strong> (Limit: {scannedItem.temp_min_c ?? -85}°C to {scannedItem.temp_max_c ?? -70}°C)</span>
                   </div>
-                  <span className="text-emerald-700 font-mono font-bold">✅ Sensor Battery 94%</span>
+                  <span className="text-emerald-400 font-mono">✅ Sensor Battery 94%</span>
                 </div>
               )}
 
               {/* Status Update Actions */}
-              <div className="pt-2.5 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs">
+              <div className="pt-2 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
                 <div className="flex items-center space-x-2">
-                  <span className="text-slate-700 font-bold">Transfer Status:</span>
+                  <span className="text-slate-400">Transfer Status:</span>
                   <select
                     value={newStatus}
                     onChange={(e) => setNewStatus(e.target.value)}
-                    className="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-slate-900 focus:outline-none focus:border-emerald-500 font-medium shadow-sm"
+                    className="bg-polar-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-cyan-500 font-medium"
                   >
                     <option value="Ready for Dispatch">Ready for Dispatch</option>
                     <option value="In Transit">In Transit (Vessel / Helo)</option>
@@ -172,7 +172,7 @@ export const CargoQrModal: React.FC<CargoQrModalProps> = ({ isOpen, onClose, car
                 <button
                   onClick={handleUpdateStatus}
                   disabled={loading}
-                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs flex items-center space-x-1.5 shadow-md shadow-emerald-600/20 transition"
+                  className="px-4 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs flex items-center space-x-1.5 shadow-lg shadow-cyan-600/30 transition"
                 >
                   <span>Apply Transfer</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -180,14 +180,14 @@ export const CargoQrModal: React.FC<CargoQrModalProps> = ({ isOpen, onClose, car
               </div>
 
               {success && (
-                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-semibold flex items-center space-x-2 animate-fadeIn shadow-sm">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <div className="p-2.5 rounded-lg bg-emerald-950/80 border border-emerald-500/60 text-emerald-200 text-xs flex items-center space-x-2 animate-fadeIn">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                   <span>Cargo status updated & recorded to tracking event ledger.</span>
                 </div>
               )}
             </div>
           ) : (
-            <div className="p-8 text-center border-2 border-dashed border-slate-200 rounded-2xl text-slate-500 text-xs font-medium">
+            <div className="p-8 text-center border border-dashed border-slate-800 rounded-xl text-slate-500 text-xs">
               Select any sample barcode above or scan cargo manifest tag to verify payload.
             </div>
           )}

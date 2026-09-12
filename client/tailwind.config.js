@@ -9,27 +9,26 @@ export default {
     extend: {
       colors: {
         polar: {
-          950: '#ffffff', // Pure card white
-          900: '#f8fafc', // Light canvas
-          850: '#f1f5f9', // Soft light surface
-          800: '#e2e8f0', // Soft border
-          700: '#cbd5e1', // Divider
-          600: '#94a3b8', // Muted text
-          500: '#64748b', // Secondary text
-          400: '#475569', // Body text
-          300: '#334155', // Subtitle text
-          200: '#1e293b', // Header text
-          100: '#0f172a', // Bold primary text
-          50: '#020617',  // Pitch black
+          950: '#060d19',
+          900: '#0a1628',
+          850: '#0e1e36',
+          800: '#132845',
+          700: '#1b3a61',
+          600: '#255085',
+          500: '#3472ba',
+          400: '#5c97e6',
+          300: '#8dbdf5',
+          200: '#c2defb',
+          100: '#e5f1fd',
+          50: '#f4f8fe',
         },
         aurora: {
-          emerald: '#059669',
-          teal: '#0d9488',
-          cyan: '#0284c7',
-          amber: '#d97706',
-          rose: '#e11d48',
-          violet: '#6366f1',
-          ice: '#f0fdf4'
+          cyan: '#00f2fe',
+          teal: '#4facfe',
+          emerald: '#10b981',
+          amber: '#f59e0b',
+          rose: '#f43f5e',
+          ice: '#e0f2fe'
         }
       },
       animation: {
@@ -46,4 +45,3 @@ export default {
   },
   plugins: [],
 }
-

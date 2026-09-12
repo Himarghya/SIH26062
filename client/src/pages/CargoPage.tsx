@@ -124,11 +124,11 @@ export const CargoPage: React.FC<{
       {/* Header & Quick Action */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-black text-slate-900 uppercase font-mono flex items-center space-x-2">
-            <Box className="w-6 h-6 text-emerald-600" />
+          <h2 className="text-xl font-black text-slate-100 uppercase font-mono flex items-center space-x-2">
+            <Box className="w-6 h-6 text-cyan-400" />
             <span>Cargo Manifest & Cold-Chain IoT Telemetry</span>
           </h2>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-slate-400 mt-1">
             Multimodal container tracking (Goa Port $\rightarrow$ Icebreaker Hold $\rightarrow$ Kamov Helo $\rightarrow$ Station Vault)
           </p>
         </div>
@@ -136,9 +136,9 @@ export const CargoPage: React.FC<{
         <div className="flex items-center space-x-2">
           <button
             onClick={() => setShowCreateModal(true)}
-            className="px-4 py-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-800 font-bold text-xs flex items-center space-x-1.5 transition shadow-sm"
+            className="px-4 py-2 rounded-xl bg-polar-900 hover:bg-polar-850 border border-slate-700 text-slate-200 font-bold text-xs flex items-center space-x-1.5 transition"
           >
-            <Plus className="w-4 h-4 text-emerald-600" />
+            <Plus className="w-4 h-4" />
             <span>Register Cargo</span>
           </button>
           <button
@@ -146,7 +146,7 @@ export const CargoPage: React.FC<{
               if (onOpenScanner) onOpenScanner();
               else setShowQrModal(true);
             }}
-            className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs flex items-center space-x-2 shadow-lg shadow-emerald-600/25 transition"
+            className="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs flex items-center space-x-2 shadow-lg shadow-cyan-600/25 transition"
           >
             <QrCode className="w-4 h-4" />
             <span>Launch Optical QR/RFID Scanner</span>
@@ -156,17 +156,17 @@ export const CargoPage: React.FC<{
 
       {/* Cold-Chain Telemetry Alert Strip with Sensor Health & Violation Duration */}
       {coldChainItems.length > 0 && (
-        <div className="glass-panel p-4 rounded-xl border border-indigo-200 space-y-3 bg-indigo-50/30">
+        <div className="glass-panel p-4 rounded-xl border border-blue-900/50 space-y-3">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h3 className="text-xs font-mono font-bold text-indigo-900 uppercase flex items-center space-x-2">
-              <Thermometer className="w-4 h-4 text-indigo-600 animate-pulse" />
+            <h3 className="text-xs font-mono font-bold text-blue-300 uppercase flex items-center space-x-2">
+              <Thermometer className="w-4 h-4 text-cyan-400 animate-pulse" />
               <span>Active Cold-Chain Scientific Cryo-Containers (-80°C Specimen Monitoring)</span>
             </h3>
             <div className="flex items-center space-x-2 text-[10px] font-mono">
-              <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold">
+              <span className="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">
                 🟢 BLE/LoRa Telemetry Active
               </span>
-              <span className="text-slate-500">Duration-Aware Logic Enabled</span>
+              <span className="text-slate-400">Duration-Aware Logic Enabled</span>
             </div>
           </div>
 
@@ -180,29 +180,29 @@ export const CargoPage: React.FC<{
               return (
                 <div 
                   key={item.id}
-                  className={`p-3.5 rounded-xl border space-y-2.5 transition shadow-sm ${
+                  className={`p-3.5 rounded-xl border space-y-2.5 transition ${
                     isViolated
-                      ? 'bg-rose-50 border-rose-300 text-rose-900'
-                      : 'bg-white border-slate-200 text-slate-800'
+                      ? 'bg-rose-950/70 border-rose-500/70 text-rose-200'
+                      : 'bg-polar-900/90 border-blue-800/40 text-slate-200'
                   }`}
                 >
                   <div className="flex items-start justify-between">
                     <div>
                       <div className="flex items-center space-x-2">
-                        <span className="font-mono font-bold text-emerald-700 text-xs">{item.cargo_code || item.trackingCode}</span>
-                        <span className="text-[10px] text-slate-500 font-mono">[{item.barcode}]</span>
+                        <span className="font-mono font-bold text-cyan-400 text-xs">{item.cargo_code || item.trackingCode}</span>
+                        <span className="text-[10px] text-slate-400 font-mono">[{item.barcode}]</span>
                       </div>
-                      <div className="font-bold text-xs text-slate-900 mt-0.5">{item.name}</div>
-                      <div className="text-[11px] text-slate-500 mt-0.5">
+                      <div className="font-semibold text-xs text-slate-100 mt-0.5">{item.name}</div>
+                      <div className="text-[11px] text-slate-400 mt-0.5">
                         Safe Band: {item.temp_min_c ?? -85}°C to {item.temp_max_c ?? -70}°C
                       </div>
                     </div>
 
                     <div className="text-right font-mono">
-                      <div className={`text-xl font-black ${isViolated ? 'text-rose-600' : 'text-emerald-700'}`}>
+                      <div className={`text-xl font-black ${isViolated ? 'text-rose-400' : 'text-cyan-300'}`}>
                         {currentTemp}°C
                       </div>
-                      <div className="text-[10px] text-emerald-700 font-bold flex items-center justify-end space-x-1 mt-0.5">
+                      <div className="text-[10px] text-emerald-400 flex items-center justify-end space-x-1 mt-0.5">
                         <Battery className="w-3 h-3" />
                         <span>94% Batt</span>
                       </div>
@@ -210,15 +210,15 @@ export const CargoPage: React.FC<{
                   </div>
 
                   {/* Sensor Health & Breach Duration Breakdown */}
-                  <div className="p-2 rounded-lg bg-slate-50 border border-slate-200 text-[10px] font-mono flex items-center justify-between">
+                  <div className="p-2 rounded-lg bg-polar-950/80 border border-slate-800 text-[10px] font-mono flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <span className="text-slate-500">Sensor Health:</span>
+                      <span className="text-slate-400">Sensor Health:</span>
                       <span className={`px-1.5 py-0.2 rounded font-bold ${
                         sensorStatus === 'Healthy' 
-                          ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' 
+                          ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' 
                           : sensorStatus === 'Stale' 
-                          ? 'bg-amber-100 text-amber-800 border border-amber-300' 
-                          : 'bg-rose-100 text-rose-800 border border-rose-300'
+                          ? 'bg-amber-950 text-amber-300 border border-amber-800' 
+                          : 'bg-rose-950 text-rose-300 border border-rose-800'
                       }`}>
                         {sensorStatus === 'Healthy' ? '● HEALTHY (2m ago)' : '▲ STALE (>15m delay)'}
                       </span>
@@ -226,7 +226,7 @@ export const CargoPage: React.FC<{
 
                     {isViolated && (
                       <div className="flex items-center space-x-1.5">
-                        <span className="text-rose-700 font-bold">
+                        <span className="text-rose-300 font-bold">
                           Breach Duration: {breachDurationMins}m
                         </span>
                         <span className={`px-1.5 py-0.2 rounded text-[9px] font-bold ${
@@ -253,7 +253,7 @@ export const CargoPage: React.FC<{
             placeholder="Search cargo by name, tracking ID, or barcode..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-slate-50 border border-slate-300 rounded-lg pl-9 pr-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-emerald-500 font-mono focus:bg-white transition"
+            className="w-full bg-polar-900 border border-slate-700/80 rounded-lg pl-9 pr-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-cyan-500 font-mono"
           />
         </div>
 
@@ -261,7 +261,7 @@ export const CargoPage: React.FC<{
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-emerald-500 font-medium"
+            className="bg-polar-900 border border-slate-700/80 rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-cyan-500"
           >
             <option value="all">All Categories</option>
             {categories.map(cat => (
@@ -271,10 +271,10 @@ export const CargoPage: React.FC<{
 
           <button
             onClick={() => setColdChainOnly(!coldChainOnly)}
-            className={`px-3 py-2 rounded-lg text-xs font-mono font-semibold border transition ${
+            className={`px-3 py-2 rounded-lg text-xs font-mono font-medium border transition ${
               coldChainOnly
-                ? 'bg-indigo-50 border-indigo-400 text-indigo-800 shadow-sm'
-                : 'bg-slate-50 border-slate-300 text-slate-600 hover:bg-slate-100'
+                ? 'bg-blue-950 border-cyan-400 text-cyan-300'
+                : 'bg-polar-900 border-slate-700 text-slate-400'
             }`}
           >
             ❄️ Cold-Chain Only
@@ -293,55 +293,55 @@ export const CargoPage: React.FC<{
           return (
             <div
               key={item.id}
-              className="glass-panel p-4 rounded-xl space-y-3 relative group hover:border-emerald-400 transition shadow-sm hover:shadow"
+              className="glass-panel p-4 rounded-xl space-y-3 relative group hover:border-cyan-500/40 transition"
             >
               {/* Header */}
               <div className="flex items-start justify-between">
                 <div>
-                  <span className="font-mono font-extrabold text-emerald-700 text-xs">{code}</span>
-                  <span className="ml-2 text-[10px] font-mono text-slate-500">Barcode: {item.barcode}</span>
-                  <h4 className="font-bold text-slate-900 text-sm mt-1">{item.name}</h4>
-                  <div className="text-[11px] text-slate-500">{item.category}</div>
+                  <span className="font-mono font-extrabold text-cyan-400 text-xs">{code}</span>
+                  <span className="ml-2 text-[10px] font-mono text-slate-400">Barcode: {item.barcode}</span>
+                  <h4 className="font-bold text-slate-100 text-sm mt-1">{item.name}</h4>
+                  <div className="text-[11px] text-slate-400">{item.category}</div>
                 </div>
 
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-800 text-slate-300">
                   {item.hazard_class || 'Standard'}
                 </span>
               </div>
 
               {/* Transit Status Badge */}
-              <div className="p-2 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+              <div className="p-2 rounded-lg bg-polar-900/90 border border-slate-800 flex items-center justify-between text-xs">
                 <div className="flex items-center space-x-2">
-                  <Anchor className="w-3.5 h-3.5 text-emerald-600" />
-                  <span className="font-mono font-semibold text-slate-800">{status}</span>
+                  <Anchor className="w-3.5 h-3.5 text-cyan-400" />
+                  <span className="font-mono font-semibold text-slate-200">{status}</span>
                 </div>
-                <span className="text-[10px] text-slate-500 truncate max-w-[110px]">{item.destination || 'Bharati'}</span>
+                <span className="text-[10px] text-slate-400 truncate max-w-[110px]">{item.destination || 'Bharati'}</span>
               </div>
 
               {/* Weight, Volume, Origin */}
-              <div className="grid grid-cols-3 gap-2 text-[11px] text-slate-700">
-                <div className="p-1.5 rounded bg-slate-50 border border-slate-200">
-                  <div className="text-slate-500 text-[9px] font-semibold">Weight</div>
-                  <div className="font-mono font-bold text-slate-900">{weight} kg</div>
+              <div className="grid grid-cols-3 gap-2 text-[11px] text-slate-300">
+                <div className="p-1.5 rounded bg-polar-950/60 border border-slate-800/80">
+                  <div className="text-slate-500 text-[9px]">Weight</div>
+                  <div className="font-mono font-bold">{weight} kg</div>
                 </div>
-                <div className="p-1.5 rounded bg-slate-50 border border-slate-200">
-                  <div className="text-slate-500 text-[9px] font-semibold">Volume</div>
-                  <div className="font-mono font-bold text-slate-900">{volume} m³</div>
+                <div className="p-1.5 rounded bg-polar-950/60 border border-slate-800/80">
+                  <div className="text-slate-500 text-[9px]">Volume</div>
+                  <div className="font-mono font-bold">{volume} m³</div>
                 </div>
-                <div className="p-1.5 rounded bg-slate-50 border border-slate-200">
-                  <div className="text-slate-500 text-[9px] font-semibold">Cryo/Cold</div>
-                  <div className="font-mono font-bold text-indigo-700 truncate">{item.is_cold_chain ? 'Active -80°C' : 'Ambient'}</div>
+                <div className="p-1.5 rounded bg-polar-950/60 border border-slate-800/80">
+                  <div className="text-slate-500 text-[9px]">Cryo/Cold</div>
+                  <div className="font-mono font-bold text-cyan-400 truncate">{item.is_cold_chain ? 'Active -80°C' : 'Ambient'}</div>
                 </div>
               </div>
 
               {/* Footer Links & QR Code Trigger */}
-              <div className="pt-2 border-t border-slate-200 flex items-center justify-between text-xs">
+              <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs">
                 <button
                   onClick={() => {
                     setSelectedItemForQr(item);
                     setShowQrModal(true);
                   }}
-                  className="text-emerald-700 hover:text-emerald-800 font-mono text-[11px] font-bold flex items-center space-x-1"
+                  className="text-cyan-400 hover:text-cyan-300 font-mono text-[11px] flex items-center space-x-1"
                 >
                   <QrCode className="w-3.5 h-3.5" />
                   <span>QR Code</span>
@@ -349,7 +349,7 @@ export const CargoPage: React.FC<{
 
                 <Link
                   to={`/cargo/${item.id}`}
-                  className="text-slate-600 hover:text-slate-900 font-semibold flex items-center space-x-1 text-[11px]"
+                  className="text-slate-400 hover:text-slate-200 flex items-center space-x-1 text-[11px]"
                 >
                   <span>Dossier</span>
                   <ArrowRight className="w-3 h-3" />
@@ -370,28 +370,28 @@ export const CargoPage: React.FC<{
 
       {/* Register New Cargo Modal */}
       {showCreateModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-md animate-fadeIn">
-          <div className="relative w-full max-w-xl bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-4">
-            <h3 className="text-base font-bold text-slate-900 font-mono uppercase">Register New Expedition Cargo Manifest</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
+          <div className="relative w-full max-w-xl bg-polar-950 border border-cyan-500/40 rounded-2xl p-6 shadow-2xl space-y-4">
+            <h3 className="text-base font-bold text-slate-100 font-mono uppercase">Register New Expedition Cargo Manifest</h3>
 
             <form onSubmit={handleCreateCargo} className="space-y-3 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-slate-700 mb-1 font-mono uppercase font-bold text-[11px]">Cargo Code</label>
+                  <label className="block text-slate-400 mb-1 font-mono uppercase">Cargo Code</label>
                   <input
                     type="text"
                     value={newCargoCode}
                     onChange={(e) => setNewCargoCode(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-mono focus:outline-none focus:border-emerald-500 focus:bg-white"
+                    className="w-full bg-polar-900 border border-slate-700 rounded px-3 py-1.5 text-slate-100 font-mono"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-700 mb-1 font-mono uppercase font-bold text-[11px]">Category</label>
+                  <label className="block text-slate-400 mb-1 font-mono uppercase">Category</label>
                   <select
                     value={newCategory}
                     onChange={(e) => setNewCategory(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 focus:outline-none focus:border-emerald-500 font-medium"
+                    className="w-full bg-polar-900 border border-slate-700 rounded px-3 py-1.5 text-slate-100"
                   >
                     {categories.map(c => (
                       <option key={c} value={c}>{c}</option>
@@ -401,85 +401,85 @@ export const CargoPage: React.FC<{
               </div>
 
               <div>
-                <label className="block text-slate-700 mb-1 font-mono uppercase font-bold text-[11px]">Item / Manifest Description</label>
+                <label className="block text-slate-400 mb-1 font-mono uppercase">Item / Manifest Description</label>
                 <input
                   type="text"
                   value={newName}
                   onChange={(e) => setNewName(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 focus:outline-none focus:border-emerald-500 focus:bg-white"
+                  className="w-full bg-polar-900 border border-slate-700 rounded px-3 py-1.5 text-slate-100"
                   required
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-slate-700 mb-1 font-mono uppercase font-bold text-[11px]">Weight (kg)</label>
+                  <label className="block text-slate-400 mb-1 font-mono uppercase">Weight (kg)</label>
                   <input
                     type="number"
                     value={newWeight}
                     onChange={(e) => setNewWeight(Number(e.target.value))}
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-mono focus:outline-none focus:border-emerald-500 focus:bg-white"
+                    className="w-full bg-polar-900 border border-slate-700 rounded px-3 py-1.5 text-slate-100 font-mono"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-700 mb-1 font-mono uppercase font-bold text-[11px]">Volume (m³)</label>
+                  <label className="block text-slate-400 mb-1 font-mono uppercase">Volume (m³)</label>
                   <input
                     type="number"
                     value={newVolume}
                     onChange={(e) => setNewVolume(Number(e.target.value))}
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-mono focus:outline-none focus:border-emerald-500 focus:bg-white"
+                    className="w-full bg-polar-900 border border-slate-700 rounded px-3 py-1.5 text-slate-100 font-mono"
                     required
                   />
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                <label className="flex items-center space-x-2 text-slate-800 cursor-pointer">
+              <div className="p-3 rounded-xl bg-polar-900/80 border border-slate-800 space-y-2">
+                <label className="flex items-center space-x-2 text-slate-200 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={newIsColdChain}
                     onChange={(e) => setNewIsColdChain(e.target.checked)}
-                    className="rounded text-emerald-600 focus:ring-0"
+                    className="rounded text-cyan-500 focus:ring-0"
                   />
-                  <span className="font-bold text-emerald-800 text-xs">Requires Cryogenic / Cold-Chain Monitoring</span>
+                  <span className="font-bold text-cyan-300">Requires Cryogenic / Cold-Chain Monitoring</span>
                 </label>
 
                 {newIsColdChain && (
                   <div className="grid grid-cols-2 gap-3 pt-2">
                     <div>
-                      <label className="block text-slate-600 text-[10px] mb-1 font-mono font-bold">Min Temp (°C)</label>
+                      <label className="block text-slate-400 text-[10px] mb-1 font-mono">Min Temp (°C)</label>
                       <input
                         type="number"
                         value={newMinTemp}
                         onChange={(e) => setNewMinTemp(Number(e.target.value))}
-                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-900 font-mono"
+                        className="w-full bg-polar-950 border border-slate-700 rounded px-2.5 py-1 text-slate-100 font-mono"
                       />
                     </div>
                     <div>
-                      <label className="block text-slate-600 text-[10px] mb-1 font-mono font-bold">Max Temp (°C)</label>
+                      <label className="block text-slate-400 text-[10px] mb-1 font-mono">Max Temp (°C)</label>
                       <input
                         type="number"
                         value={newMaxTemp}
                         onChange={(e) => setNewMaxTemp(Number(e.target.value))}
-                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-900 font-mono"
+                        className="w-full bg-polar-950 border border-slate-700 rounded px-2.5 py-1 text-slate-100 font-mono"
                       />
                     </div>
                   </div>
                 )}
               </div>
 
-              <div className="flex justify-end space-x-3 pt-3 border-t border-slate-100">
+              <div className="flex justify-end space-x-3 pt-3">
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold"
+                  className="px-4 py-2 rounded bg-polar-800 text-slate-300"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold shadow-md shadow-emerald-600/20"
+                  className="px-4 py-2 rounded bg-cyan-600 hover:bg-cyan-500 text-white font-bold"
                 >
                   Register Manifest
                 </button>
