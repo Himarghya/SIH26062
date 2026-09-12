@@ -206,31 +206,31 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
 
   const renderBadge = (level: string) => {
     const l = (level || '').toUpperCase();
-    if (l === 'CRITICAL') return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40">CRITICAL</span>;
-    if (l === 'HIGH') return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">HIGH</span>;
-    if (l === 'MODERATE') return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">MODERATE</span>;
-    return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">LOW / OK</span>;
+    if (l === 'CRITICAL') return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-800 border border-rose-300">CRITICAL</span>;
+    if (l === 'HIGH') return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300">HIGH</span>;
+    if (l === 'MODERATE') return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-teal-100 text-teal-800 border border-teal-300">MODERATE</span>;
+    return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">LOW / OK</span>;
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn">
-      <div className="relative w-full max-w-5xl bg-polar-950 border border-cyan-500/40 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-md animate-fadeIn">
+      <div className="relative w-full max-w-5xl bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh] text-slate-800">
         {/* Modal Top Bar */}
-        <div className="bg-gradient-to-r from-polar-900 via-polar-850 to-polar-900 px-6 py-4 flex items-center justify-between border-b border-cyan-900/50">
+        <div className="bg-slate-50 px-6 py-4 flex items-center justify-between border-b border-slate-200">
           <div className="flex items-center space-x-3">
-            <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/40 text-cyan-400 shadow-lg shadow-cyan-500/10">
+            <div className="p-2 rounded-xl bg-emerald-100 border border-emerald-300 text-emerald-700 shadow-sm">
               <Cpu className="w-6 h-6 animate-pulse" />
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <h2 className="text-base font-bold text-slate-100 uppercase font-mono tracking-wider">
+                <h2 className="text-base font-bold text-slate-900 uppercase font-mono tracking-wider">
                   POLARIS ML Predictive Engine
                 </h2>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-400/10 text-cyan-300 border border-cyan-400/30">
-                  v1.0.0
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                  v1.0.0 Active
                 </span>
               </div>
-              <p className="text-xs text-slate-400 font-mono">
+              <p className="text-xs text-slate-500 font-mono font-medium">
                 XGBoost Classifiers · XGBoost Regressors · Isolation Forests · Multi-Criteria SAR Ranker
               </p>
             </div>
@@ -238,94 +238,94 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
 
           <div className="flex items-center space-x-4">
             {/* Live Model Health Indicator */}
-            <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-polar-900/90 border border-slate-800 text-xs font-mono">
-              <span className={`w-2.5 h-2.5 rounded-full ${healthStatus ? 'bg-emerald-400 animate-pulse' : 'bg-rose-400'}`} />
-              <span className="text-slate-300">
+            <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-mono shadow-xs">
+              <span className={`w-2.5 h-2.5 rounded-full ${healthStatus ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'}`} />
+              <span className="text-slate-700 font-medium">
                 {healthStatus ? `ML Engine Online (${healthStatus.models_loaded.length} models ready)` : 'Connecting ML...'}
               </span>
-              <button onClick={checkHealth} className="text-slate-400 hover:text-cyan-300 p-0.5" title="Refresh health">
+              <button onClick={checkHealth} className="text-slate-400 hover:text-emerald-700 p-0.5" title="Refresh health">
                 <RefreshCw className={`w-3 h-3 ${isHealthLoading ? 'animate-spin' : ''}`} />
               </button>
             </div>
 
-            <button onClick={onClose} className="text-slate-400 hover:text-white p-2 rounded-lg bg-polar-850 hover:bg-polar-800 transition">
+            <button onClick={onClose} className="text-slate-400 hover:text-slate-700 p-2 rounded-lg bg-slate-100 hover:bg-slate-200 transition">
               <X className="w-5 h-5" />
             </button>
           </div>
         </div>
 
         {/* Tab Navigation */}
-        <div className="bg-polar-900/80 px-6 py-2 border-b border-slate-800 flex items-center space-x-2 overflow-x-auto">
+        <div className="bg-slate-100/90 px-6 py-2 border-b border-slate-200 flex items-center space-x-2 overflow-x-auto">
           <button
             onClick={() => setActiveTab('weather')}
-            className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-mono font-medium transition ${
+            className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition shadow-xs ${
               activeTab === 'weather'
-                ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 shadow-sm'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-polar-800'
+                ? 'bg-emerald-600 text-white shadow-emerald-600/20'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
             }`}
           >
-            <CloudSnow className="w-4 h-4 text-cyan-400" />
+            <CloudSnow className={`w-4 h-4 ${activeTab === 'weather' ? 'text-white' : 'text-emerald-600'}`} />
             <span>1. Weather / Blizzard (XGBoost)</span>
           </button>
 
           <button
             onClick={() => setActiveTab('fuel')}
-            className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-mono font-medium transition ${
+            className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition shadow-xs ${
               activeTab === 'fuel'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-500/50 shadow-sm'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-polar-800'
+                ? 'bg-amber-600 text-white shadow-amber-600/20'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
             }`}
           >
-            <Flame className="w-4 h-4 text-amber-400" />
+            <Flame className={`w-4 h-4 ${activeTab === 'fuel' ? 'text-white' : 'text-amber-600'}`} />
             <span>2. Fuel Forecast (XGBoost)</span>
           </button>
 
           <button
             onClick={() => setActiveTab('coldchain')}
-            className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-mono font-medium transition ${
+            className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition shadow-xs ${
               activeTab === 'coldchain'
-                ? 'bg-blue-500/20 text-blue-300 border border-blue-500/50 shadow-sm'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-polar-800'
+                ? 'bg-teal-600 text-white shadow-teal-600/20'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
             }`}
           >
-            <ThermometerSnowflake className="w-4 h-4 text-blue-400" />
+            <ThermometerSnowflake className={`w-4 h-4 ${activeTab === 'coldchain' ? 'text-white' : 'text-teal-600'}`} />
             <span>3. Cold-Chain (Isolation Forest)</span>
           </button>
 
           <button
             onClick={() => setActiveTab('sar')}
-            className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-mono font-medium transition ${
+            className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition shadow-xs ${
               activeTab === 'sar'
-                ? 'bg-rose-500/20 text-rose-300 border border-rose-500/50 shadow-sm'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-polar-800'
+                ? 'bg-rose-600 text-white shadow-rose-600/20'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
             }`}
           >
-            <LifeBuoy className="w-4 h-4 text-rose-400" />
+            <LifeBuoy className={`w-4 h-4 ${activeTab === 'sar' ? 'text-white' : 'text-rose-600'}`} />
             <span>4a. SAR Incident Risk</span>
           </button>
 
           <button
             onClick={() => setActiveTab('ranking')}
-            className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-mono font-medium transition ${
+            className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition shadow-xs ${
               activeTab === 'ranking'
-                ? 'bg-purple-500/20 text-purple-300 border border-purple-500/50 shadow-sm'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-polar-800'
+                ? 'bg-violet-600 text-white shadow-violet-600/20'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
             }`}
           >
-            <Award className="w-4 h-4 text-purple-400" />
+            <Award className={`w-4 h-4 ${activeTab === 'ranking' ? 'text-white' : 'text-violet-600'}`} />
             <span>4b. Asset Ranking</span>
           </button>
         </div>
 
         {/* Tab Body Content */}
-        <div className="p-6 overflow-y-auto space-y-6 flex-1 bg-polar-950/90 font-sans">
+        <div className="p-6 overflow-y-auto space-y-6 flex-1 bg-white font-sans text-slate-800">
 
           {/* TAB 1: WEATHER / BLIZZARD RISK */}
           {activeTab === 'weather' && (
             <div className="space-y-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-cyan-950/40 border border-cyan-800/40">
-                <div className="flex items-center space-x-2 text-xs text-cyan-200 font-mono">
-                  <Sparkles className="w-4 h-4 text-cyan-400" />
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-teal-50 border border-teal-200">
+                <div className="flex items-center space-x-2 text-xs text-teal-900 font-mono font-medium">
+                  <Sparkles className="w-4 h-4 text-teal-600 shrink-0" />
                   <span>XGBoost Classifier trained on multi-variate polar barometric & thermal telemetry.</span>
                 </div>
                 <div className="flex space-x-2">
@@ -334,7 +334,7 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                       setWStation('Bharati'); setWTemp(-38); setWWind(95); setWGust(130);
                       setWPres(955); setWDPres(-6); setWVis(250); setWHum(88); setWChill(-55);
                     }}
-                    className="px-2.5 py-1 bg-polar-800 hover:bg-polar-700 text-cyan-300 text-[11px] font-mono rounded border border-slate-700"
+                    className="px-2.5 py-1 bg-white hover:bg-slate-50 text-slate-700 text-[11px] font-mono font-bold rounded-lg border border-slate-300 shadow-2xs transition"
                   >
                     Preset: Severe Blizzard
                   </button>
@@ -343,7 +343,7 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                       setWStation('Maitri'); setWTemp(-12); setWWind(25); setWGust(35);
                       setWPres(992); setWDPres(1.2); setWVis(8000); setWHum(65); setWChill(-18);
                     }}
-                    className="px-2.5 py-1 bg-polar-800 hover:bg-polar-700 text-slate-300 text-[11px] font-mono rounded border border-slate-700"
+                    className="px-2.5 py-1 bg-white hover:bg-slate-50 text-slate-700 text-[11px] font-mono font-bold rounded-lg border border-slate-300 shadow-2xs transition"
                   >
                     Preset: Clear Weather
                   </button>
@@ -352,84 +352,84 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Target Station</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Target Station</label>
                   <input
                     type="text"
                     value={wStation}
                     onChange={(e) => setWStation(e.target.value)}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-cyan-300 font-mono focus:border-cyan-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Temperature (°C)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Temperature (°C)</label>
                   <input
                     type="number"
                     value={wTemp}
                     onChange={(e) => setWTemp(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-cyan-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Wind Speed (km/h)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Wind Speed (km/h)</label>
                   <input
                     type="number"
                     value={wWind}
                     onChange={(e) => setWWind(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-cyan-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Wind Gust (km/h)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Wind Gust (km/h)</label>
                   <input
                     type="number"
                     value={wGust}
                     onChange={(e) => setWGust(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-cyan-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Atmospheric Pressure (hPa)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Atmospheric Pressure (hPa)</label>
                   <input
                     type="number"
                     value={wPres}
                     onChange={(e) => setWPres(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-cyan-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Pressure Δ 3h (hPa/3h)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Pressure Δ 3h (hPa/3h)</label>
                   <input
                     type="number"
                     value={wDPres}
                     onChange={(e) => setWDPres(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-cyan-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Visibility (meters)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Visibility (meters)</label>
                   <input
                     type="number"
                     value={wVis}
                     onChange={(e) => setWVis(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-cyan-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Relative Humidity (%)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Relative Humidity (%)</label>
                   <input
                     type="number"
                     value={wHum}
                     onChange={(e) => setWHum(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-cyan-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Wind Chill Index (°C)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Wind Chill Index (°C)</label>
                   <input
                     type="number"
                     value={wChill}
                     onChange={(e) => setWChill(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-cyan-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 shadow-2xs"
                   />
                 </div>
               </div>
@@ -438,7 +438,7 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                 <button
                   onClick={handlePredictWeather}
                   disabled={wLoading}
-                  className="px-6 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold font-mono text-xs rounded-xl shadow-lg shadow-cyan-500/20 flex items-center space-x-2 disabled:opacity-50"
+                  className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold font-mono text-xs rounded-xl shadow-md shadow-emerald-600/20 flex items-center space-x-2 disabled:opacity-50 transition"
                 >
                   {wLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
                   <span>RUN BLIZZARD PREDICTION</span>
@@ -446,34 +446,34 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
               </div>
 
               {wResult && (
-                <div className="p-5 rounded-2xl bg-polar-900/90 border border-cyan-500/40 space-y-4">
-                  <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                    <h3 className="font-mono font-bold text-sm text-cyan-300 uppercase flex items-center space-x-2">
-                      <CloudSnow className="w-4 h-4" />
+                <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <h3 className="font-mono font-bold text-sm text-emerald-800 uppercase flex items-center space-x-2">
+                      <CloudSnow className="w-4 h-4 text-emerald-600" />
                       <span>Prediction Results for {wResult.station}</span>
                     </h3>
                     <div className="flex items-center space-x-2">
-                      <span className="text-xs text-slate-400">Overall Risk:</span>
+                      <span className="text-xs text-slate-500 font-medium">Overall Risk:</span>
                       {renderBadge(wResult.predicted_risk)}
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono">
-                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
-                      <div className="text-[10px] text-slate-400">BLIZZARD PROBABILITY</div>
-                      <div className="text-xl font-bold text-cyan-300 mt-1">{wResult.blizzard_probability_pct}%</div>
+                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                      <div className="text-[10px] text-slate-500 font-medium">BLIZZARD PROBABILITY</div>
+                      <div className="text-xl font-bold text-emerald-700 mt-1">{wResult.blizzard_probability_pct}%</div>
                     </div>
-                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
-                      <div className="text-[10px] text-slate-400">VISIBILITY RISK</div>
+                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                      <div className="text-[10px] text-slate-500 font-medium">VISIBILITY RISK</div>
                       <div className="mt-1">{renderBadge(wResult.visibility_risk)}</div>
                     </div>
-                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
-                      <div className="text-[10px] text-slate-400">WIND GUST RISK</div>
+                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                      <div className="text-[10px] text-slate-500 font-medium">WIND GUST RISK</div>
                       <div className="mt-1">{renderBadge(wResult.wind_risk)}</div>
                     </div>
-                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
-                      <div className="text-[10px] text-slate-400">MODEL CONFIDENCE</div>
-                      <div className="text-xl font-bold text-emerald-400 mt-1">{wResult.confidence_pct}%</div>
+                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                      <div className="text-[10px] text-slate-500 font-medium">MODEL CONFIDENCE</div>
+                      <div className="text-xl font-bold text-emerald-700 mt-1">{wResult.confidence_pct}%</div>
                     </div>
                   </div>
                 </div>
@@ -484,9 +484,9 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
           {/* TAB 2: FUEL & INVENTORY FORECAST */}
           {activeTab === 'fuel' && (
             <div className="space-y-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-amber-950/40 border border-amber-800/40">
-                <div className="flex items-center space-x-2 text-xs text-amber-200 font-mono">
-                  <Sparkles className="w-4 h-4 text-amber-400" />
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-amber-50 border border-amber-200">
+                <div className="flex items-center space-x-2 text-xs text-amber-900 font-mono font-medium">
+                  <Sparkles className="w-4 h-4 text-amber-600 shrink-0" />
                   <span>XGBoost Regressor modeling nonlinear thermal loss, generator load & equipment demand.</span>
                 </div>
                 <button 
@@ -494,7 +494,7 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                     setFStation('Bharati'); setFStock(72400); setFResupply(26); setFTemp(-32);
                     setFWind(60); setFPers(55); setFLoad(70); setFBliz(0); setFEquip(12);
                   }}
-                  className="px-2.5 py-1 bg-polar-800 hover:bg-polar-700 text-amber-300 text-[11px] font-mono rounded border border-slate-700"
+                  className="px-2.5 py-1 bg-white hover:bg-slate-50 text-slate-700 text-[11px] font-mono font-bold rounded-lg border border-slate-300 shadow-2xs transition"
                 >
                   Preset: Normal Winter Baseline
                 </button>
@@ -502,84 +502,84 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Station</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Station</label>
                   <input
                     type="text"
                     value={fStation}
                     onChange={(e) => setFStation(e.target.value)}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-amber-300 font-mono focus:border-amber-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Current Stock (Liters D-10)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Current Stock (Liters D-10)</label>
                   <input
                     type="number"
                     value={fStock}
                     onChange={(e) => setFStock(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-amber-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Next Resupply (Days)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Next Resupply (Days)</label>
                   <input
                     type="number"
                     value={fResupply}
                     onChange={(e) => setFResupply(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-amber-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Avg Ambient Temp (°C)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Avg Ambient Temp (°C)</label>
                   <input
                     type="number"
                     value={fTemp}
                     onChange={(e) => setFTemp(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-amber-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Avg Wind Speed (km/h)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Avg Wind Speed (km/h)</label>
                   <input
                     type="number"
                     value={fWind}
                     onChange={(e) => setFWind(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-amber-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Station Personnel Count</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Station Personnel Count</label>
                   <input
                     type="number"
                     value={fPers}
                     onChange={(e) => setFPers(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-amber-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Generator Load (%)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Generator Load (%)</label>
                   <input
                     type="number"
                     value={fLoad}
                     onChange={(e) => setFLoad(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-amber-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Blizzard Flag (0 or 1)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Blizzard Flag (0 or 1)</label>
                   <input
                     type="number"
                     value={fBliz}
                     onChange={(e) => setFBliz(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-amber-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Equipment Usage (hrs/day)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Equipment Usage (hrs/day)</label>
                   <input
                     type="number"
                     value={fEquip}
                     onChange={(e) => setFEquip(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-amber-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 shadow-2xs"
                   />
                 </div>
               </div>
@@ -588,7 +588,7 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                 <button
                   onClick={handlePredictFuel}
                   disabled={fLoading}
-                  className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-bold font-mono text-xs rounded-xl shadow-lg shadow-amber-500/20 flex items-center space-x-2 disabled:opacity-50"
+                  className="px-6 py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold font-mono text-xs rounded-xl shadow-md shadow-amber-600/20 flex items-center space-x-2 disabled:opacity-50 transition"
                 >
                   {fLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
                   <span>RUN FUEL CONSUMPTION FORECAST</span>
@@ -596,44 +596,44 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
               </div>
 
               {fResult && (
-                <div className="p-5 rounded-2xl bg-polar-900/90 border border-amber-500/40 space-y-4">
-                  <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                    <h3 className="font-mono font-bold text-sm text-amber-300 uppercase flex items-center space-x-2">
-                      <Flame className="w-4 h-4" />
+                <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <h3 className="font-mono font-bold text-sm text-amber-800 uppercase flex items-center space-x-2">
+                      <Flame className="w-4 h-4 text-amber-600" />
                       <span>Forecast Results for {fResult.station}</span>
                     </h3>
                     <div className="flex items-center space-x-2">
-                      <span className="text-xs text-slate-400">Stockout Risk:</span>
+                      <span className="text-xs text-slate-500 font-medium">Stockout Risk:</span>
                       {renderBadge(fResult.risk)}
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono">
-                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
-                      <div className="text-[10px] text-slate-400">PREDICTED DAILY BURN</div>
-                      <div className="text-xl font-bold text-amber-400 mt-1">{fResult.predicted_burn_l_per_day.toLocaleString()} L/day</div>
+                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                      <div className="text-[10px] text-slate-500 font-medium">PREDICTED DAILY BURN</div>
+                      <div className="text-xl font-bold text-amber-700 mt-1">{fResult.predicted_burn_l_per_day.toLocaleString()} L/day</div>
                     </div>
-                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
-                      <div className="text-[10px] text-slate-400">ESTIMATED EXHAUSTION</div>
-                      <div className="text-xl font-bold text-cyan-300 mt-1">
+                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                      <div className="text-[10px] text-slate-500 font-medium">ESTIMATED EXHAUSTION</div>
+                      <div className="text-xl font-bold text-indigo-700 mt-1">
                         {fResult.predicted_exhaustion_day ? `Day ${fResult.predicted_exhaustion_day}` : 'Beyond Horizon (>30d)'}
                       </div>
                     </div>
-                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
-                      <div className="text-[10px] text-slate-400">NEXT RESUPPLY</div>
-                      <div className="text-xl font-bold text-slate-200 mt-1">Day {fResult.next_resupply_in_days ?? 'N/A'}</div>
+                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                      <div className="text-[10px] text-slate-500 font-medium">NEXT RESUPPLY</div>
+                      <div className="text-xl font-bold text-slate-900 mt-1">Day {fResult.next_resupply_in_days ?? 'N/A'}</div>
                     </div>
                   </div>
 
                   {/* Stock Trajectory Table */}
                   {fResult.projection && (
-                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800 space-y-2">
-                      <div className="text-xs font-mono font-bold text-slate-300 uppercase">Forward Stock Projections:</div>
+                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                      <div className="text-xs font-mono font-bold text-slate-800 uppercase">Forward Stock Projections:</div>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono text-xs">
                         {Object.entries(fResult.projection).map(([key, val]: [string, any]) => (
-                          <div key={key} className="p-2 rounded bg-polar-900 border border-slate-800 flex justify-between items-center">
-                            <span className="text-slate-400">{key.replace('_', ' ').toUpperCase()}:</span>
-                            <span className="font-bold text-cyan-300">{Number(val).toLocaleString()} L</span>
+                          <div key={key} className="p-2 rounded-lg bg-white border border-slate-200 flex justify-between items-center shadow-2xs">
+                            <span className="text-slate-500 font-medium">{key.replace('_', ' ').toUpperCase()}:</span>
+                            <span className="font-bold text-emerald-700">{Number(val).toLocaleString()} L</span>
                           </div>
                         ))}
                       </div>
@@ -647,9 +647,9 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
           {/* TAB 3: COLD-CHAIN ANOMALY DETECTION */}
           {activeTab === 'coldchain' && (
             <div className="space-y-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-blue-950/40 border border-blue-800/40">
-                <div className="flex items-center space-x-2 text-xs text-blue-200 font-mono">
-                  <Sparkles className="w-4 h-4 text-blue-400" />
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-teal-50 border border-teal-200">
+                <div className="flex items-center space-x-2 text-xs text-teal-900 font-mono font-medium">
+                  <Sparkles className="w-4 h-4 text-teal-600 shrink-0" />
                   <span>Isolation Forest trained on rolling trend volatility & slope to detect thermal degradation early.</span>
                 </div>
                 <div className="flex space-x-2">
@@ -658,7 +658,7 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                       setCId('ICE-CORE-204'); setCTarget(-80);
                       setCStream('-80,-79,-80,-81,-80,-79,-77,-74,-70,-68');
                     }}
-                    className="px-2.5 py-1 bg-polar-800 hover:bg-polar-700 text-rose-300 text-[11px] font-mono rounded border border-slate-700"
+                    className="px-2.5 py-1 bg-white hover:bg-slate-50 text-rose-700 text-[11px] font-mono font-bold rounded-lg border border-slate-300 shadow-2xs transition"
                   >
                     Preset: Warming Trend Breach
                   </button>
@@ -667,7 +667,7 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                       setCId('BIO-PLASMA-09'); setCTarget(-80);
                       setCStream('-80.1,-79.8,-80.2,-80.0,-80.1,-79.9,-80.0,-80.1');
                     }}
-                    className="px-2.5 py-1 bg-polar-800 hover:bg-polar-700 text-emerald-300 text-[11px] font-mono rounded border border-slate-700"
+                    className="px-2.5 py-1 bg-white hover:bg-slate-50 text-emerald-700 text-[11px] font-mono font-bold rounded-lg border border-slate-300 shadow-2xs transition"
                   >
                     Preset: Stable Cryo Stream
                   </button>
@@ -676,34 +676,34 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Cargo Package ID</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Cargo Package ID</label>
                   <input
                     type="text"
                     value={cId}
                     onChange={(e) => setCId(e.target.value)}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-blue-300 font-mono focus:border-blue-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Target Cryogenic Temperature (°C)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Target Cryogenic Temperature (°C)</label>
                   <input
                     type="number"
                     value={cTarget}
                     onChange={(e) => setCTarget(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-blue-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="md:col-span-2 space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">
                     Recent Temperature Stream (Oldest → Newest, comma separated)
                   </label>
                   <input
                     type="text"
                     value={cStream}
                     onChange={(e) => setCStream(e.target.value)}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-cyan-300 font-mono focus:border-blue-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20 shadow-2xs"
                   />
-                  <div className="text-[10px] text-slate-500 font-mono">
+                  <div className="text-[10px] text-slate-500 font-mono font-medium">
                     Must have at least 2 telemetry readings to calculate slope & rolling standard deviation.
                   </div>
                 </div>
@@ -713,7 +713,7 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                 <button
                   onClick={handlePredictColdchain}
                   disabled={cLoading}
-                  className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white font-bold font-mono text-xs rounded-xl shadow-lg shadow-blue-500/20 flex items-center space-x-2 disabled:opacity-50"
+                  className="px-6 py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-bold font-mono text-xs rounded-xl shadow-md shadow-teal-600/20 flex items-center space-x-2 disabled:opacity-50 transition"
                 >
                   {cLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
                   <span>SCORE TEMPERATURE STREAM</span>
@@ -721,45 +721,45 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
               </div>
 
               {cResult && (
-                <div className="p-5 rounded-2xl bg-polar-900/90 border border-blue-500/40 space-y-4">
-                  <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                    <h3 className="font-mono font-bold text-sm text-blue-300 uppercase flex items-center space-x-2">
-                      <ThermometerSnowflake className="w-4 h-4" />
+                <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <h3 className="font-mono font-bold text-sm text-teal-800 uppercase flex items-center space-x-2">
+                      <ThermometerSnowflake className="w-4 h-4 text-teal-600" />
                       <span>Isolation Forest Evaluation: {cResult.cargo_id}</span>
                     </h3>
                     <div className="flex items-center space-x-2">
-                      <span className="text-xs text-slate-400">Trend Status:</span>
+                      <span className="text-xs text-slate-500 font-medium">Trend Status:</span>
                       {cResult.trend_anomaly_detected ? renderBadge('CRITICAL') : renderBadge('LOW')}
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono">
-                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
-                      <div className="text-[10px] text-slate-400">CURRENT TELEMETRY</div>
-                      <div className="text-xl font-bold text-cyan-300 mt-1">{cResult.current_temperature_c}°C</div>
+                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                      <div className="text-[10px] text-slate-500 font-medium">CURRENT TELEMETRY</div>
+                      <div className="text-xl font-bold text-teal-700 mt-1">{cResult.current_temperature_c}°C</div>
                     </div>
-                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
-                      <div className="text-[10px] text-slate-400">TARGET TEMP</div>
-                      <div className="text-xl font-bold text-slate-300 mt-1">{cResult.target_temp_c}°C</div>
+                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                      <div className="text-[10px] text-slate-500 font-medium">TARGET TEMP</div>
+                      <div className="text-xl font-bold text-slate-900 mt-1">{cResult.target_temp_c}°C</div>
                     </div>
-                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
-                      <div className="text-[10px] text-slate-400">ANOMALY SCORE</div>
-                      <div className="text-xl font-bold text-amber-400 mt-1">{cResult.anomaly_score} / 1.0</div>
+                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                      <div className="text-[10px] text-slate-500 font-medium">ANOMALY SCORE</div>
+                      <div className="text-xl font-bold text-amber-700 mt-1">{cResult.anomaly_score} / 1.0</div>
                     </div>
-                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
-                      <div className="text-[10px] text-slate-400">EST. STEPS TO BREACH</div>
-                      <div className="text-xl font-bold text-rose-400 mt-1">
+                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                      <div className="text-[10px] text-slate-500 font-medium">EST. STEPS TO BREACH</div>
+                      <div className="text-xl font-bold text-rose-700 mt-1">
                         {cResult.estimated_steps_to_breach ?? 'None (Stable)'}
                       </div>
                     </div>
                   </div>
 
-                  <div className={`p-3 rounded-xl border font-mono text-xs ${
+                  <div className={`p-3.5 rounded-xl border font-mono text-xs ${
                     cResult.trend_anomaly_detected
-                      ? 'bg-rose-950/40 border-rose-600/50 text-rose-200'
-                      : 'bg-emerald-950/40 border-emerald-600/50 text-emerald-200'
+                      ? 'bg-rose-50 border-rose-200 text-rose-900 font-bold'
+                      : 'bg-emerald-50 border-emerald-200 text-emerald-900 font-bold'
                   }`}>
-                    <span className="font-bold">Recommended Action: </span>
+                    <span>Recommended Action: </span>
                     {cResult.action}
                   </div>
                 </div>
@@ -770,9 +770,9 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
           {/* TAB 4a: SAR INCIDENT RESPONSE RISK */}
           {activeTab === 'sar' && (
             <div className="space-y-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-rose-950/40 border border-rose-800/40">
-                <div className="flex items-center space-x-2 text-xs text-rose-200 font-mono">
-                  <Sparkles className="w-4 h-4 text-rose-400" />
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-rose-50 border border-rose-200">
+                <div className="flex items-center space-x-2 text-xs text-rose-900 font-mono font-medium">
+                  <Sparkles className="w-4 h-4 text-rose-600 shrink-0" />
                   <span>XGBoost Classification Pipeline with OneHot categorical encoding for SAR mission friction.</span>
                 </div>
                 <button 
@@ -780,7 +780,7 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                     setSId('Field-Team-07'); setSDist(43); setSVis(180); setSWind(104);
                     setSTemp(-39); setSPers(6); setSFuel(70); setSContact(5); setSType('snowcat');
                   }}
-                  className="px-2.5 py-1 bg-polar-800 hover:bg-polar-700 text-rose-300 text-[11px] font-mono rounded border border-slate-700"
+                  className="px-2.5 py-1 bg-white hover:bg-slate-50 text-slate-700 text-[11px] font-mono font-bold rounded-lg border border-slate-300 shadow-2xs transition"
                 >
                   Preset: Field Team 07 Distress
                 </button>
@@ -788,83 +788,83 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Incident ID</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Incident ID</label>
                   <input
                     type="text"
                     value={sId}
                     onChange={(e) => setSId(e.target.value)}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-rose-300 font-mono focus:border-rose-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Distance to Target (km)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Distance to Target (km)</label>
                   <input
                     type="number"
                     value={sDist}
                     onChange={(e) => setSDist(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-rose-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Visibility (m)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Visibility (m)</label>
                   <input
                     type="number"
                     value={sVis}
                     onChange={(e) => setSVis(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-rose-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Wind Velocity (km/h)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Wind Velocity (km/h)</label>
                   <input
                     type="number"
                     value={sWind}
                     onChange={(e) => setSWind(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-rose-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Ambient Temp (°C)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Ambient Temp (°C)</label>
                   <input
                     type="number"
                     value={sTemp}
                     onChange={(e) => setSTemp(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-rose-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Personnel Available</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Personnel Available</label>
                   <input
                     type="number"
                     value={sPers}
                     onChange={(e) => setSPers(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-rose-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Asset Fuel Tank (%)</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Asset Fuel Tank (%)</label>
                   <input
                     type="number"
                     value={sFuel}
                     onChange={(e) => setSFuel(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-rose-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Hours Since Last Radio Contact</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Hours Since Last Radio Contact</label>
                   <input
                     type="number"
                     value={sContact}
                     onChange={(e) => setSContact(Number(e.target.value))}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-rose-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20 shadow-2xs"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] uppercase font-mono text-slate-400">Asset Vehicle Type</label>
+                  <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Asset Vehicle Type</label>
                   <select
                     value={sType}
                     onChange={(e) => setSType(e.target.value)}
-                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-rose-400 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 font-mono font-medium focus:bg-white focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20 shadow-2xs"
                   >
                     <option value="snowcat">Snowcat (PistenBully / Antarctic)</option>
                     <option value="helicopter">Helicopter (Airborne SAR)</option>
@@ -877,7 +877,7 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                 <button
                   onClick={handlePredictSar}
                   disabled={sLoading}
-                  className="px-6 py-2.5 bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-400 hover:to-red-500 text-white font-bold font-mono text-xs rounded-xl shadow-lg shadow-rose-500/20 flex items-center space-x-2 disabled:opacity-50"
+                  className="px-6 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold font-mono text-xs rounded-xl shadow-md shadow-rose-600/20 flex items-center space-x-2 disabled:opacity-50 transition"
                 >
                   {sLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
                   <span>ASSESS SAR INCIDENT RISK</span>
@@ -885,34 +885,34 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
               </div>
 
               {sResult && (
-                <div className="p-5 rounded-2xl bg-polar-900/90 border border-rose-500/40 space-y-4">
-                  <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                    <h3 className="font-mono font-bold text-sm text-rose-300 uppercase flex items-center space-x-2">
-                      <LifeBuoy className="w-4 h-4" />
+                <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <h3 className="font-mono font-bold text-sm text-rose-800 uppercase flex items-center space-x-2">
+                      <LifeBuoy className="w-4 h-4 text-rose-600" />
                       <span>Response Risk Analysis: {sResult.incident_id}</span>
                     </h3>
                     <div className="flex items-center space-x-2">
-                      <span className="text-xs text-slate-400">Calculated Risk Level:</span>
+                      <span className="text-xs text-slate-500 font-medium">Calculated Risk Level:</span>
                       {renderBadge(sResult.risk_level)}
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono">
-                    <div className="p-4 bg-polar-950 rounded-xl border border-slate-800 flex items-center justify-between">
+                    <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
                       <div>
-                        <div className="text-[10px] text-slate-400">CRITICAL RESPONSE RISK</div>
-                        <div className="text-2xl font-bold text-rose-400 mt-1">{sResult.response_risk_pct}%</div>
+                        <div className="text-[10px] text-slate-500 font-medium">CRITICAL RESPONSE RISK</div>
+                        <div className="text-2xl font-black text-rose-700 mt-1">{sResult.response_risk_pct}%</div>
                       </div>
-                      <div className="p-2.5 rounded-lg bg-rose-500/10 text-rose-400">
+                      <div className="p-2.5 rounded-xl bg-rose-100 text-rose-700">
                         <AlertTriangle className="w-6 h-6" />
                       </div>
                     </div>
-                    <div className="p-4 bg-polar-950 rounded-xl border border-slate-800 flex items-center justify-between">
+                    <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
                       <div>
-                        <div className="text-[10px] text-slate-400">ESTIMATED RESPONSE TIME</div>
-                        <div className="text-2xl font-bold text-cyan-300 mt-1">{sResult.estimated_response_time_min} minutes</div>
+                        <div className="text-[10px] text-slate-500 font-medium">ESTIMATED RESPONSE TIME</div>
+                        <div className="text-2xl font-black text-indigo-700 mt-1">{sResult.estimated_response_time_min} minutes</div>
                       </div>
-                      <div className="p-2.5 rounded-lg bg-cyan-500/10 text-cyan-400">
+                      <div className="p-2.5 rounded-xl bg-indigo-100 text-indigo-700">
                         <Activity className="w-6 h-6" />
                       </div>
                     </div>
@@ -925,18 +925,18 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
           {/* TAB 4b: SAR ASSET SUITABILITY RANKING */}
           {activeTab === 'ranking' && (
             <div className="space-y-6">
-              <div className="p-3 rounded-xl bg-purple-950/40 border border-purple-800/40 text-xs text-purple-200 font-mono flex items-center space-x-2">
-                <Sparkles className="w-4 h-4 text-purple-400" />
+              <div className="p-3 rounded-xl bg-violet-50 border border-violet-200 text-xs text-violet-900 font-mono font-medium flex items-center space-x-2">
+                <Sparkles className="w-4 h-4 text-violet-600 shrink-0" />
                 <span>Multi-criteria asset ranking formula: Distance (30%) + Fuel (20%) + Weather Compat (30%) + Availability (20%).</span>
               </div>
 
               <div className="space-y-2">
-                <label className="text-[11px] uppercase font-mono text-slate-400">Fleet Asset Configuration (JSON format)</label>
+                <label className="text-[11px] uppercase font-mono font-bold text-slate-700">Fleet Asset Configuration (JSON format)</label>
                 <textarea
                   rows={6}
                   value={aAssetsJson}
                   onChange={(e) => setAAssetsJson(e.target.value)}
-                  className="w-full bg-polar-900 border border-slate-700 rounded-xl p-3 text-xs text-purple-300 font-mono focus:border-purple-400 focus:outline-none"
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs text-slate-900 font-mono font-medium focus:bg-white focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20 shadow-2xs"
                 />
               </div>
 
@@ -944,7 +944,7 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                 <button
                   onClick={handleRankAssets}
                   disabled={aLoading}
-                  className="px-6 py-2.5 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-400 hover:to-indigo-500 text-white font-bold font-mono text-xs rounded-xl shadow-lg shadow-purple-500/20 flex items-center space-x-2 disabled:opacity-50"
+                  className="px-6 py-2.5 bg-violet-600 hover:bg-violet-700 text-white font-bold font-mono text-xs rounded-xl shadow-md shadow-violet-600/20 flex items-center space-x-2 disabled:opacity-50 transition"
                 >
                   {aLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
                   <span>RANK ASSETS FOR SAR MISSION</span>
@@ -952,9 +952,9 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
               </div>
 
               {aResult && Array.isArray(aResult) && (
-                <div className="p-5 rounded-2xl bg-polar-900/90 border border-purple-500/40 space-y-4">
-                  <h3 className="font-mono font-bold text-sm text-purple-300 uppercase flex items-center space-x-2 border-b border-slate-800 pb-3">
-                    <Award className="w-4 h-4 text-amber-400" />
+                <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+                  <h3 className="font-mono font-bold text-sm text-violet-800 uppercase flex items-center space-x-2 border-b border-slate-100 pb-3">
+                    <Award className="w-4 h-4 text-amber-500" />
                     <span>Recommended Asset Dispatch Ranking</span>
                   </h3>
 
@@ -967,17 +967,17 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                           key={asset.name}
                           className={`p-4 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
                             isTop 
-                              ? 'bg-purple-950/40 border-purple-500/50 shadow-md shadow-purple-500/10'
-                              : 'bg-polar-950 border-slate-800'
+                              ? 'bg-violet-50/70 border-violet-300 shadow-xs'
+                              : 'bg-slate-50 border-slate-200'
                           }`}
                         >
                           <div className="flex items-center space-x-3">
-                            <span className="text-xs font-bold px-2 py-1 rounded bg-polar-900 text-amber-300 border border-slate-700">
+                            <span className="text-xs font-bold px-2 py-1 rounded bg-white text-amber-700 border border-slate-200 shadow-2xs">
                               {medal}
                             </span>
                             <div>
-                              <div className="text-sm font-bold text-slate-100">{asset.name}</div>
-                              <div className="text-[11px] text-slate-400 mt-0.5">
+                              <div className="text-sm font-bold text-slate-900">{asset.name}</div>
+                              <div className="text-[11px] text-slate-600 font-medium mt-0.5">
                                 Distance: {asset.distance_km}km · Fuel: {asset.fuel_pct}% · Weather Compat: {asset.weather_compatibility_pct}%
                               </div>
                             </div>
@@ -986,8 +986,8 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                           <div className="flex items-center space-x-3">
                             {renderBadge(asset.availability)}
                             <div className="text-right">
-                              <div className="text-[10px] text-slate-400">SUITABILITY</div>
-                              <div className="text-lg font-bold text-cyan-300">{asset.suitability_pct}%</div>
+                              <div className="text-[10px] text-slate-500 font-medium">SUITABILITY</div>
+                              <div className="text-lg font-bold text-violet-700">{asset.suitability_pct}%</div>
                             </div>
                           </div>
                         </div>

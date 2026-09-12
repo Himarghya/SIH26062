@@ -41,22 +41,22 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
 
   return (
     <aside 
-      className={`fixed top-0 left-0 z-40 h-screen transition-all duration-300 bg-polar-950/90 backdrop-blur-xl border-r border-cyan-900/40 flex flex-col shadow-2xl ${
+      className={`fixed top-0 left-0 z-40 h-screen transition-all duration-300 bg-white/95 backdrop-blur-xl border-r border-slate-200/90 flex flex-col shadow-lg shadow-slate-200/50 ${
         collapsed ? 'w-20' : 'w-64'
       }`}
     >
       {/* Brand Header */}
-      <div className="h-16 flex items-center justify-between px-4 border-b border-cyan-900/40 bg-polar-900/50">
+      <div className="h-16 flex items-center justify-between px-4 border-b border-slate-200/80 bg-slate-50/70">
         {!collapsed && (
           <div className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-400 via-blue-500 to-indigo-600 flex items-center justify-center font-black text-white shadow-md shadow-cyan-500/30 text-sm polar-glow-cyan">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-cyan-600 flex items-center justify-center font-black text-white shadow-md shadow-emerald-500/25 text-sm polar-glow-emerald">
               🧊
             </div>
             <div>
-              <span className="font-black text-sm tracking-wider text-slate-100 gradient-text-cyan">
+              <span className="font-black text-sm tracking-wider text-slate-900 gradient-text-cyan">
                 POLARIS
               </span>
-              <span className="block text-[8.5px] text-cyan-400 font-mono uppercase tracking-widest font-semibold">
+              <span className="block text-[8.5px] text-emerald-700 font-mono uppercase tracking-widest font-bold">
                 NCPOR • MoES (Goa)
               </span>
             </div>
@@ -64,14 +64,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
         )}
 
         {collapsed && (
-          <div className="mx-auto w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-400 to-blue-600 flex items-center justify-center font-black text-white shadow-md shadow-cyan-500/25 text-sm polar-glow-cyan">
+          <div className="mx-auto w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-600 flex items-center justify-center font-black text-white shadow-md shadow-emerald-500/25 text-sm polar-glow-emerald">
             🧊
           </div>
         )}
 
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="p-1.5 rounded-lg bg-polar-850 hover:bg-polar-800 text-slate-400 hover:text-slate-200 border border-slate-700/60 transition hidden md:block"
+          className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-200 transition hidden md:block"
           title={collapsed ? "Expand Sidebar" : "Collapse Sidebar"}
         >
           {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
@@ -87,16 +87,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
               key={item.path}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 group relative ${
+                `flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 group relative ${
                   isActive
-                    ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/10 text-cyan-300 border border-cyan-500/40 shadow-sm shadow-cyan-500/15'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-polar-900/60 border border-transparent'
+                    ? 'bg-gradient-to-r from-emerald-500/15 via-teal-500/10 to-transparent text-emerald-800 border border-emerald-500/30 shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 border border-transparent'
                 } ${collapsed ? 'justify-center px-0' : ''}`
               }
               title={collapsed ? item.name : undefined}
             >
               <Icon className={`w-4 h-4 shrink-0 transition-transform duration-200 group-hover:scale-110 ${
-                item.alert ? 'text-rose-400 animate-pulse' : 'group-hover:text-cyan-400'
+                item.alert ? 'text-rose-600 animate-pulse' : 'group-hover:text-emerald-600 text-slate-500'
               }`} />
               {!collapsed && (
                 <span className="truncate tracking-wide">{item.name}</span>
@@ -107,23 +107,23 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
       </nav>
 
       {/* User Role Card & Uplink status */}
-      <div className="p-3 border-t border-cyan-900/40 bg-polar-900/30">
+      <div className="p-3 border-t border-slate-200/80 bg-slate-50/70">
         {!collapsed ? (
-          <div className="p-2.5 rounded-xl bg-polar-950/80 border border-slate-800 space-y-1">
+          <div className="p-2.5 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-wider font-bold truncate max-w-[130px]">
+              <span className="text-[10px] font-mono text-emerald-700 uppercase tracking-wider font-bold truncate max-w-[130px]">
                 {user?.role.replace('_', ' ')}
               </span>
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             </div>
-            <div className="font-semibold text-xs text-slate-200 truncate">{user?.name}</div>
+            <div className="font-bold text-xs text-slate-800 truncate">{user?.name}</div>
             <div className="text-[10px] text-slate-500 flex items-center space-x-1 pt-0.5 font-mono">
-              <Radio className="w-3 h-3 text-cyan-500" />
+              <Radio className="w-3 h-3 text-emerald-600" />
               <span>Iridium SBD Active</span>
             </div>
           </div>
         ) : (
-          <div className="w-8 h-8 rounded-full bg-cyan-950 border border-cyan-500/50 flex items-center justify-center font-bold font-mono text-cyan-300 text-xs mx-auto" title={user?.name}>
+          <div className="w-8 h-8 rounded-full bg-emerald-50 border border-emerald-300 flex items-center justify-center font-bold font-mono text-emerald-700 text-xs mx-auto shadow-sm" title={user?.name}>
             {user?.name?.[0] || 'U'}
           </div>
         )}

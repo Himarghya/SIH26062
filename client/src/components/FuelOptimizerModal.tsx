@@ -73,24 +73,24 @@ export const FuelOptimizerModal: React.FC<FuelOptimizerModalProps> = ({
   });
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
-      <div className="relative w-full max-w-3xl bg-polar-950 border border-cyan-500/40 rounded-2xl overflow-hidden shadow-2xl polar-glow">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-md animate-fadeIn">
+      <div className="relative w-full max-w-3xl bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-2xl">
         {/* Header */}
-        <div className="bg-gradient-to-r from-polar-900 to-polar-850 px-6 py-4 flex items-center justify-between border-b border-cyan-900/50">
+        <div className="bg-gradient-to-r from-emerald-50 via-teal-50 to-indigo-50 px-6 py-4 flex items-center justify-between border-b border-slate-200">
           <div className="flex items-center space-x-3">
-            <div className="p-2 rounded-lg bg-cyan-600/20 border border-cyan-500/50 text-cyan-300">
+            <div className="p-2.5 rounded-xl bg-emerald-100 border border-emerald-300 text-emerald-800 shadow-sm">
               <Cpu className="w-6 h-6 animate-pulse" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-slate-100 uppercase font-mono tracking-wide">
+              <h2 className="text-lg font-black text-slate-900 uppercase font-mono tracking-wide">
                 AI Polar Thermal & Fuel Burn Optimizer
               </h2>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-500 font-medium">
                 Predictive Autonomy & Winter Resupply Planning Engine
               </p>
             </div>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-white p-1.5 rounded-lg bg-polar-800">
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-700 p-2 rounded-xl bg-white border border-slate-200 shadow-sm transition">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -98,11 +98,11 @@ export const FuelOptimizerModal: React.FC<FuelOptimizerModalProps> = ({
         <div className="p-6 space-y-6 max-h-[80vh] overflow-y-auto">
           {/* Station Selector */}
           <div className="flex items-center justify-between">
-            <label className="text-xs font-mono uppercase text-slate-300">Target Base:</label>
+            <label className="text-xs font-mono uppercase text-slate-700 font-bold">Target Base:</label>
             <select
               value={selectedStationId}
               onChange={(e) => setSelectedStationId(e.target.value)}
-              className="bg-polar-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-cyan-300 font-semibold focus:outline-none focus:border-cyan-500"
+              className="bg-slate-50 border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-900 font-semibold focus:outline-none focus:border-emerald-500 font-mono"
             >
               {stations.map(st => (
                 <option key={st.id} value={st.id}>
@@ -113,12 +113,12 @@ export const FuelOptimizerModal: React.FC<FuelOptimizerModalProps> = ({
           </div>
 
           {/* Interactive Simulation Sliders */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 rounded-xl bg-polar-900/70 border border-slate-800">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm">
             {/* Ambient Temperature Slider */}
             <div className="space-y-2">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-400">Mean Winter Temp:</span>
-                <span className="font-mono font-bold text-cyan-400">{winterTemp}°C</span>
+                <span className="text-slate-600 font-semibold">Mean Winter Temp:</span>
+                <span className="font-mono font-bold text-emerald-700">{winterTemp}°C</span>
               </div>
               <input
                 type="range"
@@ -126,9 +126,9 @@ export const FuelOptimizerModal: React.FC<FuelOptimizerModalProps> = ({
                 max="-10"
                 value={winterTemp}
                 onChange={(e) => setWinterTemp(Number(e.target.value))}
-                className="w-full accent-cyan-400 cursor-pointer"
+                className="w-full accent-emerald-600 cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] text-slate-500">
+              <div className="flex justify-between text-[10px] text-slate-500 font-mono">
                 <span>-55°C (Extreme)</span>
                 <span>-10°C (Mild)</span>
               </div>
@@ -137,8 +137,8 @@ export const FuelOptimizerModal: React.FC<FuelOptimizerModalProps> = ({
             {/* Active Generators */}
             <div className="space-y-2">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-400">Active Power Gen Units:</span>
-                <span className="font-mono font-bold text-cyan-400">{generators} Units</span>
+                <span className="text-slate-600 font-semibold">Active Gen Units:</span>
+                <span className="font-mono font-bold text-indigo-700">{generators} Units</span>
               </div>
               <input
                 type="range"
@@ -146,19 +146,19 @@ export const FuelOptimizerModal: React.FC<FuelOptimizerModalProps> = ({
                 max="4"
                 value={generators}
                 onChange={(e) => setGenerators(Number(e.target.value))}
-                className="w-full accent-cyan-400 cursor-pointer"
+                className="w-full accent-indigo-600 cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] text-slate-500">
+              <div className="flex justify-between text-[10px] text-slate-500 font-mono">
                 <span>1 (Emergency)</span>
-                <span>4 (Full Lab Load)</span>
+                <span>4 (Full Load)</span>
               </div>
             </div>
 
             {/* Blizzard Days */}
             <div className="space-y-2">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-400">Projected Blizzard Days:</span>
-                <span className="font-mono font-bold text-cyan-400">{blizzardDays} Days</span>
+                <span className="text-slate-600 font-semibold">Projected Blizzards:</span>
+                <span className="font-mono font-bold text-amber-700">{blizzardDays} Days</span>
               </div>
               <input
                 type="range"
@@ -166,9 +166,9 @@ export const FuelOptimizerModal: React.FC<FuelOptimizerModalProps> = ({
                 max="60"
                 value={blizzardDays}
                 onChange={(e) => setBlizzardDays(Number(e.target.value))}
-                className="w-full accent-cyan-400 cursor-pointer"
+                className="w-full accent-amber-600 cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] text-slate-500">
+              <div className="flex justify-between text-[10px] text-slate-500 font-mono">
                 <span>5 Days</span>
                 <span>60 Days</span>
               </div>
@@ -178,32 +178,32 @@ export const FuelOptimizerModal: React.FC<FuelOptimizerModalProps> = ({
           {/* AI Forecast Result Metrics */}
           {forecast && (
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="p-3.5 rounded-xl bg-polar-900 border border-slate-800">
-                <div className="text-[11px] text-slate-400 font-mono">ESTIMATED DAILY BURN</div>
-                <div className="text-xl font-bold text-amber-400 font-mono mt-1">
-                  {forecast.projectedDailyBurnLiters} <span className="text-xs text-slate-400">Liters/day</span>
+              <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                <div className="text-[11px] text-slate-500 font-mono font-bold">ESTIMATED DAILY BURN</div>
+                <div className="text-xl font-bold text-amber-700 font-mono mt-1">
+                  {forecast.projectedDailyBurnLiters} <span className="text-xs text-slate-500 font-normal">Liters/day</span>
                 </div>
                 <div className="text-[10px] text-slate-500 mt-0.5">Adjusted for cold degree index</div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-polar-900 border border-slate-800">
-                <div className="text-[11px] text-slate-400 font-mono">AUTONOMOUS ENDURANCE</div>
-                <div className="text-xl font-bold text-cyan-400 font-mono mt-1">
-                  {forecast.projectedDaysAutonomous} <span className="text-xs text-slate-400">Days</span>
+              <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                <div className="text-[11px] text-slate-500 font-mono font-bold">AUTONOMOUS ENDURANCE</div>
+                <div className="text-xl font-bold text-emerald-700 font-mono mt-1">
+                  {forecast.projectedDaysAutonomous} <span className="text-xs text-slate-500 font-normal">Days</span>
                 </div>
                 <div className="text-[10px] text-slate-500 mt-0.5">Without external resupply</div>
               </div>
 
-              <div className={`p-3.5 rounded-xl border ${
+              <div className={`p-4 rounded-2xl border shadow-sm ${
                 forecast.safetyStatus === 'SAFE_AUTONOMOUS'
-                  ? 'bg-emerald-950/70 border-emerald-600/60 text-emerald-200'
-                  : 'bg-amber-950/70 border-amber-600/60 text-amber-200'
+                  ? 'bg-emerald-50 border-emerald-300 text-emerald-900'
+                  : 'bg-amber-50 border-amber-300 text-amber-900'
               }`}>
-                <div className="text-[11px] font-mono">RESUPPLY WINDOW</div>
+                <div className="text-[11px] font-mono font-bold">RESUPPLY WINDOW</div>
                 <div className="text-base font-bold font-mono mt-1">
                   Day {forecast.recommendedResupplyWindowDays}
                 </div>
-                <div className="text-[10px] mt-0.5 opacity-80">
+                <div className="text-[10px] mt-0.5 font-medium">
                   {forecast.safetyStatus === 'SAFE_AUTONOMOUS' ? '✅ Full wintering survival margin' : '⚠️ Schedule early resupply'}
                 </div>
               </div>
@@ -211,9 +211,9 @@ export const FuelOptimizerModal: React.FC<FuelOptimizerModalProps> = ({
           )}
 
           {/* Fuel Depletion Curve Chart */}
-          <div className="p-4 rounded-xl bg-polar-900/90 border border-slate-800">
-            <h4 className="text-xs font-mono font-bold text-slate-300 uppercase mb-3 flex items-center space-x-2">
-              <TrendingDown className="w-4 h-4 text-cyan-400" />
+          <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm">
+            <h4 className="text-xs font-mono font-bold text-slate-800 uppercase mb-3 flex items-center space-x-2">
+              <TrendingDown className="w-4 h-4 text-emerald-600" />
               <span>Projected 300-Day Winter Fuel Reserves Trajectory</span>
             </h4>
 
@@ -222,25 +222,25 @@ export const FuelOptimizerModal: React.FC<FuelOptimizerModalProps> = ({
                 <AreaChart data={projectionData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                   <defs>
                     <linearGradient id="fuelGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#00f2fe" stopOpacity={0.4}/>
-                      <stop offset="95%" stopColor="#00f2fe" stopOpacity={0.0}/>
+                      <stop offset="5%" stopColor="#059669" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="#059669" stopOpacity={0.0}/>
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
                   <XAxis dataKey="month" stroke="#64748b" fontSize={11} />
                   <YAxis stroke="#64748b" fontSize={11} tickFormatter={(val) => `${val/1000}k`} />
                   <Tooltip 
-                    contentStyle={{ backgroundColor: '#0a1628', borderColor: '#38bdf8', borderRadius: '8px', fontSize: '12px' }}
+                    contentStyle={{ backgroundColor: '#ffffff', borderColor: '#cbd5e1', borderRadius: '12px', fontSize: '12px', color: '#0f172a', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                     formatter={(val: any) => [`${Number(val).toLocaleString()} Liters`, 'Diesel D-10']}
                   />
-                  <Area type="monotone" dataKey="fuelReserves" stroke="#00f2fe" strokeWidth={2} fillOpacity={1} fill="url(#fuelGrad)" />
-                  <Area type="monotone" dataKey="safetyBuffer" stroke="#f43f5e" strokeDasharray="4 4" fill="none" />
+                  <Area type="monotone" dataKey="fuelReserves" stroke="#059669" strokeWidth={2} fillOpacity={1} fill="url(#fuelGrad)" />
+                  <Area type="monotone" dataKey="safetyBuffer" stroke="#e11d48" strokeDasharray="4 4" fill="none" />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
-            <div className="flex items-center justify-between text-[11px] text-slate-400 mt-2 px-2">
+            <div className="flex items-center justify-between text-[11px] text-slate-500 mt-2 px-2 font-medium">
               <div className="flex items-center space-x-2">
-                <span className="w-3 h-0.5 bg-cyan-400" />
+                <span className="w-3 h-0.5 bg-emerald-600" />
                 <span>Projected Fuel Stock (Liters)</span>
               </div>
               <div className="flex items-center space-x-2">

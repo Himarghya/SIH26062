@@ -63,7 +63,7 @@ export const AppLayout: React.FC = () => {
   const pathParts = location.pathname.split('/').filter(Boolean);
 
   return (
-    <div className="min-h-screen bg-polar-950 text-slate-100 flex">
+    <div className="min-h-screen bg-[#f8fafc] text-slate-800 flex">
       {/* Sidebar */}
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 
@@ -81,16 +81,16 @@ export const AppLayout: React.FC = () => {
 
         {/* Offline Banner when in isolated mode */}
         {isOffline && (
-          <div className="bg-amber-500/10 border-b border-amber-500/30 px-6 py-2 flex items-center justify-between text-xs text-amber-300 font-mono">
+          <div className="bg-amber-50 border-b border-amber-200 px-6 py-2 flex items-center justify-between text-xs text-amber-800 font-mono shadow-xs">
             <div className="flex items-center space-x-2">
-              <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+              <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
               <span>
                 <strong>POLAR EDGE OFFLINE MODE:</strong> Operating on local cached database. {offlineQueue.length} pending mutations queued for satellite burst uplink.
               </span>
             </div>
             <button
               onClick={() => setShowSatelliteSync(true)}
-              className="underline hover:text-white font-bold"
+              className="underline hover:text-amber-950 font-bold"
             >
               Inspect Queue & Force Uplink →
             </button>
@@ -98,15 +98,15 @@ export const AppLayout: React.FC = () => {
         )}
 
         {/* Breadcrumb strip */}
-        <div className="px-6 py-2 border-b border-slate-900 bg-polar-950/40 flex items-center space-x-2 text-xs text-slate-400 font-mono">
-          <Link to="/dashboard" className="hover:text-cyan-300 flex items-center space-x-1">
+        <div className="px-6 py-2 border-b border-slate-200/80 bg-white/70 backdrop-blur-xs flex items-center space-x-2 text-xs text-slate-500 font-mono">
+          <Link to="/dashboard" className="hover:text-emerald-700 flex items-center space-x-1 font-bold text-slate-700">
             <Home className="w-3.5 h-3.5" />
             <span>POLARIS</span>
           </Link>
           {pathParts.map((part, idx) => (
             <React.Fragment key={idx}>
-              <ChevronRight className="w-3 h-3 text-slate-600" />
-              <span className="capitalize text-slate-300">{part}</span>
+              <ChevronRight className="w-3 h-3 text-slate-400" />
+              <span className="capitalize text-slate-700 font-semibold">{part}</span>
             </React.Fragment>
           ))}
         </div>
