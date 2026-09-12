@@ -4,111 +4,116 @@
 
 @layer base {
   :root {
-    color-scheme: dark;
+    color-scheme: light;
   }
 
   body {
-    @apply bg-[#040813] text-slate-100 antialiased font-sans selection:bg-cyan-500 selection:text-slate-950;
+    @apply bg-[#f8fafc] text-slate-800 antialiased font-sans selection:bg-emerald-500 selection:text-white;
     background-image: 
-      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 242, 254, 0.12), transparent 70%),
-      radial-gradient(ellipse 60% 40% at 90% 10%, rgba(79, 172, 254, 0.08), transparent 60%),
-      radial-gradient(ellipse 50% 50% at 10% 90%, rgba(16, 185, 129, 0.06), transparent 60%),
-      linear-gradient(180deg, #040813 0%, #060d1b 50%, #03060f 100%);
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16, 185, 129, 0.08), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 90% 10%, rgba(245, 158, 11, 0.06), transparent 60%),
+      radial-gradient(ellipse 50% 50% at 10% 90%, rgba(99, 102, 241, 0.05), transparent 60%),
+      linear-gradient(180deg, #f8fafc 0%, #f1f5f9 50%, #ffffff 100%);
     background-attachment: fixed;
   }
 
-  /* Custom high-tech scrollbar */
+  /* Custom crisp modern scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: rgba(6, 13, 25, 0.6);
+    background: rgba(241, 245, 249, 0.8);
   }
   ::-webkit-scrollbar-thumb {
-    background: #1e3a5f;
+    background: #cbd5e1;
     border-radius: 4px;
-    border: 1px solid rgba(0, 242, 254, 0.15);
+    border: 1px solid rgba(203, 213, 225, 0.8);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #00f2fe;
+    background: #10b981;
   }
 }
 
-/* Frosted Acrylic Glass Panels */
+/* Frosted Acrylic Light Glass Panels */
 .glass-panel {
-  background: rgba(10, 22, 40, 0.65);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(56, 189, 248, 0.18);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #1e293b;
 }
 
 .glass-panel:hover {
-  border-color: rgba(56, 189, 248, 0.32);
+  border-color: rgba(16, 185, 129, 0.45);
+  box-shadow: 0 10px 25px -4px rgba(16, 185, 129, 0.1);
 }
 
 .glass-panel-interactive {
-  background: rgba(10, 22, 40, 0.65);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(56, 189, 248, 0.18);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.04);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #1e293b;
 }
 
 .glass-panel-interactive:hover {
   transform: translateY(-2px);
-  border-color: rgba(0, 242, 254, 0.45);
-  box-shadow: 0 12px 36px -4px rgba(0, 242, 254, 0.18);
+  border-color: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 12px 30px -4px rgba(16, 185, 129, 0.15);
 }
 
 .glass-panel-danger {
-  background: rgba(45, 12, 20, 0.75);
+  background: rgba(254, 242, 242, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(244, 63, 94, 0.45);
-  box-shadow: 0 8px 32px 0 rgba(244, 63, 94, 0.2);
+  border: 1px solid rgba(254, 205, 211, 0.95);
+  box-shadow: 0 4px 16px -2px rgba(225, 29, 72, 0.08);
+  color: #9f1239;
 }
 
 .glass-panel-warning {
-  background: rgba(45, 30, 10, 0.75);
+  background: rgba(254, 243, 199, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(245, 158, 11, 0.45);
-  box-shadow: 0 8px 32px 0 rgba(245, 158, 11, 0.2);
+  border: 1px solid rgba(253, 230, 138, 0.95);
+  box-shadow: 0 4px 16px -2px rgba(217, 119, 6, 0.08);
+  color: #92400e;
 }
 
 .polar-glow {
-  box-shadow: 0 0 25px -4px rgba(0, 242, 254, 0.35);
+  box-shadow: 0 0 20px -3px rgba(16, 185, 129, 0.25);
 }
 
 .polar-glow-cyan {
-  box-shadow: 0 0 20px -3px rgba(56, 189, 248, 0.3);
+  box-shadow: 0 0 20px -3px rgba(13, 148, 136, 0.25);
 }
 
 .polar-glow-red {
-  box-shadow: 0 0 25px -3px rgba(244, 63, 94, 0.45);
+  box-shadow: 0 0 20px -3px rgba(225, 29, 72, 0.25);
 }
 
 .polar-glow-amber {
-  box-shadow: 0 0 20px -3px rgba(245, 158, 11, 0.35);
+  box-shadow: 0 0 20px -3px rgba(217, 119, 6, 0.25);
 }
 
 .polar-glow-emerald {
-  box-shadow: 0 0 20px -3px rgba(16, 185, 129, 0.35);
+  box-shadow: 0 0 20px -3px rgba(16, 185, 129, 0.25);
 }
 
-/* Shimmering gradient text */
+/* Gradient text */
 .gradient-text-cyan {
-  background: linear-gradient(135deg, #e0f2fe 0%, #38bdf8 50%, #00f2fe 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #059669 50%, #0284c7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gradient-text-aurora {
-  background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #10b981 100%);
+  background: linear-gradient(135deg, #059669 0%, #0d9488 50%, #6366f1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -133,4 +138,5 @@
 .animate-aurora {
   animation: aurora-wave 8s ease-in-out infinite;
 }
+
 

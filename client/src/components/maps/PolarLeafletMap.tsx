@@ -86,10 +86,10 @@ export interface BasemapConfig {
 }
 
 export const POLAR_BASEMAPS: Record<string, BasemapConfig> = {
-  dark: {
-    id: 'dark',
-    name: 'Tactical Dark Gray (Esri Canvas)',
-    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+  light: {
+    id: 'light',
+    name: 'Light Tactical Canvas (Esri Canvas)',
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
     attribution: '&copy; Esri &mdash; Esri, DeLorme, NAVTEQ, USGS, METI, TomTom',
     maxZoom: 16
   },
@@ -113,6 +113,13 @@ export const POLAR_BASEMAPS: Record<string, BasemapConfig> = {
     url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
     maxZoom: 19
+  },
+  dark: {
+    id: 'dark',
+    name: 'Tactical Dark Gray (Esri Dark Canvas)',
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+    attribution: '&copy; Esri &mdash; Esri, DeLorme, NAVTEQ, USGS, METI, TomTom',
+    maxZoom: 16
   }
 };
 
@@ -162,7 +169,7 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
   height = "520px",
   tileUrl
 }) => {
-  const [selectedBasemap, setSelectedBasemap] = useState<string>('dark');
+  const [selectedBasemap, setSelectedBasemap] = useState<string>('light');
   const [activeLayers, setActiveLayers] = useState({
     stations: true,
     assets: true,
@@ -522,64 +529,64 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
 
         {/* Floating Route Risk Inspector Card */}
         {selectedRoute && (
-          <div className="absolute top-4 right-4 z-20 w-80 sm:w-96 bg-polar-950/95 border border-amber-500/60 rounded-xl p-4 shadow-2xl backdrop-blur-md animate-fadeIn text-xs space-y-3">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+          <div className="absolute top-4 right-4 z-20 w-80 sm:w-96 bg-white/95 border border-amber-400 rounded-xl p-4 shadow-2xl backdrop-blur-md animate-fadeIn text-xs space-y-3 text-slate-800">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-2">
               <div className="flex items-center space-x-2">
-                <Route className="w-4 h-4 text-amber-400" />
-                <h4 className="font-bold text-slate-100 font-mono uppercase">Route Risk Assessment</h4>
+                <Route className="w-4 h-4 text-amber-600" />
+                <h4 className="font-bold text-slate-900 font-mono uppercase">Route Risk Assessment</h4>
               </div>
-              <button onClick={() => setSelectedRoute(null)} className="text-slate-400 hover:text-white">
+              <button onClick={() => setSelectedRoute(null)} className="text-slate-400 hover:text-slate-700">
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <div>
-              <div className="font-semibold text-slate-200">{selectedRoute.name}</div>
-              <div className="text-[10px] text-slate-400 font-mono">{selectedRoute.code}</div>
+              <div className="font-bold text-slate-800">{selectedRoute.name}</div>
+              <div className="text-[10px] text-slate-500 font-mono">{selectedRoute.code}</div>
             </div>
 
             {/* Score Pill */}
-            <div className="p-2.5 rounded-lg bg-polar-900 border border-slate-800 flex items-center justify-between">
+            <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
               <div>
-                <div className="text-[10px] text-slate-400 uppercase font-mono">Dynamic Risk Index</div>
-                <div className={`font-bold font-mono text-base ${selectedRoute.overallScore > 50 ? 'text-amber-400' : 'text-emerald-400'}`}>
+                <div className="text-[10px] text-slate-500 uppercase font-mono">Dynamic Risk Index</div>
+                <div className={`font-bold font-mono text-base ${selectedRoute.overallScore > 50 ? 'text-amber-700' : 'text-emerald-700'}`}>
                   {selectedRoute.overallScore} / 100 • {selectedRoute.level}
                 </div>
               </div>
-              <div className="text-right text-[10px] text-slate-400">
-                Decision: <strong className="text-slate-200">Operational Caution</strong>
+              <div className="text-right text-[10px] text-slate-500">
+                Decision: <strong className="text-slate-800">Operational Caution</strong>
               </div>
             </div>
 
             {/* Risk Factor Breakdown Bars */}
             <div className="space-y-1.5 text-[10px] font-mono">
               <div className="flex items-center justify-between">
-                <span className="text-slate-400">Weather Severity</span>
-                <span className="text-amber-300 font-bold">{selectedRoute.weather}%</span>
+                <span className="text-slate-600">Weather Severity</span>
+                <span className="text-amber-700 font-bold">{selectedRoute.weather}%</span>
               </div>
-              <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+              <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
                 <div className="bg-amber-500 h-full rounded-full" style={{ width: `${selectedRoute.weather}%` }} />
               </div>
 
               <div className="flex items-center justify-between pt-1">
-                <span className="text-slate-400">Sea Ice / Katabatic Drift</span>
-                <span className="text-cyan-300 font-bold">{selectedRoute.ice}%</span>
+                <span className="text-slate-600">Sea Ice / Katabatic Drift</span>
+                <span className="text-emerald-700 font-bold">{selectedRoute.ice}%</span>
               </div>
-              <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                <div className="bg-cyan-400 h-full rounded-full" style={{ width: `${selectedRoute.ice}%` }} />
+              <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                <div className="bg-emerald-500 h-full rounded-full" style={{ width: `${selectedRoute.ice}%` }} />
               </div>
 
               <div className="flex items-center justify-between pt-1">
-                <span className="text-slate-400">Visibility Degradation</span>
-                <span className="text-slate-300 font-bold">{selectedRoute.visibility}%</span>
+                <span className="text-slate-600">Visibility Degradation</span>
+                <span className="text-slate-700 font-bold">{selectedRoute.visibility}%</span>
               </div>
-              <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                <div className="bg-indigo-400 h-full rounded-full" style={{ width: `${selectedRoute.visibility}%` }} />
+              <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${selectedRoute.visibility}%` }} />
               </div>
             </div>
 
-            <div className="p-2 rounded bg-polar-900 text-[11px] text-slate-300 border border-slate-800 leading-tight">
-              <strong className="text-cyan-400 font-mono text-[10px] block mb-0.5">DECISION ADVICE:</strong>
+            <div className="p-2 rounded bg-amber-50 text-[11px] text-amber-900 border border-amber-200 leading-tight">
+              <strong className="text-amber-800 font-mono text-[10px] block mb-0.5">DECISION ADVICE:</strong>
               {selectedRoute.recommendation}
             </div>
           </div>
@@ -587,31 +594,31 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
 
         {/* Floating PostGIS Proximity Query Result Modal */}
         {showProximityTool && (
-          <div className="absolute bottom-4 left-4 z-20 w-80 sm:w-[420px] bg-polar-950/95 border border-indigo-500/60 rounded-xl p-4 shadow-2xl backdrop-blur-md animate-fadeIn text-xs space-y-3">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+          <div className="absolute bottom-4 left-4 z-20 w-80 sm:w-[420px] bg-white/95 border border-indigo-300 rounded-xl p-4 shadow-2xl backdrop-blur-md animate-fadeIn text-xs space-y-3 text-slate-800">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-2">
               <div className="flex items-center space-x-2">
-                <Crosshair className="w-4 h-4 text-indigo-400" />
-                <h4 className="font-bold text-slate-100 font-mono uppercase">PostGIS ST_DWithin(50km)</h4>
+                <Crosshair className="w-4 h-4 text-indigo-600" />
+                <h4 className="font-bold text-slate-900 font-mono uppercase">PostGIS ST_DWithin(50km)</h4>
               </div>
-              <button onClick={() => setShowProximityTool(false)} className="text-slate-400 hover:text-white">
+              <button onClick={() => setShowProximityTool(false)} className="text-slate-400 hover:text-slate-700">
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="text-[11px] text-slate-400 font-mono bg-polar-900 p-2 rounded border border-slate-800">
+            <div className="text-[11px] text-slate-700 font-mono bg-slate-50 p-2 rounded border border-slate-200">
               <code>ST_DWithin(assets.geom, ST_MakePoint(76.19, -69.40), 50000)</code>
             </div>
 
             <div className="space-y-1.5 max-h-48 overflow-y-auto">
               {proximityResults.map((res, idx) => (
-                <div key={idx} className="p-2 rounded bg-polar-900 border border-slate-800 flex items-center justify-between">
+                <div key={idx} className="p-2 rounded bg-slate-50 border border-slate-200 flex items-center justify-between">
                   <div>
-                    <div className="font-bold text-slate-200">{res.name}</div>
-                    <div className="text-[10px] text-slate-400">{res.type} • Fuel: {res.fuel}</div>
+                    <div className="font-bold text-slate-800">{res.name}</div>
+                    <div className="text-[10px] text-slate-500">{res.type} • Fuel: {res.fuel}</div>
                   </div>
                   <div className="text-right font-mono">
-                    <div className="text-cyan-300 font-bold">{res.distanceKm} km</div>
-                    <div className="text-emerald-400 text-[10px]">ETA ~{res.etaMins}m</div>
+                    <div className="text-indigo-700 font-bold">{res.distanceKm} km</div>
+                    <div className="text-emerald-700 text-[10px] font-bold">ETA ~{res.etaMins}m</div>
                   </div>
                 </div>
               ))}
@@ -622,4 +629,5 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
     </div>
   );
 };
+
 
