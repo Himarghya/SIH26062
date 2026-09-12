@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { polarisApi } from '../api/services';
 import { PolarLeafletMap } from '../components/maps/PolarLeafletMap';
 import { 
@@ -23,22 +23,25 @@ export const DashboardPage: React.FC = () => {
   const [summary, setSummary] = useState<any>(null);
   const [stations, setStations] = useState<any[]>([]);
   const [assets, setAssets] = useState<any[]>([]);
+  const [cargo, setCargo] = useState<any[]>([]);
   const [emergencies, setEmergencies] = useState<any[]>([]);
   const [activityLogs, setActivityLogs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     try {
-      const [sumData, stns, asts, emgs, actLogs] = await Promise.all([
+      const [sumData, stns, asts, crg, emgs, actLogs] = await Promise.all([
         polarisApi.getDashboardSummary(),
         polarisApi.getStations(),
         polarisApi.getAssets(),
+        polarisApi.getCargoList(),
         polarisApi.getIncidents(),
         polarisApi.getActivityFeed()
       ]);
       setSummary(sumData);
       setStations(stns);
       setAssets(asts);
+      setCargo(crg);
       setEmergencies(emgs);
       setActivityLogs(actLogs);
     } catch (e) {
@@ -143,8 +146,9 @@ export const DashboardPage: React.FC = () => {
       <PolarLeafletMap
         stations={stations}
         assets={assets}
+        cargo={cargo}
         emergencies={emergencies}
-        height="440px"
+        height="460px"
       />
 
       {/* Station Meteorological & Activity Feed Grid */}
