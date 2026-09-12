@@ -187,24 +187,43 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
   const [mapZoom, setMapZoom] = useState<number>(initialZoom);
 
   // Sea voyage route track 1: 44th ISEA Antarctic Sea Voyage (Goa -> Cape Town -> Bharati -> Maitri)
+  // Strictly navigates international maritime waters, rounding Cape Agulhas and staying in open sea
   const antarcticVoyageCoords: [number, number][] = [
     [15.4909, 73.8278],   // Mormugao Port, Goa, India
-    [5.0000, 68.0000],    // Equatorial Indian Ocean
-    [-15.0000, 58.0000],  // South-Central Indian Ocean
+    [10.5000, 71.8000],   // Arabian Sea / Laccadive shipping lane
+    [3.0000, 68.0000],    // Maldives Western Deep Sea Corridor
+    [-4.0000, 64.0000],   // Equatorial Indian Ocean
+    [-11.5000, 60.5000],  // East of Seychelles & Saya de Malha Bank
+    [-18.5000, 58.5000],  // East of Mauritius / Rodrigues Passage
+    [-26.5000, 52.0000],  // South-East of Madagascar (Open Ocean)
+    [-31.0000, 42.0000],  // South Madagascar Basin
+    [-34.8000, 29.5000],  // Agulhas Current Maritime Corridor (Off South African Coast)
+    [-36.2000, 21.0000],  // Rounding Cape Agulhas (Deep Sea South of African Continent)
+    [-34.6000, 18.0000],  // Rounding Cape of Good Hope into Table Bay approach
     [-33.9249, 18.4241],  // Cape Town Bunkering Hub, South Africa
-    [-45.0000, 32.0000],  // Roaring Forties
-    [-55.0000, 52.0000],  // Furious Fifties
-    [-62.0000, 64.0000],  // Antarctic Convergence
+    [-38.5000, 16.5000],  // Cape Town departure south into South Atlantic/Southern Ocean
+    [-46.0000, 26.0000],  // Roaring Forties Shipping Track
+    [-54.0000, 44.0000],  // Furious Fifties (South of Crozet Islands)
+    [-61.5000, 62.0000],  // Antarctic Convergence Oceanic Transition
+    [-66.5000, 72.0000],  // Prydz Bay Ice-Edge Approach
     [-69.4075, 76.1942],  // Bharati Station, Larsemann Hills
+    [-67.5000, 68.0000],  // Coastal Southern Ocean Transit (North of Ice Shelf)
+    [-66.0000, 52.0000],  // Enderby Land Offshore Corridor
+    [-67.0000, 35.0000],  // Cosmonaut Sea
+    [-68.5000, 20.0000],  // Lazarev Sea Offshore Route
+    [-70.0000, 12.0000],  // Princess Astrid Coast / Astrid Shelf Dropoff
     [-70.7667, 11.7333]   // Maitri Station, Schirmacher Oasis
   ];
 
   // Arctic Kongsfjorden Marine Transect (Tromsø -> Ny-Ålesund -> Himadri -> IndARC)
   const arcticTransectCoords: [number, number][] = [
     [69.6492, 18.9553],   // Tromsø Port, Norway
-    [74.5000, 19.0000],   // Barents Sea
+    [72.5000, 17.5000],   // Norwegian Sea Marine Corridor
+    [74.8000, 16.0000],   // West of Bear Island (Bjørnøya)
+    [77.2000, 12.5000],   // Greenland Sea / Fram Strait Open Water
+    [78.9800, 11.4000],   // Kongsfjorden Sound Fjord Entrance
     [78.9235, 11.9333],   // Himadri Station, Ny-Ålesund, Svalbard
-    [78.9000, 12.0000]    // IndARC Subsurface Mooring Observatory
+    [78.9000, 12.2000]    // IndARC Subsurface Mooring Observatory
   ];
 
   const flyToPreset = (coords: [number, number], zoomLevel: number) => {
