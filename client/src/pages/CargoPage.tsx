@@ -293,7 +293,7 @@ export const CargoPage: React.FC<{
           return (
             <div
               key={item.id}
-              className="glass-panel p-4 rounded-xl space-y-3 relative group hover:border-emerald-400 transition shadow-sm hover:shadow"
+              className="glass-panel p-4 rounded-xl space-y-3 relative group hover:border-slate-400 transition shadow-sm hover:shadow"
             >
               {/* Header */}
               <div className="flex items-start justify-between">

@@ -279,7 +279,7 @@ export const PersonnelPage: React.FC<{
             return (
               <div
                 key={person.id}
-                className="glass-panel p-5 rounded-2xl space-y-3.5 relative group hover:border-emerald-400 transition shadow-sm hover:shadow"
+                className="glass-panel p-5 rounded-2xl space-y-3.5 relative group hover:border-slate-400 transition shadow-sm hover:shadow"
               >
                 {/* Profile Card Header */}
                 <div className="flex items-start justify-between">

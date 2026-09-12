@@ -175,7 +175,7 @@ export const DashboardPage: React.FC = () => {
               const autonomyPercent = Math.min(100, Math.round((daysRemaining / 90) * 100));
 
               return (
-                <div key={st.id} className="p-4 rounded-xl bg-slate-50/90 border border-slate-300 space-y-3 hover:border-emerald-500 transition shadow-xs">
+                <div key={st.id} className="p-4 rounded-xl bg-slate-50/90 border border-slate-300 space-y-3 hover:border-slate-400 transition shadow-xs">
                   <div className="flex items-center justify-between">
                     <div>
                       <h4 className="font-bold text-slate-950 text-sm">{st.name}</h4>
@@ -244,7 +244,7 @@ export const DashboardPage: React.FC = () => {
 
           <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
             {activityLogs.map((log: any) => (
-              <div key={log.id} className="p-2.5 rounded-xl bg-slate-50/90 border border-slate-300 text-xs space-y-1 hover:border-emerald-400 transition shadow-2xs">
+              <div key={log.id} className="p-2.5 rounded-xl bg-slate-50/90 border border-slate-300 text-xs space-y-1 hover:border-slate-400 transition shadow-2xs">
                 <div className="flex items-center justify-between text-[10px] font-mono">
                   <span className="text-emerald-800 font-bold">[{log.action}]</span>
                   <span className="text-slate-600 font-semibold">{new Date(log.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>

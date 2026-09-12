@@ -87,7 +87,7 @@ export const AssetsPage: React.FC = () => {
         {filtered.map((asset) => (
           <div
             key={asset.id}
-            className="glass-panel p-5 rounded-2xl space-y-3 relative group hover:border-emerald-400 transition shadow-sm hover:shadow"
+            className="glass-panel p-5 rounded-2xl space-y-3 relative group hover:border-slate-400 transition shadow-sm hover:shadow"
           >
             <div className="flex items-start justify-between">
               <div>

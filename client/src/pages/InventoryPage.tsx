@@ -199,7 +199,7 @@ export const InventoryPage: React.FC<{
               key={item.id}
               className={`glass-panel p-4 rounded-xl space-y-3 relative group transition border shadow-sm hover:shadow ${
                 isCritical ? 'border-rose-300 bg-rose-50/40' :
-                isWarning ? 'border-amber-300 bg-amber-50/40' : 'border-slate-200 hover:border-emerald-400'
+                isWarning ? 'border-amber-300 bg-amber-50/40' : 'border-slate-200 hover:border-slate-400'
               }`}
             >
               {/* Header */}

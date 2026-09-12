@@ -20,8 +20,8 @@ export default {
           950: '#ffffff', // Pure card white
           900: '#f8fafc', // Light canvas
           850: '#f1f5f9', // Soft light surface
-          800: '#e2e8f0', // Soft border
-          700: '#cbd5e1', // Divider
+          800: '#cbd5e1', // Crisp defined border for white backgrounds
+          700: '#94a3b8', // Darker divider
           600: '#475569', // Darkened muted text
           500: '#334155', // Darkened secondary text
           400: '#1e293b', // Darkened body text
