@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { polarisApi } from '../api/services';
 import { 
   Anchor, 
@@ -123,19 +123,19 @@ export const InventoryPage: React.FC<{
           <div className="grid grid-cols-1 md:grid-cols-4 gap-3 pt-1 text-[11px] text-slate-300">
             <div className="p-2.5 rounded-lg bg-polar-900/80 border border-slate-800">
               <div className="text-slate-500 text-[10px] uppercase">1. Estimated Remaining Days</div>
-              <div className="font-bold text-cyan-300 mt-0.5">$$\text{Days} = \frac{\text{Available Stock}}{\text{Avg Daily Burn Rate}}$$</div>
+              <div className="font-bold text-cyan-300 mt-0.5">Days = Available Stock / Daily Burn Rate</div>
             </div>
             <div className="p-2.5 rounded-lg bg-polar-900/80 border border-slate-800">
               <div className="text-slate-500 text-[10px] uppercase">2. Safety Stock Buffer</div>
-              <div className="font-bold text-emerald-300 mt-0.5">$$\text{Safety Stock} = \text{Daily Burn} \times \text{Buffer (90d)}$$</div>
+              <div className="font-bold text-emerald-300 mt-0.5">Safety Stock = Daily Burn × 90 Days</div>
             </div>
             <div className="p-2.5 rounded-lg bg-polar-900/80 border border-slate-800">
               <div className="text-slate-500 text-[10px] uppercase">3. Reorder Point (ROP)</div>
-              <div className="font-bold text-amber-300 mt-0.5">$$\text{ROP} = \text{Lead-Time Demand} + \text{Safety Stock}$$</div>
+              <div className="font-bold text-amber-300 mt-0.5">ROP = Lead-Time Demand + Safety Stock</div>
             </div>
             <div className="p-2.5 rounded-lg bg-polar-900/80 border border-slate-800">
               <div className="text-slate-500 text-[10px] uppercase">4. Wintering Risk Triage</div>
-              <div className="font-bold text-rose-300 mt-0.5">$$\text{Days} < 240\text{d} \rightarrow \text{Critical Risk}$$</div>
+              <div className="font-bold text-rose-300 mt-0.5">Days &lt; 180d → Critical Risk</div>
             </div>
           </div>
         </div>
