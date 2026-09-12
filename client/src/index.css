@@ -5,14 +5,17 @@
 @layer base {
   :root {
     color-scheme: light;
+    --bg-primary: #f8fafc;
+    --card-bg: rgba(255, 255, 255, 0.92);
+    --border-color: rgba(226, 232, 240, 0.95);
   }
 
   body {
     @apply bg-[#f8fafc] text-slate-800 antialiased font-sans selection:bg-emerald-500 selection:text-white;
     background-image: 
-      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16, 185, 129, 0.08), transparent 70%),
-      radial-gradient(ellipse 60% 40% at 90% 10%, rgba(245, 158, 11, 0.06), transparent 60%),
-      radial-gradient(ellipse 50% 50% at 10% 90%, rgba(99, 102, 241, 0.05), transparent 60%),
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16, 185, 129, 0.12), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 90% 10%, rgba(245, 158, 11, 0.09), transparent 60%),
+      radial-gradient(ellipse 50% 50% at 10% 90%, rgba(124, 58, 237, 0.08), transparent 60%),
       linear-gradient(180deg, #f8fafc 0%, #f1f5f9 50%, #ffffff 100%);
     background-attachment: fixed;
   }
@@ -33,26 +36,34 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #10b981;
   }
+
+  /* Global input, select, textarea styling in light theme */
+  input:not([type='checkbox']):not([type='radio']), select, textarea {
+    color: #0f172a !important;
+  }
+  input::placeholder, textarea::placeholder {
+    color: #94a3b8 !important;
+  }
 }
 
 /* Frosted Acrylic Light Glass Panels */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   color: #1e293b;
 }
 
 .glass-panel:hover {
-  border-color: rgba(16, 185, 129, 0.45);
-  box-shadow: 0 10px 25px -4px rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 10px 25px -4px rgba(16, 185, 129, 0.12);
 }
 
 .glass-panel-interactive {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(226, 232, 240, 0.95);
@@ -63,59 +74,89 @@
 
 .glass-panel-interactive:hover {
   transform: translateY(-2px);
-  border-color: rgba(16, 185, 129, 0.5);
-  box-shadow: 0 12px 30px -4px rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.6);
+  box-shadow: 0 12px 30px -4px rgba(16, 185, 129, 0.18);
 }
 
 .glass-panel-danger {
-  background: rgba(254, 242, 242, 0.92);
+  background: rgba(254, 242, 242, 0.95);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(254, 205, 211, 0.95);
-  box-shadow: 0 4px 16px -2px rgba(225, 29, 72, 0.08);
+  box-shadow: 0 4px 16px -2px rgba(225, 29, 72, 0.1);
   color: #9f1239;
 }
 
 .glass-panel-warning {
-  background: rgba(254, 243, 199, 0.85);
+  background: rgba(254, 243, 199, 0.9);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(253, 230, 138, 0.95);
-  box-shadow: 0 4px 16px -2px rgba(217, 119, 6, 0.08);
+  box-shadow: 0 4px 16px -2px rgba(217, 119, 6, 0.1);
   color: #92400e;
 }
 
 .polar-glow {
-  box-shadow: 0 0 20px -3px rgba(16, 185, 129, 0.25);
+  box-shadow: 0 0 20px -3px rgba(16, 185, 129, 0.3);
 }
 
 .polar-glow-cyan {
-  box-shadow: 0 0 20px -3px rgba(13, 148, 136, 0.25);
+  box-shadow: 0 0 20px -3px rgba(13, 148, 136, 0.3);
 }
 
 .polar-glow-red {
-  box-shadow: 0 0 20px -3px rgba(225, 29, 72, 0.25);
+  box-shadow: 0 0 20px -3px rgba(225, 29, 72, 0.3);
 }
 
 .polar-glow-amber {
-  box-shadow: 0 0 20px -3px rgba(217, 119, 6, 0.25);
+  box-shadow: 0 0 20px -3px rgba(217, 119, 6, 0.3);
 }
 
 .polar-glow-emerald {
-  box-shadow: 0 0 20px -3px rgba(16, 185, 129, 0.25);
+  box-shadow: 0 0 20px -3px rgba(16, 185, 129, 0.3);
+}
+
+.polar-glow-violet {
+  box-shadow: 0 0 20px -3px rgba(124, 58, 237, 0.3);
 }
 
 /* Gradient text */
 .gradient-text-cyan {
-  background: linear-gradient(135deg, #0f172a 0%, #059669 50%, #0284c7 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #059669 45%, #0284c7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gradient-text-aurora {
-  background: linear-gradient(135deg, #059669 0%, #0d9488 50%, #6366f1 100%);
+  background: linear-gradient(135deg, #059669 0%, #0d9488 40%, #7c3aed 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-sunset {
+  background: linear-gradient(135deg, #ea580c 0%, #d97706 50%, #e11d48 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Modal overlays in light theme */
+.fixed.inset-0.bg-black\/85,
+.fixed.inset-0.bg-black\/80,
+.fixed.inset-0.bg-black\/70,
+.fixed.inset-0.bg-black\/60 {
+  background-color: rgba(15, 23, 42, 0.45) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* Tables and list cards */
+table thead tr {
+  background-color: #f1f5f9 !important;
+  color: #334155 !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+table tbody tr:hover {
+  background-color: rgba(241, 245, 249, 0.7) !important;
 }
 
 /* Radar scan sweep effect for polar operations */
@@ -138,5 +179,6 @@
 .animate-aurora {
   animation: aurora-wave 8s ease-in-out infinite;
 }
+
 
 

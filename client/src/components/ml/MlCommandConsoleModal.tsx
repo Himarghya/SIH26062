@@ -206,31 +206,31 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
 
   const renderBadge = (level: string) => {
     const l = (level || '').toUpperCase();
-    if (l === 'CRITICAL') return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40">CRITICAL</span>;
-    if (l === 'HIGH') return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">HIGH</span>;
-    if (l === 'MODERATE') return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">MODERATE</span>;
-    return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">LOW / OK</span>;
+    if (l === 'CRITICAL') return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-800 border border-rose-300">CRITICAL</span>;
+    if (l === 'HIGH') return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300">HIGH</span>;
+    if (l === 'MODERATE') return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-teal-100 text-teal-800 border border-teal-300">MODERATE</span>;
+    return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">LOW / OK</span>;
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn">
-      <div className="relative w-full max-w-5xl bg-polar-950 border border-cyan-500/40 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-md animate-fadeIn">
+      <div className="relative w-full max-w-5xl bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh] text-slate-800">
         {/* Modal Top Bar */}
-        <div className="bg-gradient-to-r from-polar-900 via-polar-850 to-polar-900 px-6 py-4 flex items-center justify-between border-b border-cyan-900/50">
+        <div className="bg-slate-50 px-6 py-4 flex items-center justify-between border-b border-slate-200">
           <div className="flex items-center space-x-3">
-            <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/40 text-cyan-400 shadow-lg shadow-cyan-500/10">
+            <div className="p-2 rounded-xl bg-emerald-100 border border-emerald-300 text-emerald-700 shadow-sm">
               <Cpu className="w-6 h-6 animate-pulse" />
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <h2 className="text-base font-bold text-slate-100 uppercase font-mono tracking-wider">
+                <h2 className="text-base font-bold text-slate-900 uppercase font-mono tracking-wider">
                   POLARIS ML Predictive Engine
                 </h2>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-400/10 text-cyan-300 border border-cyan-400/30">
-                  v1.0.0
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                  v1.0.0 Active
                 </span>
               </div>
-              <p className="text-xs text-slate-400 font-mono">
+              <p className="text-xs text-slate-500 font-mono font-medium">
                 XGBoost Classifiers · XGBoost Regressors · Isolation Forests · Multi-Criteria SAR Ranker
               </p>
             </div>
@@ -238,87 +238,87 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
 
           <div className="flex items-center space-x-4">
             {/* Live Model Health Indicator */}
-            <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-polar-900/90 border border-slate-800 text-xs font-mono">
-              <span className={`w-2.5 h-2.5 rounded-full ${healthStatus ? 'bg-emerald-400 animate-pulse' : 'bg-rose-400'}`} />
-              <span className="text-slate-300">
+            <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-mono shadow-xs">
+              <span className={`w-2.5 h-2.5 rounded-full ${healthStatus ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'}`} />
+              <span className="text-slate-700 font-medium">
                 {healthStatus ? `ML Engine Online (${healthStatus.models_loaded.length} models ready)` : 'Connecting ML...'}
               </span>
-              <button onClick={checkHealth} className="text-slate-400 hover:text-cyan-300 p-0.5" title="Refresh health">
+              <button onClick={checkHealth} className="text-slate-400 hover:text-emerald-700 p-0.5" title="Refresh health">
                 <RefreshCw className={`w-3 h-3 ${isHealthLoading ? 'animate-spin' : ''}`} />
               </button>
             </div>
 
-            <button onClick={onClose} className="text-slate-400 hover:text-white p-2 rounded-lg bg-polar-850 hover:bg-polar-800 transition">
+            <button onClick={onClose} className="text-slate-400 hover:text-slate-700 p-2 rounded-lg bg-slate-100 hover:bg-slate-200 transition">
               <X className="w-5 h-5" />
             </button>
           </div>
         </div>
 
         {/* Tab Navigation */}
-        <div className="bg-polar-900/80 px-6 py-2 border-b border-slate-800 flex items-center space-x-2 overflow-x-auto">
+        <div className="bg-slate-100/90 px-6 py-2 border-b border-slate-200 flex items-center space-x-2 overflow-x-auto">
           <button
             onClick={() => setActiveTab('weather')}
-            className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-mono font-medium transition ${
+            className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition shadow-xs ${
               activeTab === 'weather'
-                ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 shadow-sm'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-polar-800'
+                ? 'bg-emerald-600 text-white shadow-emerald-600/20'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
             }`}
           >
-            <CloudSnow className="w-4 h-4 text-cyan-400" />
+            <CloudSnow className={`w-4 h-4 ${activeTab === 'weather' ? 'text-white' : 'text-emerald-600'}`} />
             <span>1. Weather / Blizzard (XGBoost)</span>
           </button>
 
           <button
             onClick={() => setActiveTab('fuel')}
-            className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-mono font-medium transition ${
+            className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition shadow-xs ${
               activeTab === 'fuel'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-500/50 shadow-sm'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-polar-800'
+                ? 'bg-amber-600 text-white shadow-amber-600/20'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
             }`}
           >
-            <Flame className="w-4 h-4 text-amber-400" />
+            <Flame className={`w-4 h-4 ${activeTab === 'fuel' ? 'text-white' : 'text-amber-600'}`} />
             <span>2. Fuel Forecast (XGBoost)</span>
           </button>
 
           <button
             onClick={() => setActiveTab('coldchain')}
-            className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-mono font-medium transition ${
+            className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition shadow-xs ${
               activeTab === 'coldchain'
-                ? 'bg-blue-500/20 text-blue-300 border border-blue-500/50 shadow-sm'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-polar-800'
+                ? 'bg-teal-600 text-white shadow-teal-600/20'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
             }`}
           >
-            <ThermometerSnowflake className="w-4 h-4 text-blue-400" />
+            <ThermometerSnowflake className={`w-4 h-4 ${activeTab === 'coldchain' ? 'text-white' : 'text-teal-600'}`} />
             <span>3. Cold-Chain (Isolation Forest)</span>
           </button>
 
           <button
             onClick={() => setActiveTab('sar')}
-            className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-mono font-medium transition ${
+            className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition shadow-xs ${
               activeTab === 'sar'
-                ? 'bg-rose-500/20 text-rose-300 border border-rose-500/50 shadow-sm'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-polar-800'
+                ? 'bg-rose-600 text-white shadow-rose-600/20'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
             }`}
           >
-            <LifeBuoy className="w-4 h-4 text-rose-400" />
+            <LifeBuoy className={`w-4 h-4 ${activeTab === 'sar' ? 'text-white' : 'text-rose-600'}`} />
             <span>4a. SAR Incident Risk</span>
           </button>
 
           <button
             onClick={() => setActiveTab('ranking')}
-            className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-mono font-medium transition ${
+            className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition shadow-xs ${
               activeTab === 'ranking'
-                ? 'bg-purple-500/20 text-purple-300 border border-purple-500/50 shadow-sm'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-polar-800'
+                ? 'bg-violet-600 text-white shadow-violet-600/20'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
             }`}
           >
-            <Award className="w-4 h-4 text-purple-400" />
+            <Award className={`w-4 h-4 ${activeTab === 'ranking' ? 'text-white' : 'text-violet-600'}`} />
             <span>4b. Asset Ranking</span>
           </button>
         </div>
 
         {/* Tab Body Content */}
-        <div className="p-6 overflow-y-auto space-y-6 flex-1 bg-polar-950/90 font-sans">
+        <div className="p-6 overflow-y-auto space-y-6 flex-1 bg-white font-sans text-slate-800">
 
           {/* TAB 1: WEATHER / BLIZZARD RISK */}
           {activeTab === 'weather' && (
