@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POLARIS — ML Command Console</title>
+<style>
+  :root{
+    --ice:#eef3f6;
+    --deep:#0c1f2e;
+    --panel:#122a3d;
+    --panel-line:#1e3d54;
+    --accent:#3fa9d6;
+    --warn:#e8a33d;
+    --crit:#e2544a;
+    --ok:#4bc08a;
+    --text-dim:#8ea9bb;
+    font-family: "IBM Plex Mono", "Courier New", monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--deep); color:var(--ice);
+    min-height:100vh; padding:32px 24px 64px;
+  }
+  h1{
+    font-size:20px; letter-spacing:0.04em; margin:0 0 4px;
+    font-weight:600;
+  }
+  .sub{color:var(--text-dim); font-size:13px; margin-bottom:28px;}
+  .grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr));
+    gap:18px; max-width:1280px; margin:0 auto;
+  }
+  .panel{
+    background:var(--panel); border:1px solid var(--panel-line);
+    border-radius:4px; padding:18px 20px;
+  }
+  .panel h2{
+    font-size:13px; text-transform:uppercase; letter-spacing:0.08em;
+    color:var(--accent); margin:0 0 14px; font-weight:600;
+  }
+  label{display:block; font-size:11px; color:var(--text-dim); margin:10px 0 3px;}
+  input, select{
+    width:100%; background:#0c1f2e; border:1px solid var(--panel-line);
+    color:var(--ice); padding:6px 8px; font-size:12px; border-radius:2px;
+    font-family:inherit;
+  }
+  button{
+    margin-top:14px; width:100%; background:var(--accent); border:none;
+    color:#08151f; padding:9px; font-weight:600; font-size:12px;
+    letter-spacing:0.04em; border-radius:2px; cursor:pointer;
+    text-transform:uppercase;
+  }
+  button:hover{ filter:brightness(1.1); }
+  .result{
+    margin-top:14px; border-top:1px dashed var(--panel-line); padding-top:12px;
+    font-size:12px; line-height:1.7; white-space:pre-wrap; min-height:20px;
+  }
+  .row{display:flex; justify-content:space-between; gap:8px;}
+  .badge{
+    display:inline-block; padding:1px 8px; border-radius:2px; font-size:11px;
+    font-weight:700; letter-spacing:0.03em;
+  }
+  .LOW,.READY,.ok{background:rgba(75,192,138,.15); color:var(--ok);}
+  .MODERATE{background:rgba(232,163,61,.15); color:var(--warn);}
+  .HIGH{background:rgba(232,163,61,.25); color:var(--warn);}
+  .CRITICAL{background:rgba(226,84,74,.2); color:var(--crit);}
+  .err{color:var(--crit);}
+  .apibar{
+    max-width:1280px; margin:0 auto 20px; display:flex; gap:10px; align-items:center;
+    font-size:12px; color:var(--text-dim);
+  }
+  .apibar input{width:280px;}
+</style>
+</head>
+<body>
+
+<h1>POLARIS // ML COMMAND CONSOLE</h1>
+<div class="sub">Weather risk · fuel forecasting · cold-chain anomaly · SAR risk & asset ranking</div>
+
+<div class="apibar">
+  API base:
+  <input id="apiBase" value="http://localhost:8000">
+  <span id="healthDot">●</span> <span id="healthText">checking…</span>
+</div>
+
+<div class="grid">
+
+  <!-- WEATHER RISK -->
+  <div class="panel">
+    <h2>1 · Weather / Blizzard Risk</h2>
+    <label>Station</label><input id="w_station" value="Bharati">
+    <div class="row">
+      <div style="flex:1"><label>Temp (°C)</label><input id="w_temp" type="number" value="-38"></div>
+      <div style="flex:1"><label>Wind speed (km/h)</label><input id="w_wind" type="number" value="95"></div>
+    </div>
+    <div class="row">
+      <div style="flex:1"><label>Wind gust (km/h)</label><input id="w_gust" type="number" value="130"></div>
+      <div style="flex:1"><label>Pressure (hPa)</label><input id="w_pres" type="number" value="955"></div>
+    </div>
+    <div class="row">
+      <div style="flex:1"><label>Pressure Δ 3h</label><input id="w_dpres" type="number" value="-6"></div>
+      <div style="flex:1"><label>Visibility (m)</label><input id="w_vis" type="number" value="250"></div>
+    </div>
+    <div class="row">
+      <div style="flex:1"><label>Humidity (%)</label><input id="w_hum" type="number" value="88"></div>
+      <div style="flex:1"><label>Wind chill (°C)</label><input id="w_chill" type="number" value="-55"></div>
+    </div>
+    <button onclick="predictWeather()">Run prediction</button>
+    <div class="result" id="w_result"></div>
+  </div>
+
+  <!-- FUEL FORECAST -->
+  <div class="panel">
+    <h2>2 · Fuel & Inventory Forecast</h2>
+    <label>Station</label><input id="f_station" value="Bharati">
+    <div class="row">
+      <div style="flex:1"><label>Current stock (L)</label><input id="f_stock" type="number" value="72400"></div>
+      <div style="flex:1"><label>Resupply in (days)</label><input id="f_resupply" type="number" value="26"></div>
+    </div>
+    <div class="row">
+      <div style="flex:1"><label>Temp (°C)</label><input id="f_temp" type="number" value="-32"></div>
+      <div style="flex:1"><label>Wind (km/h)</label><input id="f_wind" type="number" value="60"></div>
+    </div>
+    <div class="row">
+      <div style="flex:1"><label>Personnel</label><input id="f_pers" type="number" value="55"></div>
+      <div style="flex:1"><label>Generator load (%)</label><input id="f_load" type="number" value="70"></div>
+    </div>
+    <div class="row">
+      <div style="flex:1"><label>Blizzard flag (0/1)</label><input id="f_bliz" type="number" value="0"></div>
+      <div style="flex:1"><label>Equip. use (hrs)</label><input id="f_equip" type="number" value="12"></div>
+    </div>
+    <button onclick="predictFuel()">Run forecast</button>
+    <div class="result" id="f_result"></div>
+  </div>
+
+  <!-- COLD CHAIN -->
+  <div class="panel">
+    <h2>3 · Cold-Chain Anomaly Detection</h2>
+    <label>Cargo ID</label><input id="c_id" value="ICE-CORE-204">
+    <label>Target temp (°C)</label><input id="c_target" type="number" value="-80">
+    <label>Temperature stream (comma-separated, oldest→newest)</label>
+    <input id="c_stream" value="-80,-79,-80,-81,-80,-79,-77,-74,-70,-68">
+    <button onclick="predictColdchain()">Score stream</button>
+    <div class="result" id="c_result"></div>
+  </div>
+
+  <!-- SAR RISK -->
+  <div class="panel">
+    <h2>4a · SAR Incident Risk</h2>
+    <label>Incident ID</label><input id="s_id" value="Field-Team-07">
+    <div class="row">
+      <div style="flex:1"><label>Distance (km)</label><input id="s_dist" type="number" value="43"></div>
+      <div style="flex:1"><label>Visibility (m)</label><input id="s_vis" type="number" value="180"></div>
+    </div>
+    <div class="row">
+      <div style="flex:1"><label>Wind (km/h)</label><input id="s_wind" type="number" value="104"></div>
+      <div style="flex:1"><label>Temp (°C)</label><input id="s_temp" type="number" value="-39"></div>
+    </div>
+    <div class="row">
+      <div style="flex:1"><label>Personnel available</label><input id="s_pers" type="number" value="6"></div>
+      <div style="flex:1"><label>Asset fuel (%)</label><input id="s_fuel" type="number" value="70"></div>
+    </div>
+    <div class="row">
+      <div style="flex:1"><label>Hrs since contact</label><input id="s_contact" type="number" value="5"></div>
+      <div style="flex:1"><label>Asset type</label>
+        <select id="s_type"><option>snowcat</option><option>helicopter</option><option>vessel</option></select>
+      </div>
+    </div>
+    <button onclick="predictSar()">Assess risk</button>
+    <div class="result" id="s_result"></div>
+  </div>
+
+  <!-- ASSET RANKING -->
+  <div class="panel" style="grid-column: span 2;">
+    <h2>4b · SAR Asset Suitability Ranking</h2>
+    <div class="sub">Preloaded example from spec — edit the JSON below to test other fleets.</div>
+    <textarea id="a_assets" rows="6" style="width:100%;background:#0c1f2e;border:1px solid var(--panel-line);color:var(--ice);padding:8px;font-family:inherit;font-size:12px;">[
+  {"name":"Helicopter A","distance_km":80,"fuel_pct":75,"weather_compat_pct":45,"availability":"WEATHER_LIMITED"},
+  {"name":"Snowcat B","distance_km":31,"fuel_pct":82,"weather_compat_pct":94,"availability":"READY"},
+  {"name":"Snowcat C","distance_km":47,"fuel_pct":60,"weather_compat_pct":88,"availability":"READY"}
+]</textarea>
+    <button onclick="rankAssets()">Rank assets</button>
+    <div class="result" id="a_result"></div>
+  </div>
+
+</div>
+
+<script>
+const base = () => document.getElementById('apiBase').value.replace(/\/$/,'');
+
+async function post(path, body){
+  const res = await fetch(base()+path, {
+    method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)
+  });
+  if(!res.ok) throw new Error(await res.text());
+  return res.json();
+}
+
+function badge(text){ return `<span class="badge ${text}">${text}</span>`; }
+
+async function checkHealth(){
+  const dot = document.getElementById('healthDot');
+  const txt = document.getElementById('healthText');
+  try{
+    const res = await fetch(base()+'/health');
+    const data = await res.json();
+    dot.style.color = 'var(--ok)';
+    txt.textContent = `online · models loaded: ${data.models_loaded.join(', ')}`;
+  }catch(e){
+    dot.style.color = 'var(--crit)';
+    txt.textContent = 'offline — start the API with `python api.py`';
+  }
+}
+checkHealth();
+
+async function predictWeather(){
+  const el = document.getElementById('w_result');
+  el.textContent = 'running…';
+  try{
+    const d = await post('/predict/weather-risk', {
+      station: w_station.value, temperature_c:+w_temp.value, wind_speed_kmh:+w_wind.value,
+      wind_gust_kmh:+w_gust.value, pressure_hpa:+w_pres.value, pressure_change_3h:+w_dpres.value,
+      visibility_m:+w_vis.value, humidity_pct:+w_hum.value, wind_chill_c:+w_chill.value
+    });
+    el.innerHTML = `Blizzard probability: <b>${d.blizzard_probability_pct}%</b>
+Visibility risk: ${badge(d.visibility_risk)}   Wind risk: ${badge(d.wind_risk)}
+Predicted risk: ${badge(d.predicted_risk)}
+Confidence: ${d.confidence_pct}%`;
+  }catch(e){ el.innerHTML = `<span class="err">${e.message}</span>`; }
+}
+
+async function predictFuel(){
+  const el = document.getElementById('f_result');
+  el.textContent = 'running…';
+  try{
+    const d = await post('/predict/fuel-forecast', {
+      station: f_station.value, current_stock_l:+f_stock.value, temperature_c:+f_temp.value,
+      wind_speed_kmh:+f_wind.value, personnel_count:+f_pers.value, generator_load_pct:+f_load.value,
+      blizzard_flag:+f_bliz.value, equipment_usage_hrs:+f_equip.value,
+      resupply_in_days: f_resupply.value ? +f_resupply.value : null
+    });
+    const proj = Object.entries(d.projection).map(([k,v])=>`  ${k.replace('_',' ')}: ${v.toLocaleString()} L`).join('\n');
+    el.innerHTML = `Predicted burn: <b>${d.predicted_burn_l_per_day.toLocaleString()} L/day</b>
+Projection:
+${proj}
+Predicted exhaustion: day ${d.predicted_exhaustion_day ?? '—'}
+Risk: ${badge(d.risk)}`;
+  }catch(e){ el.innerHTML = `<span class="err">${e.message}</span>`; }
+}
+
+async function predictColdchain(){
+  const el = document.getElementById('c_result');
+  el.textContent = 'running…';
+  try{
+    const temps = c_stream.value.split(',').map(Number);
+    const d = await post('/predict/coldchain-anomaly', {
+      cargo_id: c_id.value, temperatures: temps, target_temp_c:+c_target.value
+    });
+    el.innerHTML = `Current temp: <b>${d.current_temperature_c}°C</b> (target ${d.target_temp_c}°C)
+Trend anomaly: ${d.trend_anomaly_detected ? badge('CRITICAL') : badge('LOW')}
+Anomaly score: ${d.anomaly_score}
+Est. steps to breach: ${d.estimated_steps_to_breach ?? '—'}
+Action: ${d.action}`;
+  }catch(e){ el.innerHTML = `<span class="err">${e.message}</span>`; }
+}
+
+async function predictSar(){
+  const el = document.getElementById('s_result');
+  el.textContent = 'running…';
+  try{
+    const d = await post('/predict/sar-risk', {
+      incident_id: s_id.value, distance_km:+s_dist.value, visibility_m:+s_vis.value,
+      wind_kmh:+s_wind.value, temperature_c:+s_temp.value, personnel_available:+s_pers.value,
+      asset_fuel_pct:+s_fuel.value, time_since_contact_hr:+s_contact.value, asset_type: s_type.value
+    });
+    el.innerHTML = `Response risk: <b>${d.response_risk_pct}%</b>
+Est. response time: ${d.estimated_response_time_min} min
+Risk level: ${badge(d.risk_level)}`;
+  }catch(e){ el.innerHTML = `<span class="err">${e.message}</span>`; }
+}
+
+async function rankAssets(){
+  const el = document.getElementById('a_result');
+  el.textContent = 'running…';
+  try{
+    const assets = JSON.parse(a_assets.value);
+    const d = await post('/predict/sar-asset-ranking', { assets });
+    el.innerHTML = d.map((a,i)=>
+      `${i===0?'🥇':i===1?'🥈':'🥉'} ${a.name} — suitability ${a.suitability_pct}%  ${badge(a.availability)}
+   distance ${a.distance_km}km · fuel ${a.fuel_pct}% · weather compat ${a.weather_compatibility_pct}%`
+    ).join('\n\n');
+  }catch(e){ el.innerHTML = `<span class="err">${e.message}</span>`; }
+}
+</script>
+</body>
+</html>

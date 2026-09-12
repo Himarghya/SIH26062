@@ -1,6 +1,6 @@
 from typing import Optional, List, Any
 from datetime import datetime
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, model_validator
 
 # Auth Schemas
 class Token(BaseModel):
@@ -109,6 +109,31 @@ class PersonnelBase(BaseModel):
     availability: str = "Deployed"
     biometric_muster_passed: bool = True
 
+    @model_validator(mode="before")
+    @classmethod
+    def map_aliases(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            # Map frontend form variations to canonical fields
+            if "badge_number" in data and "personnel_code" not in data:
+                data["personnel_code"] = data["badge_number"]
+            elif "badge" in data and "personnel_code" not in data:
+                data["personnel_code"] = data["badge"]
+            if "full_name" in data and "name" not in data:
+                data["name"] = data["full_name"]
+            if "station_id" in data and "assigned_station_id" not in data:
+                data["assigned_station_id"] = data["station_id"]
+            if "expedition_id" in data and "assigned_expedition_id" not in data:
+                data["assigned_expedition_id"] = data["expedition_id"]
+            if "medical_clearance" in data and "fitness_status" not in data:
+                data["fitness_status"] = data["medical_clearance"]
+            if "status" in data and "current_status" not in data:
+                data["current_status"] = data["status"]
+            if "tactical_callsign" in data and "radio_id" not in data:
+                data["radio_id"] = data["tactical_callsign"]
+            if "shelter" in data and "assigned_shelter" not in data:
+                data["assigned_shelter"] = data["shelter"]
+        return data
+
 class PersonnelCreate(PersonnelBase):
     pass
 
@@ -207,13 +232,23 @@ class CargoBase(BaseModel):
     status: str = "Packed"
     priority: str = "High"
     is_cold_chain: bool = False
-    temp_min_c: float = -85.0
-    temp_max_c: float = -75.0
-    current_temp_c: float = -80.0
+    temp_min_c: Optional[float] = -85.0
+    temp_max_c: Optional[float] = -75.0
+    current_temp_c: Optional[float] = -80.0
     hazard_type: str = "None"
     expected_delivery_date: Optional[datetime] = None
     current_location: str = "Goa Port Staging Depot"
     special_handling_instructions: Optional[str] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def map_cargo_aliases(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            if "destination" in data and "destination_station_id" not in data:
+                data["destination_station_id"] = data["destination"]
+            if "tracking_code" in data and "cargo_code" not in data:
+                data["cargo_code"] = data["tracking_code"]
+        return data
 
 class CargoCreate(CargoBase):
     pass
@@ -346,9 +381,25 @@ class IncidentAssignmentResponse(BaseModel):
         from_attributes = True
 
 class IncidentUpdateCreate(BaseModel):
-    status: str
+    status: Optional[str] = "Update Logged"
     message: str
     created_by: Optional[str] = "Incident Commander"
+
+    @model_validator(mode="before")
+    @classmethod
+    def map_incident_update_aliases(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            if "update_text" in data and "message" not in data:
+                data["message"] = data["update_text"]
+            elif "note" in data and "message" not in data:
+                data["message"] = data["note"]
+            elif "text" in data and "message" not in data:
+                data["message"] = data["text"]
+            if "reported_by" in data and "created_by" not in data:
+                data["created_by"] = data["reported_by"]
+            if "status" not in data or not data["status"]:
+                data["status"] = "Update Logged"
+        return data
 
 class IncidentUpdateResponse(BaseModel):
     id: str

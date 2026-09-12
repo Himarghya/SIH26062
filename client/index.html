@@ -14,6 +14,28 @@
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+    <!-- React DevTools Extension Hook Compatibility Guard -->
+    <script>
+      (function() {
+        if (typeof window.__REACT_DEVTOOLS_GLOBAL_HOOK__ === 'object') {
+          try {
+            // Prevent outdated DevTools extension from crashing on React 19 fiber flags
+            const hook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+            if (hook.onCommitFiberRoot) {
+              const origCommit = hook.onCommitFiberRoot;
+              hook.onCommitFiberRoot = function() {
+                try {
+                  return origCommit.apply(this, arguments);
+                } catch (e) {
+                  // Suppress DevTools internal static flag mismatch error
+                }
+              };
+            }
+          } catch(e) {}
+        }
+      })();
+    </script>
   </head>
   <body class="bg-polar-950 text-slate-100 min-h-screen font-sans antialiased selection:bg-cyan-500 selection:text-polar-950">
     <div id="root"></div>

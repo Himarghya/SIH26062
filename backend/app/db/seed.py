@@ -1,4 +1,4 @@
-﻿from datetime import datetime, timedelta
+from datetime import datetime, timedelta
 from backend.app.db.session import SessionLocal, Base, engine
 from backend.app.db.models import (
     Role, User, Station, Expedition, Personnel, Asset, Cargo, CargoTrackingEvent,
@@ -342,7 +342,177 @@ def seed_database():
         inv = InventoryItem(**item)
         db.add(inv)
 
-    # 8. Seed Emergency Incident
+    # 8. Seed Personnel
+    personnel_data = [
+        {
+            "personnel_code": "NCPOR-POL-001",
+            "name": "Dr. Arvind Swaminathan",
+            "role": "Expedition Leader & Chief Scientist",
+            "organization": "National Centre for Polar and Ocean Research (NCPOR)",
+            "contact_information": "a.swaminathan@ncpor.res.in | Sat: +8816-3184-9021",
+            "blood_group": "O+ve",
+            "fitness_status": "Class-1 Polar Cleared",
+            "survival_trained": True,
+            "current_status": "On Station",
+            "assigned_expedition_id": exp_map["ISEA-44"].id,
+            "assigned_station_id": stn_map["BHR-ANT"].id,
+            "assigned_shelter": "Main Module Habitation Sector A-01",
+            "radio_id": "BHR-TAC-1",
+            "availability": "Deployed",
+            "last_muster_timestamp": datetime.utcnow(),
+            "biometric_muster_passed": True
+        },
+        {
+            "personnel_code": "NCPOR-POL-002",
+            "name": "Wg Cdr Tarun Jaswal (Retd)",
+            "role": "Station Commander & Logistics Officer",
+            "organization": "Indian Air Force / NCPOR",
+            "contact_information": "t.jaswal@ncpor.res.in | Sat: +8816-3184-9022",
+            "blood_group": "B+ve",
+            "fitness_status": "Class-1 Polar Cleared",
+            "survival_trained": True,
+            "current_status": "On Station",
+            "assigned_expedition_id": exp_map["ISEA-44"].id,
+            "assigned_station_id": stn_map["BHR-ANT"].id,
+            "assigned_shelter": "Logistics Center Room L-02",
+            "radio_id": "BHR-LOG-1",
+            "availability": "Deployed",
+            "last_muster_timestamp": datetime.utcnow(),
+            "biometric_muster_passed": True
+        },
+        {
+            "personnel_code": "NCPOR-POL-003",
+            "name": "Dr. Ananya Roy",
+            "role": "Station Medical Officer & Surgeon",
+            "organization": "AIIMS New Delhi / NCPOR",
+            "contact_information": "ananya.roy@aiims.edu | Sat: +8816-3184-9023",
+            "blood_group": "A+ve",
+            "fitness_status": "Class-1 Polar Cleared",
+            "survival_trained": True,
+            "current_status": "On Station",
+            "assigned_expedition_id": exp_map["ISEA-44"].id,
+            "assigned_station_id": stn_map["BHR-ANT"].id,
+            "assigned_shelter": "Medical Unit ICU-1",
+            "radio_id": "BHR-MED-1",
+            "availability": "Deployed",
+            "last_muster_timestamp": datetime.utcnow(),
+            "biometric_muster_passed": True
+        },
+        {
+            "personnel_code": "NCPOR-POL-004",
+            "name": "Er. Sandeep Bopche",
+            "role": "Chief Power & Heavy Mechanical Engineer",
+            "organization": "Indian Navy / NCPOR",
+            "contact_information": "s.bopche@navy.gov.in",
+            "blood_group": "AB+ve",
+            "fitness_status": "Class-1 Polar Cleared",
+            "survival_trained": True,
+            "current_status": "Field Sortie",
+            "assigned_expedition_id": exp_map["ISEA-44"].id,
+            "assigned_station_id": stn_map["BHR-ANT"].id,
+            "assigned_shelter": "Powerhouse Bay 2",
+            "radio_id": "BHR-ENG-4",
+            "availability": "Deployed",
+            "last_muster_timestamp": datetime.utcnow() - timedelta(hours=3),
+            "biometric_muster_passed": True
+        },
+        {
+            "personnel_code": "NCPOR-POL-005",
+            "name": "Capt. R. Deshmukh",
+            "role": "Polar Helicopter Pilot (Kamov Ka-32)",
+            "organization": "Pawan Hans / IAF Polar Wing",
+            "contact_information": "r.deshmukh@pawanhans.co.in",
+            "blood_group": "B+ve",
+            "fitness_status": "Class-1 Polar Cleared",
+            "survival_trained": True,
+            "current_status": "On Station",
+            "assigned_expedition_id": exp_map["ISEA-44"].id,
+            "assigned_station_id": stn_map["BHR-ANT"].id,
+            "assigned_shelter": "Hangar Crew Quarters",
+            "radio_id": "BHR-AIR-1",
+            "availability": "Deployed",
+            "last_muster_timestamp": datetime.utcnow(),
+            "biometric_muster_passed": True
+        },
+        {
+            "personnel_code": "NCPOR-POL-006",
+            "name": "Dr. Priya Namboodiri",
+            "role": "Senior Glaciologist & Ice Core Analyst",
+            "organization": "Geological Survey of India (GSI)",
+            "contact_information": "p.namboodiri@gsi.gov.in",
+            "blood_group": "O-ve",
+            "fitness_status": "Class-1 Polar Cleared",
+            "survival_trained": True,
+            "current_status": "On Station",
+            "assigned_expedition_id": exp_map["ISEA-44"].id,
+            "assigned_station_id": stn_map["MTR-ANT"].id,
+            "assigned_shelter": "Maitri Main Block - Room 14",
+            "radio_id": "MTR-SCI-2",
+            "availability": "Deployed",
+            "last_muster_timestamp": datetime.utcnow(),
+            "biometric_muster_passed": True
+        },
+        {
+            "personnel_code": "NCPOR-POL-007",
+            "name": "Er. Vikram Negi",
+            "role": "Station Mechanical & Generator Specialist",
+            "organization": "NCPOR Engineering",
+            "contact_information": "v.negi@ncpor.res.in",
+            "blood_group": "A+ve",
+            "fitness_status": "Class-1 Polar Cleared",
+            "survival_trained": True,
+            "current_status": "On Station",
+            "assigned_expedition_id": exp_map["ISEA-44"].id,
+            "assigned_station_id": stn_map["MTR-ANT"].id,
+            "assigned_shelter": "Maitri Generator Complex",
+            "radio_id": "MTR-ENG-1",
+            "availability": "Deployed",
+            "last_muster_timestamp": datetime.utcnow(),
+            "biometric_muster_passed": True
+        },
+        {
+            "personnel_code": "NCPOR-POL-008",
+            "name": "Dr. Meera Nambiar",
+            "role": "Arctic Expedition Leader & Atmospheric Physicist",
+            "organization": "NCPOR / MoES",
+            "contact_information": "m.nambiar@ncpor.res.in | Sat: +8816-4190-2811",
+            "blood_group": "B+ve",
+            "fitness_status": "Class-1 Polar Cleared",
+            "survival_trained": True,
+            "current_status": "On Station",
+            "assigned_expedition_id": exp_map["ARCTIC-2026"].id,
+            "assigned_station_id": stn_map["HMD-ARC"].id,
+            "assigned_shelter": "Himadri Main Laboratory Pod",
+            "radio_id": "HMD-SCI-1",
+            "availability": "Deployed",
+            "last_muster_timestamp": datetime.utcnow(),
+            "biometric_muster_passed": True
+        },
+        {
+            "personnel_code": "NCPOR-POL-009",
+            "name": "Siddharth Verma",
+            "role": "Oceanographic Mooring Engineer",
+            "organization": "National Institute of Oceanography (CSIR-NIO)",
+            "contact_information": "sverma@nio.org",
+            "blood_group": "O+ve",
+            "fitness_status": "Class-1 Polar Cleared",
+            "survival_trained": True,
+            "current_status": "On Station",
+            "assigned_expedition_id": exp_map["ARCTIC-2026"].id,
+            "assigned_station_id": stn_map["HMD-ARC"].id,
+            "assigned_shelter": "Himadri Tech Quarters",
+            "radio_id": "HMD-ENG-1",
+            "availability": "Deployed",
+            "last_muster_timestamp": datetime.utcnow(),
+            "biometric_muster_passed": True
+        }
+    ]
+
+    for p in personnel_data:
+        person = Personnel(**p)
+        db.add(person)
+
+    # 9. Seed Emergency Incident
     emg = EmergencyIncident(
         incident_code="SOS-BHR-2026-01",
         title="Field Sortie Crevasse Hazard & Stage-3 Blizzard Advisory",

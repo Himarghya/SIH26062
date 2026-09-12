@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { polarisApi } from '../api/services';
 import { 
   ShieldAlert, 
@@ -80,16 +80,19 @@ export const EmergencySARPage: React.FC<{
           status,
           resolution_notes: status === 'Resolved' || status === 'Post-Incident Review' ? (note || 'Incident resolved by commander') : undefined
         });
-        if (note) {
+        if (note && note.trim()) {
           await polarisApi.addIncidentUpdate(selectedIncident.id, {
-            update_text: note,
+            status,
+            message: note.trim(),
+            update_text: note.trim(),
+            created_by: 'Emergency Response Commander',
             reported_by: 'Emergency Response Commander'
           });
         }
         await fetchEmergencyData();
       }
     } catch (err) {
-      console.error(err);
+      console.error("Failed to update incident status:", err);
     }
   };
 
@@ -98,13 +101,16 @@ export const EmergencySARPage: React.FC<{
     if (!actionNote.trim() || !selectedIncident) return;
     try {
       await polarisApi.addIncidentUpdate(selectedIncident.id, {
-        update_text: actionNote,
+        status: selectedIncident.status || 'Active',
+        message: actionNote.trim(),
+        update_text: actionNote.trim(),
+        created_by: 'Emergency Response Commander',
         reported_by: 'Emergency Response Commander'
       });
       setActionNote('');
       await fetchEmergencyData();
     } catch (err) {
-      console.error(err);
+      console.error("Failed to add action log:", err);
     }
   };
 

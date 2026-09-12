@@ -1,8 +1,9 @@
-﻿from fastapi import FastAPI
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from backend.app.core.config import settings
 from backend.app.db.session import engine, Base
 from backend.app.api.v1 import api_router
+from backend.app.api.v1.ml import router as ml_router
 
 # Create database tables automatically
 Base.metadata.create_all(bind=engine)
@@ -25,6 +26,8 @@ app.add_middleware(
 )
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
+app.include_router(ml_router, prefix="/predict", tags=["ML Engine (Direct)"])
+
 
 @app.get("/health", tags=["Health & Diagnostics"])
 def health_check():

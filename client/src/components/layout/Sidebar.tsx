@@ -13,7 +13,8 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
-  Radio
+  Radio,
+  Sparkles
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -40,30 +41,30 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
 
   return (
     <aside 
-      className={`fixed top-0 left-0 z-40 h-screen transition-all duration-300 bg-polar-950/95 backdrop-blur-md border-r border-cyan-900/40 flex flex-col ${
+      className={`fixed top-0 left-0 z-40 h-screen transition-all duration-300 bg-polar-950/90 backdrop-blur-xl border-r border-cyan-900/40 flex flex-col shadow-2xl ${
         collapsed ? 'w-20' : 'w-64'
       }`}
     >
       {/* Brand Header */}
-      <div className="h-16 flex items-center justify-between px-4 border-b border-cyan-900/40 bg-polar-900/60">
+      <div className="h-16 flex items-center justify-between px-4 border-b border-cyan-900/40 bg-polar-900/50">
         {!collapsed && (
           <div className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-black text-white shadow-lg shadow-cyan-500/20 text-sm">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-400 via-blue-500 to-indigo-600 flex items-center justify-center font-black text-white shadow-md shadow-cyan-500/30 text-sm polar-glow-cyan">
               🧊
             </div>
             <div>
-              <span className="font-extrabold text-sm tracking-wider text-slate-100 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              <span className="font-black text-sm tracking-wider text-slate-100 gradient-text-cyan">
                 POLARIS
               </span>
-              <span className="block text-[9px] text-cyan-400 font-mono uppercase tracking-widest">
-                NCPOR • MoES
+              <span className="block text-[8.5px] text-cyan-400 font-mono uppercase tracking-widest font-semibold">
+                NCPOR • MoES (Goa)
               </span>
             </div>
           </div>
         )}
 
         {collapsed && (
-          <div className="mx-auto w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-black text-white shadow-lg text-sm">
+          <div className="mx-auto w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-400 to-blue-600 flex items-center justify-center font-black text-white shadow-md shadow-cyan-500/25 text-sm polar-glow-cyan">
             🧊
           </div>
         )}
@@ -86,15 +87,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
               key={item.path}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition group ${
+                `flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 group relative ${
                   isActive
-                    ? 'bg-cyan-500/15 text-cyan-300 border border-cyan-500/40 shadow-sm shadow-cyan-500/10'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-polar-900 border border-transparent'
+                    ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/10 text-cyan-300 border border-cyan-500/40 shadow-sm shadow-cyan-500/15'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-polar-900/60 border border-transparent'
                 } ${collapsed ? 'justify-center px-0' : ''}`
               }
               title={collapsed ? item.name : undefined}
             >
-              <Icon className={`w-4 h-4 shrink-0 transition group-hover:text-cyan-400 ${item.alert ? 'text-rose-400' : ''}`} />
+              <Icon className={`w-4 h-4 shrink-0 transition-transform duration-200 group-hover:scale-110 ${
+                item.alert ? 'text-rose-400 animate-pulse' : 'group-hover:text-cyan-400'
+              }`} />
               {!collapsed && (
                 <span className="truncate tracking-wide">{item.name}</span>
               )}
@@ -104,19 +107,19 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
       </nav>
 
       {/* User Role Card & Uplink status */}
-      <div className="p-3 border-t border-cyan-900/40 bg-polar-900/40">
+      <div className="p-3 border-t border-cyan-900/40 bg-polar-900/30">
         {!collapsed ? (
-          <div className="p-2.5 rounded-xl bg-polar-950 border border-slate-800/80 space-y-1">
+          <div className="p-2.5 rounded-xl bg-polar-950/80 border border-slate-800 space-y-1">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-wider font-bold">
+              <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-wider font-bold truncate max-w-[130px]">
                 {user?.role.replace('_', ' ')}
               </span>
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             </div>
             <div className="font-semibold text-xs text-slate-200 truncate">{user?.name}</div>
-            <div className="text-[10px] text-slate-500 flex items-center space-x-1 pt-0.5">
+            <div className="text-[10px] text-slate-500 flex items-center space-x-1 pt-0.5 font-mono">
               <Radio className="w-3 h-3 text-cyan-500" />
-              <span>Iridium Polar Sync Active</span>
+              <span>Iridium SBD Active</span>
             </div>
           </div>
         ) : (
@@ -128,3 +131,4 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
     </aside>
   );
 };
+

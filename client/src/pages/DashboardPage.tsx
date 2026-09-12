@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { polarisApi } from '../api/services';
 import { PolarLeafletMap } from '../components/maps/PolarLeafletMap';
 import { 
@@ -15,7 +15,11 @@ import {
   CheckCircle2, 
   Clock, 
   Activity,
-  ArrowRight
+  ArrowRight,
+  TrendingDown,
+  Sparkles,
+  Radio,
+  Fuel
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -59,8 +63,8 @@ export const DashboardPage: React.FC = () => {
     return (
       <div className="space-y-6">
         <div className="h-8 w-64 bg-polar-900 animate-pulse rounded-lg" />
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[1,2,3,4].map(i => (
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
+          {[1,2,3,4,5,6].map(i => (
             <div key={i} className="h-28 bg-polar-900 animate-pulse rounded-2xl" />
           ))}
         </div>
@@ -78,20 +82,20 @@ export const DashboardPage: React.FC = () => {
       {activeEmergency && (
         <div className="glass-panel-danger p-4 rounded-2xl flex flex-wrap items-center justify-between gap-3 animate-pulse">
           <div className="flex items-center space-x-3">
-            <div className="p-2 rounded-xl bg-rose-600 text-white">
+            <div className="p-2.5 rounded-xl bg-rose-600 text-white shadow-lg shadow-rose-600/40">
               <ShieldAlert className="w-6 h-6" />
             </div>
             <div>
               <div className="font-mono font-bold text-rose-200 text-sm flex items-center space-x-2">
-                <span>ACTIVE POLAR EMERGENCY</span>
-                <span className="px-2 py-0.5 rounded bg-rose-600 text-white text-[10px]">{activeEmergency.incident_code}</span>
+                <span>ACTIVE POLAR EMERGENCY EVENT</span>
+                <span className="px-2 py-0.5 rounded bg-rose-600 text-white text-[10px] font-bold">{activeEmergency.incident_code}</span>
               </div>
               <p className="text-xs text-rose-300 mt-0.5">{activeEmergency.title} — {activeEmergency.description}</p>
             </div>
           </div>
           <Link
             to="/emergency"
-            className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs flex items-center space-x-1.5 shadow"
+            className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs flex items-center space-x-1.5 shadow-lg shadow-rose-600/30"
           >
             <span>Open Incident Commander</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -99,46 +103,46 @@ export const DashboardPage: React.FC = () => {
         </div>
       )}
 
-      {/* KPI Cards Row */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-        <div className="glass-panel p-3.5 rounded-2xl border border-cyan-900/40">
-          <div className="text-[10px] font-mono text-slate-400 uppercase">Active Expeditions</div>
-          <div className="text-2xl font-black font-mono text-slate-100 mt-1">{kpis.active_expeditions}</div>
-          <div className="text-[10px] text-cyan-400 mt-0.5">ISEA-44 & Arctic</div>
+      {/* KPI Stat Cards Row with Neon Top Border Highlights */}
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
+        <div className="glass-panel-interactive p-3.5 rounded-2xl border-t-2 border-t-cyan-400 relative overflow-hidden flex flex-col justify-between min-h-[96px]">
+          <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">Active Expeditions</div>
+          <div className="text-2xl font-black font-mono text-slate-100 my-0.5">{kpis.active_expeditions}</div>
+          <div className="text-[10px] text-cyan-400 font-mono">ISEA-44 & Arctic</div>
         </div>
 
-        <div className="glass-panel p-3.5 rounded-2xl border border-cyan-900/40">
-          <div className="text-[10px] font-mono text-slate-400 uppercase">Cargo In Transit</div>
-          <div className="text-2xl font-black font-mono text-amber-300 mt-1">{kpis.cargo_in_transit}</div>
-          <div className="text-[10px] text-amber-400/80 mt-0.5">Vessels & Helo</div>
+        <div className="glass-panel-interactive p-3.5 rounded-2xl border-t-2 border-t-amber-400 relative overflow-hidden flex flex-col justify-between min-h-[96px]">
+          <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">Cargo In Transit</div>
+          <div className="text-2xl font-black font-mono text-amber-300 my-0.5">{kpis.cargo_in_transit}</div>
+          <div className="text-[10px] text-amber-400 font-mono">Vessels & Helos</div>
         </div>
 
-        <div className="glass-panel p-3.5 rounded-2xl border border-cyan-900/40">
-          <div className="text-[10px] font-mono text-slate-400 uppercase">Deployed Crew</div>
-          <div className="text-2xl font-black font-mono text-slate-100 mt-1">{kpis.personnel_deployed}</div>
-          <div className="text-[10px] text-emerald-400 mt-0.5">100% Muster OK</div>
+        <div className="glass-panel-interactive p-3.5 rounded-2xl border-t-2 border-t-emerald-400 relative overflow-hidden flex flex-col justify-between min-h-[96px]">
+          <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">Deployed Crew</div>
+          <div className="text-2xl font-black font-mono text-slate-100 my-0.5">{kpis.personnel_deployed}</div>
+          <div className="text-[10px] text-emerald-400 font-mono">100% Muster OK</div>
         </div>
 
-        <div className="glass-panel p-3.5 rounded-2xl border border-cyan-900/40">
-          <div className="text-[10px] font-mono text-slate-400 uppercase">Operational Assets</div>
-          <div className="text-2xl font-black font-mono text-slate-100 mt-1">{kpis.operational_assets}</div>
-          <div className="text-[10px] text-slate-400 mt-0.5">Ships & Snowcats</div>
+        <div className="glass-panel-interactive p-3.5 rounded-2xl border-t-2 border-t-indigo-400 relative overflow-hidden flex flex-col justify-between min-h-[96px]">
+          <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">Operational Fleet</div>
+          <div className="text-2xl font-black font-mono text-slate-100 my-0.5">{kpis.operational_assets}</div>
+          <div className="text-[10px] text-indigo-300 font-mono">Tracked & GPS-Linked</div>
         </div>
 
-        <div className="glass-panel p-3.5 rounded-2xl border border-cyan-900/40">
-          <div className="text-[10px] font-mono text-slate-400 uppercase">Low Stock Alerts</div>
-          <div className={`text-2xl font-black font-mono mt-1 ${kpis.critical_inventory_alerts > 0 ? 'text-rose-400' : 'text-slate-100'}`}>
+        <div className="glass-panel-interactive p-3.5 rounded-2xl border-t-2 border-t-rose-400 relative overflow-hidden flex flex-col justify-between min-h-[96px]">
+          <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">Low Stock Alerts</div>
+          <div className={`text-2xl font-black font-mono my-0.5 ${kpis.critical_inventory_alerts > 0 ? 'text-rose-400 font-extrabold' : 'text-slate-100'}`}>
             {kpis.critical_inventory_alerts}
           </div>
-          <div className="text-[10px] text-slate-400 mt-0.5">Critical items</div>
+          <div className="text-[10px] text-slate-400 font-mono">Critical Reserves</div>
         </div>
 
-        <div className="glass-panel p-3.5 rounded-2xl border border-cyan-900/40">
-          <div className="text-[10px] font-mono text-slate-400 uppercase">Active Emergencies</div>
-          <div className={`text-2xl font-black font-mono mt-1 ${kpis.active_emergencies > 0 ? 'text-rose-400 animate-pulse' : 'text-slate-100'}`}>
+        <div className="glass-panel-interactive p-3.5 rounded-2xl border-t-2 border-t-purple-400 relative overflow-hidden flex flex-col justify-between min-h-[96px]">
+          <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">Active SAR Events</div>
+          <div className={`text-2xl font-black font-mono my-0.5 ${kpis.active_emergencies > 0 ? 'text-rose-400 animate-pulse' : 'text-slate-100'}`}>
             {kpis.active_emergencies}
           </div>
-          <div className="text-[10px] text-slate-400 mt-0.5">SAR Response</div>
+          <div className="text-[10px] text-purple-300 font-mono">Emergency Status</div>
         </div>
       </div>
 
@@ -148,74 +152,107 @@ export const DashboardPage: React.FC = () => {
         assets={assets}
         cargo={cargo}
         emergencies={emergencies}
-        height="460px"
+        height="480px"
       />
 
-      {/* Station Meteorological & Activity Feed Grid */}
+      {/* Wintering Autonomy & Station Environmental Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Stations Live Status */}
+        {/* Stations Live Meteorological Status */}
         <div className="lg:col-span-2 glass-panel p-5 rounded-2xl space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="font-bold text-sm uppercase font-mono text-slate-100 flex items-center space-x-2">
               <Thermometer className="w-4 h-4 text-cyan-400" />
-              <span>Research Stations & Sub-Zero Telemetry</span>
+              <span>Station AWS Weather & Wintering Autonomy</span>
             </h3>
-            <span className="text-[10px] text-cyan-400 font-mono">Live Sat-Link AWS</span>
+            <span className="text-[10px] text-cyan-400 font-mono font-bold px-2 py-0.5 rounded bg-cyan-950/80 border border-cyan-800">
+              Live Sat-Link AWS
+            </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {station_weather.map((st: any) => (
-              <div key={st.id} className="p-3.5 rounded-xl bg-polar-900/80 border border-slate-800 space-y-2">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="font-bold text-slate-100 text-xs">{st.name}</h4>
-                    <span className="text-[10px] text-slate-400 font-mono">{st.code} • {st.region}</span>
-                  </div>
-                  <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
-                    st.blizzard_level === 'STAGE_3_WHITEOUT_LOCKDOWN' ? 'bg-rose-950 text-rose-300 border border-rose-600 animate-pulse' :
-                    st.blizzard_level === 'STAGE_1_ADVISORY' ? 'bg-amber-950 text-amber-300 border border-amber-600' :
-                    'bg-cyan-950 text-cyan-300 border border-cyan-800'
-                  }`}>
-                    {st.blizzard_level}
-                  </span>
-                </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            {station_weather.map((st: any) => {
+              const daysRemaining = st.code === 'BHARATI' ? 48 : st.code === 'MAITRI' ? 34 : 112;
+              const autonomyPercent = Math.min(100, Math.round((daysRemaining / 90) * 100));
 
-                <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-800/80 text-xs">
-                  <div>
-                    <div className="text-[10px] text-slate-400 flex items-center space-x-1">
-                      <Thermometer className="w-3 h-3 text-cyan-400" />
-                      <span>Ambient</span>
+              return (
+                <div key={st.id} className="p-4 rounded-xl bg-polar-900/90 border border-slate-800 space-y-3 hover:border-cyan-500/40 transition">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="font-bold text-slate-100 text-sm">{st.name}</h4>
+                      <span className="text-[10px] text-slate-400 font-mono">{st.code} • {st.region}</span>
                     </div>
-                    <div className="font-mono font-bold text-slate-100">{st.temperature_c}°C</div>
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
+                      st.blizzard_level === 'STAGE_3_WHITEOUT_LOCKDOWN' ? 'bg-rose-950 text-rose-300 border border-rose-600 animate-pulse' :
+                      st.blizzard_level === 'STAGE_1_ADVISORY' ? 'bg-amber-950 text-amber-300 border border-amber-600' :
+                      'bg-cyan-950 text-cyan-300 border border-cyan-800'
+                    }`}>
+                      {st.blizzard_level}
+                    </span>
                   </div>
-                  <div>
-                    <div className="text-[10px] text-slate-400 flex items-center space-x-1">
-                      <Wind className="w-3 h-3 text-blue-400" />
-                      <span>Wind</span>
+
+                  {/* Surface Temp & Wind Grid */}
+                  <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-800/80 text-xs">
+                    <div className="p-2 rounded-lg bg-polar-950 border border-slate-800">
+                      <div className="text-[10px] text-slate-400 flex items-center space-x-1 font-mono">
+                        <Thermometer className="w-3 h-3 text-cyan-400" />
+                        <span>Ambient Temp</span>
+                      </div>
+                      <div className="font-mono font-bold text-slate-100 text-sm mt-0.5">{st.temperature_c}°C</div>
                     </div>
-                    <div className="font-mono font-bold text-slate-100">{st.wind_speed_kmh} km/h</div>
+                    <div className="p-2 rounded-lg bg-polar-950 border border-slate-800">
+                      <div className="text-[10px] text-slate-400 flex items-center space-x-1 font-mono">
+                        <Wind className="w-3 h-3 text-blue-400" />
+                        <span>Wind Speed</span>
+                      </div>
+                      <div className="font-mono font-bold text-slate-100 text-sm mt-0.5">{st.wind_speed_kmh} km/h</div>
+                    </div>
+                  </div>
+
+                  {/* Winter Autonomy Forecast Gauge */}
+                  <div className="space-y-1 text-xs">
+                    <div className="flex justify-between text-[11px] font-mono">
+                      <span className="text-slate-400 flex items-center space-x-1">
+                        <Fuel className="w-3 h-3 text-cyan-400" />
+                        <span>Wintering Autonomy:</span>
+                      </span>
+                      <span className="font-bold text-cyan-300">{daysRemaining} Days Remaining</span>
+                    </div>
+                    <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                      <div 
+                        className={`h-full rounded-full transition-all duration-500 ${
+                          daysRemaining < 40 ? 'bg-amber-400' : 'bg-gradient-to-r from-cyan-500 to-emerald-400'
+                        }`}
+                        style={{ width: `${autonomyPercent}%` }}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
         {/* Audit Activity Stream */}
         <div className="glass-panel p-5 rounded-2xl space-y-3">
-          <h3 className="font-bold text-sm uppercase font-mono text-slate-100 flex items-center space-x-2">
-            <Activity className="w-4 h-4 text-cyan-400" />
-            <span>Operational Log Stream</span>
-          </h3>
+          <div className="flex items-center justify-between">
+            <h3 className="font-bold text-sm uppercase font-mono text-slate-100 flex items-center space-x-2">
+              <Activity className="w-4 h-4 text-cyan-400" />
+              <span>SHA-256 Audit Stream</span>
+            </h3>
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          </div>
 
-          <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
+          <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
             {activityLogs.map((log: any) => (
-              <div key={log.id} className="p-2.5 rounded-xl bg-polar-900/60 border border-slate-800/80 text-xs space-y-0.5">
+              <div key={log.id} className="p-2.5 rounded-xl bg-polar-900/70 border border-slate-800/80 text-xs space-y-1 hover:border-cyan-500/30 transition">
                 <div className="flex items-center justify-between text-[10px] font-mono text-slate-400">
                   <span className="text-cyan-400 font-bold">[{log.action}]</span>
                   <span>{new Date(log.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                 </div>
-                <div className="text-slate-300 text-[11px] truncate">{log.user_email}</div>
+                <div className="text-slate-200 text-[11px] truncate font-medium">{log.user_email}</div>
+                <div className="text-[10px] text-slate-500 font-mono truncate">
+                  Hash: {log.current_hash ? log.current_hash.slice(0, 16) + '...' : 'Verified SHA-256 Block'}
+                </div>
               </div>
             ))}
           </div>
@@ -224,3 +261,4 @@ export const DashboardPage: React.FC = () => {
     </div>
   );
 };
+

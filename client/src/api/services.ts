@@ -207,5 +207,81 @@ export const polarisApi = {
   triggerSimulationStep: async (stepId: number) => {
     const res = await apiClient.post(`/simulation/step/${stepId}`);
     return res.data;
+  },
+
+  // ML Engine
+  predictWeatherRisk: async (payload: {
+    station: string;
+    temperature_c: number;
+    wind_speed_kmh: number;
+    wind_gust_kmh: number;
+    pressure_hpa: number;
+    pressure_change_3h: number;
+    visibility_m: number;
+    humidity_pct: number;
+    wind_chill_c: number;
+  }) => {
+    const res = await apiClient.post('/predict/weather-risk', payload);
+    return res.data;
+  },
+
+  predictFuelForecast: async (payload: {
+    station: string;
+    current_stock_l: number;
+    temperature_c: number;
+    wind_speed_kmh: number;
+    personnel_count: number;
+    generator_load_pct: number;
+    blizzard_flag: number;
+    equipment_usage_hrs: number;
+    resupply_in_days?: number | null;
+  }) => {
+    const res = await apiClient.post('/predict/fuel-forecast', payload);
+    return res.data;
+  },
+
+  predictColdchainAnomaly: async (payload: {
+    cargo_id: string;
+    temperatures: number[];
+    target_temp_c: number;
+    breach_margin_c?: number;
+  }) => {
+    const res = await apiClient.post('/predict/coldchain-anomaly', payload);
+    return res.data;
+  },
+
+  predictSarRisk: async (payload: {
+    incident_id: string;
+    distance_km: number;
+    visibility_m: number;
+    wind_kmh: number;
+    temperature_c: number;
+    personnel_available: number;
+    asset_fuel_pct: number;
+    time_since_contact_hr: number;
+    asset_type?: string;
+  }) => {
+    const res = await apiClient.post('/predict/sar-risk', payload);
+    return res.data;
+  },
+
+  predictSarAssetRanking: async (payload: {
+    assets: Array<{
+      name: string;
+      distance_km: number;
+      fuel_pct: number;
+      weather_compat_pct: number;
+      availability?: string;
+      payload_ok?: boolean;
+    }>;
+  }) => {
+    const res = await apiClient.post('/predict/sar-asset-ranking', payload);
+    return res.data;
+  },
+
+  getMlHealth: async () => {
+    const res = await apiClient.get('/predict/health');
+    return res.data;
   }
 };
+

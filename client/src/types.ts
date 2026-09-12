@@ -194,3 +194,40 @@ export interface QueuedMutation {
   data: any;
   timestamp: string;
 }
+
+export interface RouteRiskAssessment {
+  routeId: string;
+  routeName: string;
+  origin: string;
+  destination: string;
+  distanceKm: number;
+  estimatedHours: number;
+  overallScore: number; // 0 - 100
+  riskLevel: 'LOW RISK' | 'MODERATE RISK' | 'HIGH RISK' | 'SEVERE / NO-GO';
+  breakdown: {
+    weatherRisk: number; // 0 - 100
+    visibilityRisk: number;
+    seaIceTerrainRisk: number;
+    assetReadinessRisk: number;
+    supplyBufferRisk: number;
+  };
+  recommendations: string[];
+  safeWaypoints: { lat: number; lng: number; name: string }[];
+}
+
+export interface OperationsAlert {
+  id: string;
+  title: string;
+  message: string;
+  severity: 'critical' | 'warning' | 'info';
+  source: 'Weather Engine' | 'Cold-Chain IoT' | 'Wintering Autonomy' | 'Personnel Muster' | 'SAR Center' | 'Vessel Telemetry';
+  stationId?: string;
+  relatedEntity?: string;
+  requiredAction: string;
+  actionLink?: string;
+  assignedRole: 'super_admin' | 'expedition_manager' | 'logistics_officer' | 'station_manager' | 'emergency_coordinator' | 'viewer';
+  is_read: boolean;
+  is_acknowledged: boolean;
+  created_at: string;
+}
+

@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { 
   Bell, 
   ShieldAlert, 
@@ -10,7 +10,8 @@ import {
   Sparkles,
   ChevronDown,
   Wifi,
-  Info
+  Info,
+  Cpu
 } from 'lucide-react';
 import { useAuth, DEMO_ACCOUNTS } from '../../context/AuthContext';
 import { NotificationsPopover } from '../notifications/NotificationsPopover';
@@ -19,50 +20,90 @@ interface TopNavProps {
   onOpenDigitalTwin: () => void;
   onOpenQrScanner: () => void;
   onOpenBlizzardSOS: () => void;
+  onOpenSatelliteSync: () => void;
+  onOpenMlConsole?: () => void;
+  isOffline: boolean;
+  pendingQueueCount: number;
 }
 
 export const TopNav: React.FC<TopNavProps> = ({
   onOpenDigitalTwin,
   onOpenQrScanner,
-  onOpenBlizzardSOS
+  onOpenBlizzardSOS,
+  onOpenSatelliteSync,
+  onOpenMlConsole,
+  isOffline,
+  pendingQueueCount
 }) => {
   const { user, logout, switchDemoRole } = useAuth();
   const [showRoleMenu, setShowRoleMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
 
   return (
-    <header className="h-16 bg-polar-950/80 backdrop-blur-md border-b border-cyan-900/30 px-4 md:px-6 flex items-center justify-between sticky top-0 z-30">
+    <header className="h-16 bg-polar-950/90 backdrop-blur-md border-b border-cyan-900/30 px-4 md:px-6 flex items-center justify-between sticky top-0 z-30">
       {/* Left: Operational Mode & Transparency Pill */}
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center space-x-2.5 overflow-x-auto no-scrollbar">
         {/* Simulation Transparency Label */}
-        <div className="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-cyan-950/70 border border-cyan-800/60 text-cyan-300 text-[11px] font-mono">
+        <div className="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg bg-cyan-950/70 border border-cyan-800/60 text-cyan-300 text-xs font-mono whitespace-nowrap shrink-0">
           <Info className="w-3.5 h-3.5 text-cyan-400" />
-          <span className="font-bold">Simulation Mode — Demonstration Data</span>
+          <span className="font-bold hidden sm:inline">Simulation Demo</span>
+          <span className="font-bold sm:hidden">Sim</span>
         </div>
 
         {/* Satellite Sync Status Indicator */}
-        <div className="hidden lg:flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-polar-900 border border-slate-800 text-[11px] font-mono text-slate-400">
-          <Wifi className="w-3 h-3 text-emerald-400 animate-pulse" />
-          <span>Iridium Sat-Link: <strong className="text-emerald-400 font-normal">Active</strong> (Delta Sync: 2m ago)</span>
-        </div>
+        <button
+          onClick={onOpenSatelliteSync}
+          className={`flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono border transition whitespace-nowrap shrink-0 ${
+            isOffline
+              ? 'bg-amber-950/80 border-amber-600/80 text-amber-300 animate-pulse'
+              : 'bg-polar-900 hover:bg-polar-850 border-slate-800 text-slate-300'
+          }`}
+          title="Open Satellite Delta Sync Console"
+        >
+          <Wifi className={`w-3.5 h-3.5 ${isOffline ? 'text-amber-400' : 'text-emerald-400 animate-pulse'}`} />
+          <span>
+            {isOffline ? (
+              <strong className="text-amber-400">Offline</strong>
+            ) : (
+              <>Sat-Link: <strong className="text-emerald-400 font-normal">Active</strong></>
+            )}
+          </span>
+          {pendingQueueCount > 0 && (
+            <span className="px-1.5 py-0.2 rounded-full bg-cyan-500 text-slate-950 font-bold text-[10px]">
+              {pendingQueueCount}
+            </span>
+          )}
+        </button>
 
         {/* Scenario Simulation Launcher */}
         <button
           onClick={onOpenDigitalTwin}
-          className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-blue-900 to-indigo-900 hover:from-blue-800 hover:to-indigo-800 border border-blue-500/40 text-cyan-200 font-mono text-xs shadow-md transition"
+          className="hidden md:flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-blue-900 to-indigo-900 hover:from-blue-800 hover:to-indigo-800 border border-blue-500/40 text-cyan-200 font-mono text-xs shadow-md transition whitespace-nowrap shrink-0"
           title="Launch Deterministic Scenario Simulation"
         >
           <PlayCircle className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-          <span className="font-bold">Scenario Simulation</span>
+          <span className="font-bold">Scenario Sim</span>
         </button>
+
+        {/* AI ML Engine Console Launcher */}
+        {onOpenMlConsole && (
+          <button
+            onClick={onOpenMlConsole}
+            className="hidden lg:flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-cyan-950 via-polar-900 to-blue-950 hover:from-cyan-900 hover:to-blue-900 border border-cyan-500/50 text-cyan-300 font-mono text-xs shadow-md transition polar-glow-cyan whitespace-nowrap shrink-0"
+            title="Open POLARIS ML Predictive Command Console"
+          >
+            <Cpu className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+            <span className="font-bold">ML Engine</span>
+          </button>
+        )}
       </div>
 
       {/* Right Controls */}
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center space-x-2.5 shrink-0">
         {/* Urgent Blizzard SOS Trigger */}
         <button
           onClick={onOpenBlizzardSOS}
-          className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-rose-950/80 hover:bg-rose-900 border border-rose-600/60 text-rose-200 font-bold text-xs shadow transition animate-pulse"
+          className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-rose-950/80 hover:bg-rose-900 border border-rose-600/60 text-rose-200 font-bold text-xs shadow transition animate-pulse whitespace-nowrap"
         >
           <ShieldAlert className="w-3.5 h-3.5 text-rose-400" />
           <span>BLIZZARD SOS</span>
@@ -87,16 +128,16 @@ export const TopNav: React.FC<TopNavProps> = ({
         <div className="relative">
           <button
             onClick={() => setShowRoleMenu(!showRoleMenu)}
-            className="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-polar-900 hover:bg-polar-850 border border-cyan-800/50 text-slate-200 text-xs transition"
+            className="flex items-center space-x-2 px-2.5 py-1.5 rounded-xl bg-polar-900 hover:bg-polar-850 border border-cyan-800/50 text-slate-200 text-xs transition"
           >
-            <div className="w-6 h-6 rounded-full bg-cyan-950 border border-cyan-500/60 flex items-center justify-center font-bold text-[10px] text-cyan-300">
+            <div className="w-6 h-6 rounded-full bg-cyan-950 border border-cyan-500/60 flex items-center justify-center font-bold text-[10px] text-cyan-300 shrink-0">
               {user?.name?.[0] || 'U'}
             </div>
-            <div className="text-left hidden lg:block">
-              <div className="font-bold text-slate-100 text-[11px] truncate max-w-[130px]">{user?.name}</div>
+            <div className="text-left hidden xl:block">
+              <div className="font-bold text-slate-100 text-[11px] truncate max-w-[120px]">{user?.name}</div>
               <div className="text-[9px] text-cyan-400 uppercase font-mono">{user?.role.replace('_', ' ')}</div>
             </div>
-            <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+            <ChevronDown className="w-3.5 h-3.5 text-slate-400 shrink-0" />
           </button>
 
           {showRoleMenu && (
@@ -144,3 +185,4 @@ export const TopNav: React.FC<TopNavProps> = ({
     </header>
   );
 };
+

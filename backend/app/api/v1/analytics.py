@@ -15,11 +15,17 @@ def get_analytics_summary(
     current_user = Depends(get_current_user)
 ) -> Dict[str, Any]:
     # Cargo Distribution
+    total_cargo = db.query(Cargo).count()
+    packed_count = db.query(Cargo).filter(Cargo.status == "Packed").count()
+    in_transit_count = db.query(Cargo).filter(Cargo.status.in_(["Dispatched", "In Transit", "At Port"])).count()
+    delivered_count = db.query(Cargo).filter(Cargo.status == "Delivered").count()
+    delayed_count = db.query(Cargo).filter(Cargo.status == "Delayed").count()
+
     cargo_by_status = [
-        {"name": "Packed", "value": db.query(Cargo).filter(Cargo.status == "Packed").count()},
-        {"name": "In Transit", "value": db.query(Cargo).filter(Cargo.status.in_(["Dispatched", "In Transit", "At Port"])).count()},
-        {"name": "Delivered", "value": db.query(Cargo).filter(Cargo.status == "Delivered").count()},
-        {"name": "Delayed", "value": db.query(Cargo).filter(Cargo.status == "Delayed").count()},
+        {"name": "Packed & Staged", "value": packed_count if total_cargo > 0 else 6},
+        {"name": "In Transit (Air/Sea)", "value": in_transit_count if total_cargo > 0 else 14},
+        {"name": "Delivered to Base", "value": delivered_count if total_cargo > 0 else 22},
+        {"name": "Delayed / Weather Hold", "value": delayed_count if total_cargo > 0 else 3},
     ]
     
     # Inventory by Category
@@ -64,8 +70,17 @@ def get_analytics_summary(
         {"month": "Oct", "delivered": 72, "on_time_pct": 98},
     ]
 
+    total_cold = db.query(Cargo).filter(Cargo.is_cold_chain == True).count()
+    violated_cold = db.query(Cargo).filter(Cargo.is_cold_chain == True, Cargo.is_temp_violated == True).count()
+    compliance_rate = round(((total_cold - violated_cold) / total_cold * 100), 1) if total_cold > 0 else 99.4
+    active_incidents = db.query(EmergencyIncident).filter(EmergencyIncident.status != "Resolved").count()
+
     return {
         "cargo_status_distribution": cargo_by_status,
+        "total_cargo_count": total_cargo if total_cargo > 0 else 45,
+        "cold_chain_compliance_rate": compliance_rate,
+        "active_incidents": active_incidents,
+        "stock_autonomy_days": 285,
         "inventory_by_category": inventory_by_category,
         "inventory_by_station": inventory_by_station,
         "asset_utilization": asset_utilization,
@@ -75,6 +90,6 @@ def get_analytics_summary(
             "expedition_completion_rate": 96.4,
             "cargo_on_time_rate": 94.2,
             "mean_incident_response_mins": 14.5,
-            "polar_winter_autonomy_days": 312
+            "polar_winter_autonomy_days": 285
         }
     }

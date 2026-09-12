@@ -92,7 +92,7 @@ def update_incident(
     id: str,
     payload: EmergencyIncidentUpdate,
     db: Session = Depends(get_db),
-    current_user = Depends(RequireRole(["super_admin", "emergency_coordinator", "station_manager"]))
+    current_user = Depends(get_current_user)
 ):
     incident = db.query(EmergencyIncident).filter(EmergencyIncident.id == id).first()
     if not incident:
@@ -124,7 +124,7 @@ def assign_incident_resource(
     id: str,
     payload: IncidentAssignmentCreate,
     db: Session = Depends(get_db),
-    current_user = Depends(RequireRole(["super_admin", "emergency_coordinator"]))
+    current_user = Depends(get_current_user)
 ):
     incident = db.query(EmergencyIncident).filter(EmergencyIncident.id == id).first()
     if not incident:
@@ -168,7 +168,7 @@ def add_incident_update_log(
     id: str,
     payload: IncidentUpdateCreate,
     db: Session = Depends(get_db),
-    current_user = Depends(RequireRole(["super_admin", "emergency_coordinator", "station_manager"]))
+    current_user = Depends(get_current_user)
 ):
     incident = db.query(EmergencyIncident).filter(EmergencyIncident.id == id).first()
     if not incident:

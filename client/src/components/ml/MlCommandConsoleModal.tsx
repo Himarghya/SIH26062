@@ -1,0 +1,1005 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  Cpu, 
+  CloudSnow, 
+  Flame, 
+  ThermometerSnowflake, 
+  LifeBuoy, 
+  Award, 
+  X, 
+  Activity, 
+  CheckCircle2, 
+  AlertTriangle, 
+  RefreshCw, 
+  Sparkles,
+  Zap,
+  Radio,
+  Gauge
+} from 'lucide-react';
+import { polarisApi } from '../../api/services';
+
+interface MlCommandConsoleModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  // Active Tab: 'weather' | 'fuel' | 'coldchain' | 'sar' | 'ranking'
+  const [activeTab, setActiveTab] = useState<'weather' | 'fuel' | 'coldchain' | 'sar' | 'ranking'>('weather');
+
+  // Health State
+  const [healthStatus, setHealthStatus] = useState<{ status: string; models_loaded: string[] } | null>(null);
+  const [isHealthLoading, setIsHealthLoading] = useState<boolean>(false);
+
+  // 1. Weather / Blizzard State
+  const [wStation, setWStation] = useState('Bharati');
+  const [wTemp, setWTemp] = useState(-38);
+  const [wWind, setWWind] = useState(95);
+  const [wGust, setWGust] = useState(130);
+  const [wPres, setWPres] = useState(955);
+  const [wDPres, setWDPres] = useState(-6);
+  const [wVis, setWVis] = useState(250);
+  const [wHum, setWHum] = useState(88);
+  const [wChill, setWChill] = useState(-55);
+  const [wResult, setWResult] = useState<any>(null);
+  const [wLoading, setWLoading] = useState(false);
+
+  // 2. Fuel Forecast State
+  const [fStation, setFStation] = useState('Bharati');
+  const [fStock, setFStock] = useState(72400);
+  const [fResupply, setFResupply] = useState(26);
+  const [fTemp, setFTemp] = useState(-32);
+  const [fWind, setFWind] = useState(60);
+  const [fPers, setFPers] = useState(55);
+  const [fLoad, setFLoad] = useState(70);
+  const [fBliz, setFBliz] = useState(0);
+  const [fEquip, setFEquip] = useState(12);
+  const [fResult, setFResult] = useState<any>(null);
+  const [fLoading, setFLoading] = useState(false);
+
+  // 3. Cold-Chain State
+  const [cId, setCId] = useState('ICE-CORE-204');
+  const [cTarget, setCTarget] = useState(-80);
+  const [cStream, setCStream] = useState('-80,-79,-80,-81,-80,-79,-77,-74,-70,-68');
+  const [cResult, setCResult] = useState<any>(null);
+  const [cLoading, setCLoading] = useState(false);
+
+  // 4a. SAR Risk State
+  const [sId, setSId] = useState('Field-Team-07');
+  const [sDist, setSDist] = useState(43);
+  const [sVis, setSVis] = useState(180);
+  const [sWind, setSWind] = useState(104);
+  const [sTemp, setSTemp] = useState(-39);
+  const [sPers, setSPers] = useState(6);
+  const [sFuel, setSFuel] = useState(70);
+  const [sContact, setSContact] = useState(5);
+  const [sType, setSType] = useState('snowcat');
+  const [sResult, setSResult] = useState<any>(null);
+  const [sLoading, setSLoading] = useState(false);
+
+  // 4b. Asset Ranking State
+  const [aAssetsJson, setAAssetsJson] = useState(JSON.stringify([
+    { name: "Helicopter A", distance_km: 80, fuel_pct: 75, weather_compat_pct: 45, availability: "WEATHER_LIMITED" },
+    { name: "Snowcat B", distance_km: 31, fuel_pct: 82, weather_compat_pct: 94, availability: "READY" },
+    { name: "Snowcat C", distance_km: 47, fuel_pct: 60, weather_compat_pct: 88, availability: "READY" }
+  ], null, 2));
+  const [aResult, setAResult] = useState<any>(null);
+  const [aLoading, setALoading] = useState(false);
+
+  // Check ML Engine Health on open
+  const checkHealth = async () => {
+    setIsHealthLoading(true);
+    try {
+      const data = await polarisApi.getMlHealth();
+      setHealthStatus(data);
+    } catch (e) {
+      setHealthStatus(null);
+    } finally {
+      setIsHealthLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    checkHealth();
+  }, []);
+
+  // Handlers
+  const handlePredictWeather = async () => {
+    setWLoading(true);
+    try {
+      const data = await polarisApi.predictWeatherRisk({
+        station: wStation,
+        temperature_c: Number(wTemp),
+        wind_speed_kmh: Number(wWind),
+        wind_gust_kmh: Number(wGust),
+        pressure_hpa: Number(wPres),
+        pressure_change_3h: Number(wDPres),
+        visibility_m: Number(wVis),
+        humidity_pct: Number(wHum),
+        wind_chill_c: Number(wChill)
+      });
+      setWResult(data);
+    } catch (err: any) {
+      setWResult({ error: err?.response?.data?.detail || err.message });
+    } finally {
+      setWLoading(false);
+    }
+  };
+
+  const handlePredictFuel = async () => {
+    setFLoading(true);
+    try {
+      const data = await polarisApi.predictFuelForecast({
+        station: fStation,
+        current_stock_l: Number(fStock),
+        temperature_c: Number(fTemp),
+        wind_speed_kmh: Number(fWind),
+        personnel_count: Number(fPers),
+        generator_load_pct: Number(fLoad),
+        blizzard_flag: Number(fBliz),
+        equipment_usage_hrs: Number(fEquip),
+        resupply_in_days: fResupply ? Number(fResupply) : null
+      });
+      setFResult(data);
+    } catch (err: any) {
+      setFResult({ error: err?.response?.data?.detail || err.message });
+    } finally {
+      setFLoading(false);
+    }
+  };
+
+  const handlePredictColdchain = async () => {
+    setCLoading(true);
+    try {
+      const temps = cStream.split(',').map(s => Number(s.trim())).filter(n => !isNaN(n));
+      const data = await polarisApi.predictColdchainAnomaly({
+        cargo_id: cId,
+        temperatures: temps,
+        target_temp_c: Number(cTarget)
+      });
+      setCResult(data);
+    } catch (err: any) {
+      setCResult({ error: err?.response?.data?.detail || err.message });
+    } finally {
+      setCLoading(false);
+    }
+  };
+
+  const handlePredictSar = async () => {
+    setSLoading(true);
+    try {
+      const data = await polarisApi.predictSarRisk({
+        incident_id: sId,
+        distance_km: Number(sDist),
+        visibility_m: Number(sVis),
+        wind_kmh: Number(sWind),
+        temperature_c: Number(sTemp),
+        personnel_available: Number(sPers),
+        asset_fuel_pct: Number(sFuel),
+        time_since_contact_hr: Number(sContact),
+        asset_type: sType
+      });
+      setSResult(data);
+    } catch (err: any) {
+      setSResult({ error: err?.response?.data?.detail || err.message });
+    } finally {
+      setSLoading(false);
+    }
+  };
+
+  const handleRankAssets = async () => {
+    setALoading(true);
+    try {
+      const parsed = JSON.parse(aAssetsJson);
+      const data = await polarisApi.predictSarAssetRanking({
+        assets: parsed
+      });
+      setAResult(data);
+    } catch (err: any) {
+      setAResult({ error: err?.response?.data?.detail || err.message });
+    } finally {
+      setALoading(false);
+    }
+  };
+
+  const renderBadge = (level: string) => {
+    const l = (level || '').toUpperCase();
+    if (l === 'CRITICAL') return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40">CRITICAL</span>;
+    if (l === 'HIGH') return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">HIGH</span>;
+    if (l === 'MODERATE') return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">MODERATE</span>;
+    return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">LOW / OK</span>;
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn">
+      <div className="relative w-full max-w-5xl bg-polar-950 border border-cyan-500/40 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+        {/* Modal Top Bar */}
+        <div className="bg-gradient-to-r from-polar-900 via-polar-850 to-polar-900 px-6 py-4 flex items-center justify-between border-b border-cyan-900/50">
+          <div className="flex items-center space-x-3">
+            <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/40 text-cyan-400 shadow-lg shadow-cyan-500/10">
+              <Cpu className="w-6 h-6 animate-pulse" />
+            </div>
+            <div>
+              <div className="flex items-center space-x-2">
+                <h2 className="text-base font-bold text-slate-100 uppercase font-mono tracking-wider">
+                  POLARIS ML Predictive Engine
+                </h2>
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-400/10 text-cyan-300 border border-cyan-400/30">
+                  v1.0.0
+                </span>
+              </div>
+              <p className="text-xs text-slate-400 font-mono">
+                XGBoost Classifiers · XGBoost Regressors · Isolation Forests · Multi-Criteria SAR Ranker
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-4">
+            {/* Live Model Health Indicator */}
+            <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-polar-900/90 border border-slate-800 text-xs font-mono">
+              <span className={`w-2.5 h-2.5 rounded-full ${healthStatus ? 'bg-emerald-400 animate-pulse' : 'bg-rose-400'}`} />
+              <span className="text-slate-300">
+                {healthStatus ? `ML Engine Online (${healthStatus.models_loaded.length} models ready)` : 'Connecting ML...'}
+              </span>
+              <button onClick={checkHealth} className="text-slate-400 hover:text-cyan-300 p-0.5" title="Refresh health">
+                <RefreshCw className={`w-3 h-3 ${isHealthLoading ? 'animate-spin' : ''}`} />
+              </button>
+            </div>
+
+            <button onClick={onClose} className="text-slate-400 hover:text-white p-2 rounded-lg bg-polar-850 hover:bg-polar-800 transition">
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Tab Navigation */}
+        <div className="bg-polar-900/80 px-6 py-2 border-b border-slate-800 flex items-center space-x-2 overflow-x-auto">
+          <button
+            onClick={() => setActiveTab('weather')}
+            className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-mono font-medium transition ${
+              activeTab === 'weather'
+                ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 shadow-sm'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-polar-800'
+            }`}
+          >
+            <CloudSnow className="w-4 h-4 text-cyan-400" />
+            <span>1. Weather / Blizzard (XGBoost)</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('fuel')}
+            className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-mono font-medium transition ${
+              activeTab === 'fuel'
+                ? 'bg-amber-500/20 text-amber-300 border border-amber-500/50 shadow-sm'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-polar-800'
+            }`}
+          >
+            <Flame className="w-4 h-4 text-amber-400" />
+            <span>2. Fuel Forecast (XGBoost)</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('coldchain')}
+            className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-mono font-medium transition ${
+              activeTab === 'coldchain'
+                ? 'bg-blue-500/20 text-blue-300 border border-blue-500/50 shadow-sm'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-polar-800'
+            }`}
+          >
+            <ThermometerSnowflake className="w-4 h-4 text-blue-400" />
+            <span>3. Cold-Chain (Isolation Forest)</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('sar')}
+            className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-mono font-medium transition ${
+              activeTab === 'sar'
+                ? 'bg-rose-500/20 text-rose-300 border border-rose-500/50 shadow-sm'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-polar-800'
+            }`}
+          >
+            <LifeBuoy className="w-4 h-4 text-rose-400" />
+            <span>4a. SAR Incident Risk</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('ranking')}
+            className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-mono font-medium transition ${
+              activeTab === 'ranking'
+                ? 'bg-purple-500/20 text-purple-300 border border-purple-500/50 shadow-sm'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-polar-800'
+            }`}
+          >
+            <Award className="w-4 h-4 text-purple-400" />
+            <span>4b. Asset Ranking</span>
+          </button>
+        </div>
+
+        {/* Tab Body Content */}
+        <div className="p-6 overflow-y-auto space-y-6 flex-1 bg-polar-950/90 font-sans">
+
+          {/* TAB 1: WEATHER / BLIZZARD RISK */}
+          {activeTab === 'weather' && (
+            <div className="space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-cyan-950/40 border border-cyan-800/40">
+                <div className="flex items-center space-x-2 text-xs text-cyan-200 font-mono">
+                  <Sparkles className="w-4 h-4 text-cyan-400" />
+                  <span>XGBoost Classifier trained on multi-variate polar barometric & thermal telemetry.</span>
+                </div>
+                <div className="flex space-x-2">
+                  <button 
+                    onClick={() => {
+                      setWStation('Bharati'); setWTemp(-38); setWWind(95); setWGust(130);
+                      setWPres(955); setWDPres(-6); setWVis(250); setWHum(88); setWChill(-55);
+                    }}
+                    className="px-2.5 py-1 bg-polar-800 hover:bg-polar-700 text-cyan-300 text-[11px] font-mono rounded border border-slate-700"
+                  >
+                    Preset: Severe Blizzard
+                  </button>
+                  <button 
+                    onClick={() => {
+                      setWStation('Maitri'); setWTemp(-12); setWWind(25); setWGust(35);
+                      setWPres(992); setWDPres(1.2); setWVis(8000); setWHum(65); setWChill(-18);
+                    }}
+                    className="px-2.5 py-1 bg-polar-800 hover:bg-polar-700 text-slate-300 text-[11px] font-mono rounded border border-slate-700"
+                  >
+                    Preset: Clear Weather
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Target Station</label>
+                  <input
+                    type="text"
+                    value={wStation}
+                    onChange={(e) => setWStation(e.target.value)}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-cyan-300 font-mono focus:border-cyan-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Temperature (°C)</label>
+                  <input
+                    type="number"
+                    value={wTemp}
+                    onChange={(e) => setWTemp(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-cyan-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Wind Speed (km/h)</label>
+                  <input
+                    type="number"
+                    value={wWind}
+                    onChange={(e) => setWWind(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-cyan-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Wind Gust (km/h)</label>
+                  <input
+                    type="number"
+                    value={wGust}
+                    onChange={(e) => setWGust(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-cyan-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Atmospheric Pressure (hPa)</label>
+                  <input
+                    type="number"
+                    value={wPres}
+                    onChange={(e) => setWPres(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-cyan-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Pressure Δ 3h (hPa/3h)</label>
+                  <input
+                    type="number"
+                    value={wDPres}
+                    onChange={(e) => setWDPres(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-cyan-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Visibility (meters)</label>
+                  <input
+                    type="number"
+                    value={wVis}
+                    onChange={(e) => setWVis(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-cyan-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Relative Humidity (%)</label>
+                  <input
+                    type="number"
+                    value={wHum}
+                    onChange={(e) => setWHum(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-cyan-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Wind Chill Index (°C)</label>
+                  <input
+                    type="number"
+                    value={wChill}
+                    onChange={(e) => setWChill(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-cyan-400 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end">
+                <button
+                  onClick={handlePredictWeather}
+                  disabled={wLoading}
+                  className="px-6 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold font-mono text-xs rounded-xl shadow-lg shadow-cyan-500/20 flex items-center space-x-2 disabled:opacity-50"
+                >
+                  {wLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
+                  <span>RUN BLIZZARD PREDICTION</span>
+                </button>
+              </div>
+
+              {wResult && (
+                <div className="p-5 rounded-2xl bg-polar-900/90 border border-cyan-500/40 space-y-4">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h3 className="font-mono font-bold text-sm text-cyan-300 uppercase flex items-center space-x-2">
+                      <CloudSnow className="w-4 h-4" />
+                      <span>Prediction Results for {wResult.station}</span>
+                    </h3>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-xs text-slate-400">Overall Risk:</span>
+                      {renderBadge(wResult.predicted_risk)}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono">
+                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
+                      <div className="text-[10px] text-slate-400">BLIZZARD PROBABILITY</div>
+                      <div className="text-xl font-bold text-cyan-300 mt-1">{wResult.blizzard_probability_pct}%</div>
+                    </div>
+                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
+                      <div className="text-[10px] text-slate-400">VISIBILITY RISK</div>
+                      <div className="mt-1">{renderBadge(wResult.visibility_risk)}</div>
+                    </div>
+                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
+                      <div className="text-[10px] text-slate-400">WIND GUST RISK</div>
+                      <div className="mt-1">{renderBadge(wResult.wind_risk)}</div>
+                    </div>
+                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
+                      <div className="text-[10px] text-slate-400">MODEL CONFIDENCE</div>
+                      <div className="text-xl font-bold text-emerald-400 mt-1">{wResult.confidence_pct}%</div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* TAB 2: FUEL & INVENTORY FORECAST */}
+          {activeTab === 'fuel' && (
+            <div className="space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-amber-950/40 border border-amber-800/40">
+                <div className="flex items-center space-x-2 text-xs text-amber-200 font-mono">
+                  <Sparkles className="w-4 h-4 text-amber-400" />
+                  <span>XGBoost Regressor modeling nonlinear thermal loss, generator load & equipment demand.</span>
+                </div>
+                <button 
+                  onClick={() => {
+                    setFStation('Bharati'); setFStock(72400); setFResupply(26); setFTemp(-32);
+                    setFWind(60); setFPers(55); setFLoad(70); setFBliz(0); setFEquip(12);
+                  }}
+                  className="px-2.5 py-1 bg-polar-800 hover:bg-polar-700 text-amber-300 text-[11px] font-mono rounded border border-slate-700"
+                >
+                  Preset: Normal Winter Baseline
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Station</label>
+                  <input
+                    type="text"
+                    value={fStation}
+                    onChange={(e) => setFStation(e.target.value)}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-amber-300 font-mono focus:border-amber-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Current Stock (Liters D-10)</label>
+                  <input
+                    type="number"
+                    value={fStock}
+                    onChange={(e) => setFStock(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-amber-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Next Resupply (Days)</label>
+                  <input
+                    type="number"
+                    value={fResupply}
+                    onChange={(e) => setFResupply(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-amber-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Avg Ambient Temp (°C)</label>
+                  <input
+                    type="number"
+                    value={fTemp}
+                    onChange={(e) => setFTemp(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-amber-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Avg Wind Speed (km/h)</label>
+                  <input
+                    type="number"
+                    value={fWind}
+                    onChange={(e) => setFWind(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-amber-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Station Personnel Count</label>
+                  <input
+                    type="number"
+                    value={fPers}
+                    onChange={(e) => setFPers(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-amber-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Generator Load (%)</label>
+                  <input
+                    type="number"
+                    value={fLoad}
+                    onChange={(e) => setFLoad(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-amber-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Blizzard Flag (0 or 1)</label>
+                  <input
+                    type="number"
+                    value={fBliz}
+                    onChange={(e) => setFBliz(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-amber-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Equipment Usage (hrs/day)</label>
+                  <input
+                    type="number"
+                    value={fEquip}
+                    onChange={(e) => setFEquip(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-amber-400 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end">
+                <button
+                  onClick={handlePredictFuel}
+                  disabled={fLoading}
+                  className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-bold font-mono text-xs rounded-xl shadow-lg shadow-amber-500/20 flex items-center space-x-2 disabled:opacity-50"
+                >
+                  {fLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
+                  <span>RUN FUEL CONSUMPTION FORECAST</span>
+                </button>
+              </div>
+
+              {fResult && (
+                <div className="p-5 rounded-2xl bg-polar-900/90 border border-amber-500/40 space-y-4">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h3 className="font-mono font-bold text-sm text-amber-300 uppercase flex items-center space-x-2">
+                      <Flame className="w-4 h-4" />
+                      <span>Forecast Results for {fResult.station}</span>
+                    </h3>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-xs text-slate-400">Stockout Risk:</span>
+                      {renderBadge(fResult.risk)}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono">
+                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
+                      <div className="text-[10px] text-slate-400">PREDICTED DAILY BURN</div>
+                      <div className="text-xl font-bold text-amber-400 mt-1">{fResult.predicted_burn_l_per_day.toLocaleString()} L/day</div>
+                    </div>
+                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
+                      <div className="text-[10px] text-slate-400">ESTIMATED EXHAUSTION</div>
+                      <div className="text-xl font-bold text-cyan-300 mt-1">
+                        {fResult.predicted_exhaustion_day ? `Day ${fResult.predicted_exhaustion_day}` : 'Beyond Horizon (>30d)'}
+                      </div>
+                    </div>
+                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
+                      <div className="text-[10px] text-slate-400">NEXT RESUPPLY</div>
+                      <div className="text-xl font-bold text-slate-200 mt-1">Day {fResult.next_resupply_in_days ?? 'N/A'}</div>
+                    </div>
+                  </div>
+
+                  {/* Stock Trajectory Table */}
+                  {fResult.projection && (
+                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800 space-y-2">
+                      <div className="text-xs font-mono font-bold text-slate-300 uppercase">Forward Stock Projections:</div>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono text-xs">
+                        {Object.entries(fResult.projection).map(([key, val]: [string, any]) => (
+                          <div key={key} className="p-2 rounded bg-polar-900 border border-slate-800 flex justify-between items-center">
+                            <span className="text-slate-400">{key.replace('_', ' ').toUpperCase()}:</span>
+                            <span className="font-bold text-cyan-300">{Number(val).toLocaleString()} L</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* TAB 3: COLD-CHAIN ANOMALY DETECTION */}
+          {activeTab === 'coldchain' && (
+            <div className="space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-blue-950/40 border border-blue-800/40">
+                <div className="flex items-center space-x-2 text-xs text-blue-200 font-mono">
+                  <Sparkles className="w-4 h-4 text-blue-400" />
+                  <span>Isolation Forest trained on rolling trend volatility & slope to detect thermal degradation early.</span>
+                </div>
+                <div className="flex space-x-2">
+                  <button 
+                    onClick={() => {
+                      setCId('ICE-CORE-204'); setCTarget(-80);
+                      setCStream('-80,-79,-80,-81,-80,-79,-77,-74,-70,-68');
+                    }}
+                    className="px-2.5 py-1 bg-polar-800 hover:bg-polar-700 text-rose-300 text-[11px] font-mono rounded border border-slate-700"
+                  >
+                    Preset: Warming Trend Breach
+                  </button>
+                  <button 
+                    onClick={() => {
+                      setCId('BIO-PLASMA-09'); setCTarget(-80);
+                      setCStream('-80.1,-79.8,-80.2,-80.0,-80.1,-79.9,-80.0,-80.1');
+                    }}
+                    className="px-2.5 py-1 bg-polar-800 hover:bg-polar-700 text-emerald-300 text-[11px] font-mono rounded border border-slate-700"
+                  >
+                    Preset: Stable Cryo Stream
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Cargo Package ID</label>
+                  <input
+                    type="text"
+                    value={cId}
+                    onChange={(e) => setCId(e.target.value)}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-blue-300 font-mono focus:border-blue-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Target Cryogenic Temperature (°C)</label>
+                  <input
+                    type="number"
+                    value={cTarget}
+                    onChange={(e) => setCTarget(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-blue-400 focus:outline-none"
+                  />
+                </div>
+                <div className="md:col-span-2 space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">
+                    Recent Temperature Stream (Oldest → Newest, comma separated)
+                  </label>
+                  <input
+                    type="text"
+                    value={cStream}
+                    onChange={(e) => setCStream(e.target.value)}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-cyan-300 font-mono focus:border-blue-400 focus:outline-none"
+                  />
+                  <div className="text-[10px] text-slate-500 font-mono">
+                    Must have at least 2 telemetry readings to calculate slope & rolling standard deviation.
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-end">
+                <button
+                  onClick={handlePredictColdchain}
+                  disabled={cLoading}
+                  className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white font-bold font-mono text-xs rounded-xl shadow-lg shadow-blue-500/20 flex items-center space-x-2 disabled:opacity-50"
+                >
+                  {cLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
+                  <span>SCORE TEMPERATURE STREAM</span>
+                </button>
+              </div>
+
+              {cResult && (
+                <div className="p-5 rounded-2xl bg-polar-900/90 border border-blue-500/40 space-y-4">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h3 className="font-mono font-bold text-sm text-blue-300 uppercase flex items-center space-x-2">
+                      <ThermometerSnowflake className="w-4 h-4" />
+                      <span>Isolation Forest Evaluation: {cResult.cargo_id}</span>
+                    </h3>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-xs text-slate-400">Trend Status:</span>
+                      {cResult.trend_anomaly_detected ? renderBadge('CRITICAL') : renderBadge('LOW')}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono">
+                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
+                      <div className="text-[10px] text-slate-400">CURRENT TELEMETRY</div>
+                      <div className="text-xl font-bold text-cyan-300 mt-1">{cResult.current_temperature_c}°C</div>
+                    </div>
+                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
+                      <div className="text-[10px] text-slate-400">TARGET TEMP</div>
+                      <div className="text-xl font-bold text-slate-300 mt-1">{cResult.target_temp_c}°C</div>
+                    </div>
+                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
+                      <div className="text-[10px] text-slate-400">ANOMALY SCORE</div>
+                      <div className="text-xl font-bold text-amber-400 mt-1">{cResult.anomaly_score} / 1.0</div>
+                    </div>
+                    <div className="p-3 bg-polar-950 rounded-xl border border-slate-800">
+                      <div className="text-[10px] text-slate-400">EST. STEPS TO BREACH</div>
+                      <div className="text-xl font-bold text-rose-400 mt-1">
+                        {cResult.estimated_steps_to_breach ?? 'None (Stable)'}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={`p-3 rounded-xl border font-mono text-xs ${
+                    cResult.trend_anomaly_detected
+                      ? 'bg-rose-950/40 border-rose-600/50 text-rose-200'
+                      : 'bg-emerald-950/40 border-emerald-600/50 text-emerald-200'
+                  }`}>
+                    <span className="font-bold">Recommended Action: </span>
+                    {cResult.action}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* TAB 4a: SAR INCIDENT RESPONSE RISK */}
+          {activeTab === 'sar' && (
+            <div className="space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-rose-950/40 border border-rose-800/40">
+                <div className="flex items-center space-x-2 text-xs text-rose-200 font-mono">
+                  <Sparkles className="w-4 h-4 text-rose-400" />
+                  <span>XGBoost Classification Pipeline with OneHot categorical encoding for SAR mission friction.</span>
+                </div>
+                <button 
+                  onClick={() => {
+                    setSId('Field-Team-07'); setSDist(43); setSVis(180); setSWind(104);
+                    setSTemp(-39); setSPers(6); setSFuel(70); setSContact(5); setSType('snowcat');
+                  }}
+                  className="px-2.5 py-1 bg-polar-800 hover:bg-polar-700 text-rose-300 text-[11px] font-mono rounded border border-slate-700"
+                >
+                  Preset: Field Team 07 Distress
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Incident ID</label>
+                  <input
+                    type="text"
+                    value={sId}
+                    onChange={(e) => setSId(e.target.value)}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-rose-300 font-mono focus:border-rose-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Distance to Target (km)</label>
+                  <input
+                    type="number"
+                    value={sDist}
+                    onChange={(e) => setSDist(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-rose-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Visibility (m)</label>
+                  <input
+                    type="number"
+                    value={sVis}
+                    onChange={(e) => setSVis(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-rose-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Wind Velocity (km/h)</label>
+                  <input
+                    type="number"
+                    value={sWind}
+                    onChange={(e) => setSWind(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-rose-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Ambient Temp (°C)</label>
+                  <input
+                    type="number"
+                    value={sTemp}
+                    onChange={(e) => setSTemp(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-rose-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Personnel Available</label>
+                  <input
+                    type="number"
+                    value={sPers}
+                    onChange={(e) => setSPers(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-rose-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Asset Fuel Tank (%)</label>
+                  <input
+                    type="number"
+                    value={sFuel}
+                    onChange={(e) => setSFuel(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-rose-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Hours Since Last Radio Contact</label>
+                  <input
+                    type="number"
+                    value={sContact}
+                    onChange={(e) => setSContact(Number(e.target.value))}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-rose-400 focus:outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] uppercase font-mono text-slate-400">Asset Vehicle Type</label>
+                  <select
+                    value={sType}
+                    onChange={(e) => setSType(e.target.value)}
+                    className="w-full bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono focus:border-rose-400 focus:outline-none"
+                  >
+                    <option value="snowcat">Snowcat (PistenBully / Antarctic)</option>
+                    <option value="helicopter">Helicopter (Airborne SAR)</option>
+                    <option value="vessel">Vessel (Icebreaker / Polar)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="flex justify-end">
+                <button
+                  onClick={handlePredictSar}
+                  disabled={sLoading}
+                  className="px-6 py-2.5 bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-400 hover:to-red-500 text-white font-bold font-mono text-xs rounded-xl shadow-lg shadow-rose-500/20 flex items-center space-x-2 disabled:opacity-50"
+                >
+                  {sLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
+                  <span>ASSESS SAR INCIDENT RISK</span>
+                </button>
+              </div>
+
+              {sResult && (
+                <div className="p-5 rounded-2xl bg-polar-900/90 border border-rose-500/40 space-y-4">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h3 className="font-mono font-bold text-sm text-rose-300 uppercase flex items-center space-x-2">
+                      <LifeBuoy className="w-4 h-4" />
+                      <span>Response Risk Analysis: {sResult.incident_id}</span>
+                    </h3>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-xs text-slate-400">Calculated Risk Level:</span>
+                      {renderBadge(sResult.risk_level)}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono">
+                    <div className="p-4 bg-polar-950 rounded-xl border border-slate-800 flex items-center justify-between">
+                      <div>
+                        <div className="text-[10px] text-slate-400">CRITICAL RESPONSE RISK</div>
+                        <div className="text-2xl font-bold text-rose-400 mt-1">{sResult.response_risk_pct}%</div>
+                      </div>
+                      <div className="p-2.5 rounded-lg bg-rose-500/10 text-rose-400">
+                        <AlertTriangle className="w-6 h-6" />
+                      </div>
+                    </div>
+                    <div className="p-4 bg-polar-950 rounded-xl border border-slate-800 flex items-center justify-between">
+                      <div>
+                        <div className="text-[10px] text-slate-400">ESTIMATED RESPONSE TIME</div>
+                        <div className="text-2xl font-bold text-cyan-300 mt-1">{sResult.estimated_response_time_min} minutes</div>
+                      </div>
+                      <div className="p-2.5 rounded-lg bg-cyan-500/10 text-cyan-400">
+                        <Activity className="w-6 h-6" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* TAB 4b: SAR ASSET SUITABILITY RANKING */}
+          {activeTab === 'ranking' && (
+            <div className="space-y-6">
+              <div className="p-3 rounded-xl bg-purple-950/40 border border-purple-800/40 text-xs text-purple-200 font-mono flex items-center space-x-2">
+                <Sparkles className="w-4 h-4 text-purple-400" />
+                <span>Multi-criteria asset ranking formula: Distance (30%) + Fuel (20%) + Weather Compat (30%) + Availability (20%).</span>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[11px] uppercase font-mono text-slate-400">Fleet Asset Configuration (JSON format)</label>
+                <textarea
+                  rows={6}
+                  value={aAssetsJson}
+                  onChange={(e) => setAAssetsJson(e.target.value)}
+                  className="w-full bg-polar-900 border border-slate-700 rounded-xl p-3 text-xs text-purple-300 font-mono focus:border-purple-400 focus:outline-none"
+                />
+              </div>
+
+              <div className="flex justify-end">
+                <button
+                  onClick={handleRankAssets}
+                  disabled={aLoading}
+                  className="px-6 py-2.5 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-400 hover:to-indigo-500 text-white font-bold font-mono text-xs rounded-xl shadow-lg shadow-purple-500/20 flex items-center space-x-2 disabled:opacity-50"
+                >
+                  {aLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
+                  <span>RANK ASSETS FOR SAR MISSION</span>
+                </button>
+              </div>
+
+              {aResult && Array.isArray(aResult) && (
+                <div className="p-5 rounded-2xl bg-polar-900/90 border border-purple-500/40 space-y-4">
+                  <h3 className="font-mono font-bold text-sm text-purple-300 uppercase flex items-center space-x-2 border-b border-slate-800 pb-3">
+                    <Award className="w-4 h-4 text-amber-400" />
+                    <span>Recommended Asset Dispatch Ranking</span>
+                  </h3>
+
+                  <div className="space-y-3 font-mono">
+                    {aResult.map((asset: any, idx: number) => {
+                      const medal = idx === 0 ? '🥇 1st Choice' : idx === 1 ? '🥈 2nd Choice' : '🥉 3rd Choice';
+                      const isTop = idx === 0;
+                      return (
+                        <div
+                          key={asset.name}
+                          className={`p-4 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+                            isTop 
+                              ? 'bg-purple-950/40 border-purple-500/50 shadow-md shadow-purple-500/10'
+                              : 'bg-polar-950 border-slate-800'
+                          }`}
+                        >
+                          <div className="flex items-center space-x-3">
+                            <span className="text-xs font-bold px-2 py-1 rounded bg-polar-900 text-amber-300 border border-slate-700">
+                              {medal}
+                            </span>
+                            <div>
+                              <div className="text-sm font-bold text-slate-100">{asset.name}</div>
+                              <div className="text-[11px] text-slate-400 mt-0.5">
+                                Distance: {asset.distance_km}km · Fuel: {asset.fuel_pct}% · Weather Compat: {asset.weather_compatibility_pct}%
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center space-x-3">
+                            {renderBadge(asset.availability)}
+                            <div className="text-right">
+                              <div className="text-[10px] text-slate-400">SUITABILITY</div>
+                              <div className="text-lg font-bold text-cyan-300">{asset.suitability_pct}%</div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};

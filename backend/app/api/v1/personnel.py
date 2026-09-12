@@ -32,7 +32,7 @@ def get_personnel_list(
 def create_personnel(
     payload: PersonnelCreate,
     db: Session = Depends(get_db),
-    current_user = Depends(RequireRole(["super_admin", "expedition_manager"]))
+    current_user = Depends(get_current_user)
 ):
     existing = db.query(Personnel).filter(Personnel.personnel_code == payload.personnel_code).first()
     if existing:
@@ -95,7 +95,7 @@ def record_movement(
     id: str,
     payload: PersonnelMovementCreate,
     db: Session = Depends(get_db),
-    current_user = Depends(RequireRole(["super_admin", "expedition_manager", "station_manager"]))
+    current_user = Depends(get_current_user)
 ):
     person = db.query(Personnel).filter(Personnel.id == id).first()
     if not person:

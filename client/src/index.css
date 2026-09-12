@@ -3,58 +3,114 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply bg-[#070e1b] text-slate-100 antialiased font-sans;
-    background-image: 
-      radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.08) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, rgba(56, 189, 248, 0.05) 0px, transparent 50%),
-      radial-gradient(at 50% 100%, rgba(15, 23, 42, 0.9) 0px, transparent 50%);
+  :root {
+    color-scheme: dark;
   }
 
-  /* Custom scrollbar */
+  body {
+    @apply bg-[#040813] text-slate-100 antialiased font-sans selection:bg-cyan-500 selection:text-slate-950;
+    background-image: 
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 242, 254, 0.12), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 90% 10%, rgba(79, 172, 254, 0.08), transparent 60%),
+      radial-gradient(ellipse 50% 50% at 10% 90%, rgba(16, 185, 129, 0.06), transparent 60%),
+      linear-gradient(180deg, #040813 0%, #060d1b 50%, #03060f 100%);
+    background-attachment: fixed;
+  }
+
+  /* Custom high-tech scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #091322;
+    background: rgba(6, 13, 25, 0.6);
   }
   ::-webkit-scrollbar-thumb {
     background: #1e3a5f;
-    border-radius: 3px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 242, 254, 0.15);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #2b5488;
+    background: #00f2fe;
   }
 }
 
+/* Frosted Acrylic Glass Panels */
 .glass-panel {
-  background: rgba(13, 27, 49, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(56, 189, 248, 0.12);
+  background: rgba(10, 22, 40, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel:hover {
+  border-color: rgba(56, 189, 248, 0.32);
+}
+
+.glass-panel-interactive {
+  background: rgba(10, 22, 40, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-interactive:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 242, 254, 0.45);
+  box-shadow: 0 12px 36px -4px rgba(0, 242, 254, 0.18);
 }
 
 .glass-panel-danger {
-  background: rgba(45, 12, 20, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(244, 63, 94, 0.35);
+  background: rgba(45, 12, 20, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(244, 63, 94, 0.45);
+  box-shadow: 0 8px 32px 0 rgba(244, 63, 94, 0.2);
 }
 
 .glass-panel-warning {
-  background: rgba(45, 30, 10, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(245, 158, 11, 0.35);
+  background: rgba(45, 30, 10, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  box-shadow: 0 8px 32px 0 rgba(245, 158, 11, 0.2);
 }
 
 .polar-glow {
-  box-shadow: 0 0 20px -5px rgba(0, 242, 254, 0.25);
+  box-shadow: 0 0 25px -4px rgba(0, 242, 254, 0.35);
+}
+
+.polar-glow-cyan {
+  box-shadow: 0 0 20px -3px rgba(56, 189, 248, 0.3);
 }
 
 .polar-glow-red {
-  box-shadow: 0 0 25px -3px rgba(244, 63, 94, 0.4);
+  box-shadow: 0 0 25px -3px rgba(244, 63, 94, 0.45);
+}
+
+.polar-glow-amber {
+  box-shadow: 0 0 20px -3px rgba(245, 158, 11, 0.35);
+}
+
+.polar-glow-emerald {
+  box-shadow: 0 0 20px -3px rgba(16, 185, 129, 0.35);
+}
+
+/* Shimmering gradient text */
+.gradient-text-cyan {
+  background: linear-gradient(135deg, #e0f2fe 0%, #38bdf8 50%, #00f2fe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-aurora {
+  background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #10b981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Radar scan sweep effect for polar operations */
@@ -68,11 +124,13 @@
   transform-origin: center center;
 }
 
-/* Blizzard snow falling effect */
-.snow-particle {
-  position: absolute;
-  background: white;
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0.6;
+/* Aurora wave pulse */
+@keyframes aurora-wave {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
 }
+
+.animate-aurora {
+  animation: aurora-wave 8s ease-in-out infinite;
+}
+
