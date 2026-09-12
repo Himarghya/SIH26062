@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { 
   Bell, 
   ShieldAlert, 
@@ -8,7 +8,9 @@ import {
   Radio, 
   QrCode, 
   Sparkles,
-  ChevronDown
+  ChevronDown,
+  Wifi,
+  Info
 } from 'lucide-react';
 import { useAuth, DEMO_ACCOUNTS } from '../../context/AuthContext';
 import { NotificationsPopover } from '../notifications/NotificationsPopover';
@@ -30,31 +32,28 @@ export const TopNav: React.FC<TopNavProps> = ({
 
   return (
     <header className="h-16 bg-polar-950/80 backdrop-blur-md border-b border-cyan-900/30 px-4 md:px-6 flex items-center justify-between sticky top-0 z-30">
-      {/* Left: Operational Mode Badges */}
+      {/* Left: Operational Mode & Transparency Pill */}
       <div className="flex items-center space-x-3">
-        <div className="hidden sm:flex items-center space-x-2 px-2.5 py-1 rounded-lg bg-polar-900 border border-slate-800 text-xs">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-slate-300 font-medium">Antarctic Staging:</span>
-          <span className="font-mono font-bold text-cyan-300">Wintering Mode</span>
+        {/* Simulation Transparency Label */}
+        <div className="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-cyan-950/70 border border-cyan-800/60 text-cyan-300 text-[11px] font-mono">
+          <Info className="w-3.5 h-3.5 text-cyan-400" />
+          <span className="font-bold">Simulation Mode — Demonstration Data</span>
         </div>
 
-        {/* Digital Twin Simulator Launcher */}
+        {/* Satellite Sync Status Indicator */}
+        <div className="hidden lg:flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-polar-900 border border-slate-800 text-[11px] font-mono text-slate-400">
+          <Wifi className="w-3 h-3 text-emerald-400 animate-pulse" />
+          <span>Iridium Sat-Link: <strong className="text-emerald-400 font-normal">Active</strong> (Delta Sync: 2m ago)</span>
+        </div>
+
+        {/* Scenario Simulation Launcher */}
         <button
           onClick={onOpenDigitalTwin}
           className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-blue-900 to-indigo-900 hover:from-blue-800 hover:to-indigo-800 border border-blue-500/40 text-cyan-200 font-mono text-xs shadow-md transition"
-          title="Launch Deterministic Digital Twin Simulation for Presentation"
+          title="Launch Deterministic Scenario Simulation"
         >
           <PlayCircle className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-          <span className="font-bold">Digital Twin Simulation</span>
-        </button>
-
-        {/* QR Code Scanner Quick Trigger */}
-        <button
-          onClick={onOpenQrScanner}
-          className="hidden md:flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg bg-polar-850 hover:bg-polar-800 border border-slate-700 text-slate-300 text-xs font-mono transition"
-        >
-          <QrCode className="w-3.5 h-3.5 text-amber-400" />
-          <span>Scan Cargo QR</span>
+          <span className="font-bold">Scenario Simulation</span>
         </button>
       </div>
 
@@ -94,14 +93,14 @@ export const TopNav: React.FC<TopNavProps> = ({
               {user?.name?.[0] || 'U'}
             </div>
             <div className="text-left hidden lg:block">
-              <div className="font-bold text-slate-100 text-[11px] truncate max-w-[120px]">{user?.name}</div>
+              <div className="font-bold text-slate-100 text-[11px] truncate max-w-[130px]">{user?.name}</div>
               <div className="text-[9px] text-cyan-400 uppercase font-mono">{user?.role.replace('_', ' ')}</div>
             </div>
             <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
           </button>
 
           {showRoleMenu && (
-            <div className="absolute right-0 mt-2 w-64 bg-polar-950 border border-cyan-800/60 rounded-xl shadow-2xl p-2 z-50 animate-fadeIn">
+            <div className="absolute right-0 mt-2 w-72 bg-polar-950 border border-cyan-800/60 rounded-xl shadow-2xl p-2 z-50 animate-fadeIn">
               <div className="px-3 py-2 border-b border-slate-800 text-xs">
                 <div className="font-mono text-[10px] text-slate-400 uppercase">Switch Active Demo Role:</div>
               </div>

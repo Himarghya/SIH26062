@@ -12,7 +12,10 @@ import {
   Filter, 
   Cpu,
   Layers,
-  ArrowRight
+  ArrowRight,
+  TrendingDown,
+  Calculator,
+  Info
 } from 'lucide-react';
 import { StockTransactionModal } from '../components/inventory/StockTransactionModal';
 import { FuelOptimizerModal } from '../components/FuelOptimizerModal';
@@ -38,6 +41,7 @@ export const InventoryPage: React.FC<{
   const [showStockModal, setShowStockModal] = useState(false);
   const [selectedItemForTx, setSelectedItemForTx] = useState<any>(null);
   const [showFuelOptimizer, setShowFuelOptimizer] = useState(false);
+  const [showFormulas, setShowFormulas] = useState(true);
 
   const fetchInventoryData = async () => {
     try {
@@ -62,7 +66,7 @@ export const InventoryPage: React.FC<{
 
   const filteredInventory = inventory.filter(item => {
     const stnId = item.station_id || item.stationId;
-    const sku = item.sku || '';
+    const sku = item.sku || item.item_code || '';
     const name = item.name || '';
     const matchesStation = filterStation === 'all' || stnId === filterStation;
     const matchesCategory = filterCategory === 'all' || item.category === filterCategory;
@@ -77,24 +81,65 @@ export const InventoryPage: React.FC<{
         <div>
           <h2 className="text-xl font-black text-slate-100 uppercase font-mono flex items-center space-x-2">
             <Anchor className="w-6 h-6 text-cyan-400" />
-            <span>Polar Multi-Station Critical Inventory & Survival Reserves</span>
+            <span>Multi-Station Inventory & Wintering Autonomy Ledger</span>
           </h2>
           <p className="text-xs text-slate-400 mt-1">
-            Tracking Fuel Farms, MRE Rations, Cummins Spares, and Medical Oxygen across Antarctic & Arctic Bases
+            Predictive stockout modeling, lead-time demand, and safety stock reserves for 8-month winter isolation
           </p>
         </div>
 
-        <button
-          onClick={() => {
-            if (onOpenFuelModal) onOpenFuelModal();
-            else setShowFuelOptimizer(true);
-          }}
-          className="px-4 py-2 rounded-xl bg-blue-950/80 hover:bg-blue-900 border border-cyan-500/50 text-cyan-300 font-bold text-xs flex items-center space-x-2 shadow-lg shadow-cyan-500/15 transition"
-        >
-          <Cpu className="w-4 h-4 text-cyan-400" />
-          <span>Launch AI Fuel Burn Optimizer</span>
-        </button>
+        <div className="flex items-center space-x-2">
+          <button
+            onClick={() => setShowFormulas(!showFormulas)}
+            className="px-3 py-2 rounded-xl bg-polar-900 hover:bg-polar-850 border border-slate-700 text-slate-300 text-xs font-mono flex items-center space-x-1.5 transition"
+          >
+            <Calculator className="w-4 h-4 text-cyan-400" />
+            <span>{showFormulas ? 'Hide Formulas' : 'View Autonomy Model'}</span>
+          </button>
+          <button
+            onClick={() => {
+              if (onOpenFuelModal) onOpenFuelModal();
+              else setShowFuelOptimizer(true);
+            }}
+            className="px-4 py-2 rounded-xl bg-blue-950/80 hover:bg-blue-900 border border-cyan-500/50 text-cyan-300 font-bold text-xs flex items-center space-x-2 shadow-lg shadow-cyan-500/15 transition"
+          >
+            <Cpu className="w-4 h-4 text-cyan-400" />
+            <span>Launch Fuel Burn Model</span>
+          </button>
+        </div>
       </div>
+
+      {/* Explicit Wintering Autonomy Mathematical Formulas Box */}
+      {showFormulas && (
+        <div className="glass-panel p-4 rounded-xl border border-cyan-800/40 bg-polar-950/90 text-xs font-mono space-y-2.5 animate-fadeIn">
+          <div className="flex items-center justify-between text-cyan-300 font-bold">
+            <div className="flex items-center space-x-2">
+              <Info className="w-4 h-4" />
+              <span>Wintering Autonomy & Stockout Forecasting Engine (Deterministic Mathematical Model)</span>
+            </div>
+            <span className="text-[10px] text-slate-400 font-normal">NCPOR Standard Logistics Protocol</span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-3 pt-1 text-[11px] text-slate-300">
+            <div className="p-2.5 rounded-lg bg-polar-900/80 border border-slate-800">
+              <div className="text-slate-500 text-[10px] uppercase">1. Estimated Remaining Days</div>
+              <div className="font-bold text-cyan-300 mt-0.5">$$\text{Days} = \frac{\text{Available Stock}}{\text{Avg Daily Burn Rate}}$$</div>
+            </div>
+            <div className="p-2.5 rounded-lg bg-polar-900/80 border border-slate-800">
+              <div className="text-slate-500 text-[10px] uppercase">2. Safety Stock Buffer</div>
+              <div className="font-bold text-emerald-300 mt-0.5">$$\text{Safety Stock} = \text{Daily Burn} \times \text{Buffer (90d)}$$</div>
+            </div>
+            <div className="p-2.5 rounded-lg bg-polar-900/80 border border-slate-800">
+              <div className="text-slate-500 text-[10px] uppercase">3. Reorder Point (ROP)</div>
+              <div className="font-bold text-amber-300 mt-0.5">$$\text{ROP} = \text{Lead-Time Demand} + \text{Safety Stock}$$</div>
+            </div>
+            <div className="p-2.5 rounded-lg bg-polar-900/80 border border-slate-800">
+              <div className="text-slate-500 text-[10px] uppercase">4. Wintering Risk Triage</div>
+              <div className="font-bold text-rose-300 mt-0.5">$$\text{Days} < 240\text{d} \rightarrow \text{Critical Risk}$$</div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Filter & Search Bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 glass-panel rounded-xl">
@@ -142,22 +187,26 @@ export const InventoryPage: React.FC<{
           const stnId = item.station_id || item.stationId;
           const station = stations.find(s => s.id === stnId);
           const currentQty = item.quantity ?? item.currentStock ?? 0;
-          const minThreshold = item.min_threshold ?? item.minSafetyThreshold ?? 100;
-          const stockPercent = Math.min(100, Math.round((currentQty / (minThreshold * 2)) * 100));
-          const isLow = currentQty < minThreshold;
+          const minThreshold = item.minimum_stock ?? item.min_threshold ?? item.minSafetyThreshold ?? 100;
+          const burnRate = item.burn_rate_per_day || 15.0;
+          const remainingDays = Math.round(currentQty / Math.max(0.1, burnRate));
+          const stockPercent = Math.min(100, Math.round((currentQty / (minThreshold * 2.2)) * 100));
+          const isCritical = remainingDays < 180 || currentQty < minThreshold;
+          const isWarning = remainingDays < 270;
 
           return (
             <div
               key={item.id}
               className={`glass-panel p-4 rounded-xl space-y-3 relative group transition border ${
-                isLow ? 'border-amber-500/60 bg-amber-950/20' : 'hover:border-cyan-500/40'
+                isCritical ? 'border-rose-500/60 bg-rose-950/20' :
+                isWarning ? 'border-amber-500/60 bg-amber-950/20' : 'hover:border-cyan-500/40'
               }`}
             >
               {/* Header */}
               <div className="flex items-start justify-between">
                 <div>
                   <div className="flex items-center space-x-2">
-                    <span className="font-mono font-bold text-cyan-400 text-xs">{item.sku}</span>
+                    <span className="font-mono font-bold text-cyan-400 text-xs">{item.item_code || item.sku}</span>
                     <span className="text-[10px] font-mono text-slate-400 px-1.5 py-0.5 rounded bg-polar-900">
                       {station?.name || 'Base Store'}
                     </span>
@@ -167,41 +216,48 @@ export const InventoryPage: React.FC<{
                 </div>
 
                 <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
-                  !isLow ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' :
-                  'bg-rose-950 text-rose-300 border border-rose-800 animate-pulse'
+                  isCritical ? 'bg-rose-950 text-rose-300 border border-rose-800 animate-pulse' :
+                  isWarning ? 'bg-amber-950 text-amber-300 border border-amber-800' :
+                  'bg-emerald-950 text-emerald-300 border border-emerald-800'
                 }`}>
-                  {!isLow ? 'Optimal' : 'Low Stock'}
+                  {isCritical ? 'Critical Stockout Risk' : isWarning ? 'Warning Buffer' : 'Optimal Reserve'}
                 </span>
               </div>
 
               {/* Stock Quantity & Days Remaining */}
               <div className="p-3 rounded-lg bg-polar-900/80 border border-slate-800 flex items-center justify-between">
                 <div>
-                  <div className="text-[10px] text-slate-400 font-mono">CURRENT STOCK</div>
+                  <div className="text-[10px] text-slate-400 font-mono">AVAILABLE STOCK</div>
                   <div className="text-lg font-black font-mono text-slate-100">
                     {currentQty.toLocaleString()} <span className="text-xs font-normal text-slate-400">{item.unit}</span>
                   </div>
                 </div>
 
                 <div className="text-right">
-                  <div className="text-[10px] text-slate-400 font-mono">MIN SAFETY REQ</div>
-                  <div className="text-base font-bold font-mono text-cyan-300">
-                    {minThreshold.toLocaleString()} {item.unit}
+                  <div className="text-[10px] text-slate-400 font-mono">AUTONOMY DURATION</div>
+                  <div className={`text-base font-bold font-mono ${isCritical ? 'text-rose-400' : isWarning ? 'text-amber-300' : 'text-cyan-300'}`}>
+                    ~{remainingDays > 900 ? 'Permanent' : `${remainingDays} Days`}
                   </div>
                 </div>
+              </div>
+
+              {/* Lead Time & Reorder Point Info */}
+              <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-400 font-mono">
+                <div>Daily Burn: <strong className="text-slate-200">{burnRate} {item.unit}/day</strong></div>
+                <div>Safety Buffer: <strong className="text-emerald-400">{minThreshold} {item.unit}</strong></div>
               </div>
 
               {/* Progress Bar towards Min Threshold */}
               <div>
                 <div className="flex justify-between text-[10px] font-mono text-slate-400 mb-1">
-                  <span>Stock Buffer</span>
-                  <span>{stockPercent}% capacity</span>
+                  <span>Winter Reserve Margin</span>
+                  <span>{stockPercent}% of Target</span>
                 </div>
                 <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
                   <div
                     className={`h-full rounded-full transition-all duration-500 ${
-                      stockPercent > 50 ? 'bg-emerald-500' :
-                      stockPercent > 20 ? 'bg-amber-500' : 'bg-rose-500'
+                      !isWarning ? 'bg-emerald-500' :
+                      !isCritical ? 'bg-amber-500' : 'bg-rose-500'
                     }`}
                     style={{ width: `${stockPercent}%` }}
                   />
@@ -210,7 +266,7 @@ export const InventoryPage: React.FC<{
 
               {/* Interactive Stock Ledger Trigger Button */}
               <div className="pt-2 border-t border-slate-800 flex items-center justify-between">
-                <span className="text-[11px] text-slate-400 font-mono">Ledger Action:</span>
+                <span className="text-[11px] text-slate-400 font-mono">Ledger Transaction:</span>
                 <button
                   onClick={() => {
                     setSelectedItemForTx(item);

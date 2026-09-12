@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+﻿from datetime import datetime, timedelta
 from backend.app.db.session import SessionLocal, Base, engine
 from backend.app.db.models import (
     Role, User, Station, Expedition, Personnel, Asset, Cargo, CargoTrackingEvent,
@@ -8,6 +8,7 @@ from backend.app.db.models import (
 from backend.app.core.security import get_password_hash
 
 def seed_database():
+    Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
     
@@ -33,12 +34,12 @@ def seed_database():
     # 2. Seed Demo Users
     demo_password_hash = get_password_hash("Polaris2026!")
     demo_users = [
-        {"email": "admin@polaris.gov.in", "name": "Dr. Arvind Swaminathan (Director NCPOR)", "role": "super_admin"},
-        {"email": "expedition@polaris.gov.in", "name": "Dr. Meera Nambiar (Expedition Leader)", "role": "expedition_manager"},
-        {"email": "logistics@polaris.gov.in", "name": "Wg Cdr Tarun Jaswal (Logistics Lead)", "role": "logistics_officer"},
-        {"email": "station@polaris.gov.in", "name": "Er. Sandeep Bopche (Station Commander)", "role": "station_manager"},
-        {"email": "emergency@polaris.gov.in", "name": "Capt. R. Deshmukh (SAR Coordinator)", "role": "emergency_coordinator"},
-        {"email": "viewer@polaris.gov.in", "name": "Aditi Sharma (MoES Analyst)", "role": "viewer"},
+        {"email": "admin@polaris.gov.in", "name": "Dr. Demo Administrator (Director NCPOR)", "role": "super_admin"},
+        {"email": "expedition@polaris.gov.in", "name": "Demo Expedition Director", "role": "expedition_manager"},
+        {"email": "logistics@polaris.gov.in", "name": "Demo Logistics Officer", "role": "logistics_officer"},
+        {"email": "station@polaris.gov.in", "name": "Demo Station Commander (Bharati)", "role": "station_manager"},
+        {"email": "emergency@polaris.gov.in", "name": "Demo SAR Emergency Commander", "role": "emergency_coordinator"},
+        {"email": "viewer@polaris.gov.in", "name": "Demo MoES Scientific Analyst", "role": "viewer"},
     ]
     
     for u in demo_users:
@@ -61,113 +62,109 @@ def seed_database():
             "region": "Antarctica",
             "location_name": "Larsemann Hills, East Antarctica",
             "latitude": -69.4075,
-            "longitude": 76.1942,
+            "longitude": 76.1908,
             "elevation_m": 35.0,
             "capacity": 47,
             "active_personnel": 24,
-            "status": "Wintering",
-            "temperature_c": -28.4,
-            "wind_speed_kmh": 42.0,
-            "blizzard_level": "NORMAL"
+            "status": "Operational",
+            "temperature_c": -28.5,
+            "wind_speed_kmh": 68.0,
+            "blizzard_level": "STAGE_1_ADVISORY"
         },
         {
             "name": "Maitri Research Station",
             "code": "MTR-ANT",
             "region": "Antarctica",
-            "location_name": "Schirmacher Oasis, Queen Maud Land",
+            "location_name": "Schirmacher Oasis, Dronning Maud Land",
             "latitude": -70.7667,
             "longitude": 11.7333,
             "elevation_m": 117.0,
-            "capacity": 40,
-            "active_personnel": 22,
-            "status": "Wintering",
-            "temperature_c": -32.1,
-            "wind_speed_kmh": 58.0,
-            "blizzard_level": "STAGE_1_ADVISORY"
+            "capacity": 65,
+            "active_personnel": 25,
+            "status": "Operational",
+            "temperature_c": -22.0,
+            "wind_speed_kmh": 42.0,
+            "blizzard_level": "NORMAL"
         },
         {
             "name": "Himadri Research Station",
             "code": "HMD-ARC",
             "region": "Arctic",
-            "location_name": "Ny-Ålesund, Spitsbergen, Svalbard",
+            "location_name": "Ny-Ålesund, Spitsbergen, Svalbard, Norway",
             "latitude": 78.9235,
-            "longitude": 11.9099,
-            "elevation_m": 12.0,
-            "capacity": 15,
+            "longitude": 11.9333,
+            "elevation_m": 15.0,
+            "capacity": 12,
             "active_personnel": 8,
             "status": "Operational",
-            "temperature_c": -14.6,
-            "wind_speed_kmh": 24.0,
+            "temperature_c": -14.2,
+            "wind_speed_kmh": 28.0,
             "blizzard_level": "NORMAL"
         },
         {
-            "name": "IndARC Mooring System",
-            "code": "IND-ARC",
+            "name": "IndARC Mooring Observatory",
+            "code": "ARC-OBS-01",
             "region": "Arctic",
-            "location_name": "Kongsfjorden Fjord Sub-Surface",
-            "latitude": 78.9812,
-            "longitude": 12.0124,
+            "location_name": "Kongsfjorden Fjord Subsurface Mooring",
+            "latitude": 78.9000,
+            "longitude": 12.0000,
             "elevation_m": -192.0,
             "capacity": 0,
             "active_personnel": 0,
             "status": "Operational",
-            "temperature_c": -1.2,
-            "wind_speed_kmh": 18.0,
+            "temperature_c": -1.8,
+            "wind_speed_kmh": 15.0,
             "blizzard_level": "NORMAL"
         }
     ]
-    
-    station_objs = {}
-    for st in stations_data:
-        station = db.query(Station).filter(Station.code == st["code"]).first()
-        if not station:
-            station = Station(**st)
-            db.add(station)
-            db.flush()
-        station_objs[st["code"]] = station
+
+    stn_map = {}
+    for s in stations_data:
+        stn = Station(**s)
+        db.add(stn)
+        db.flush()
+        stn_map[s["code"]] = stn
 
     # 4. Seed Expeditions
-    exp_data = [
+    expeditions_data = [
         {
             "expedition_code": "ISEA-44",
             "name": "44th Indian Scientific Expedition to Antarctica",
-            "description": "Cryospheric dynamics, paleoclimate shallow ice core drilling, and environmental baseline monitoring at Larsemann Hills & Schirmacher Oasis.",
+            "description": "Annual deep Antarctic overwintering, deep ice-core drilling, climate observatory modernization at Larsemann Hills.",
             "region": "Antarctica",
             "destination": "Bharati & Maitri Stations",
-            "mission_type": "Deep Ice Core Paleoclimate & Atmospheric Genomics",
-            "start_date": datetime(2025, 11, 15),
-            "end_date": datetime(2026, 12, 10),
+            "mission_type": "Scientific Research & Deep Core Drilling",
+            "start_date": datetime.utcnow() - timedelta(days=90),
+            "end_date": datetime.utcnow() + timedelta(days=275),
             "status": "Active",
-            "priority": "Critical",
+            "priority": "High",
             "budget_crores": 88.5,
-            "cargo_quota_tons": 4100.0,
+            "cargo_quota_tons": 5200.0,
             "risk_index": 7
         },
         {
-            "expedition_code": "ARC-2026-S",
-            "name": "Indian Arctic Spring-Summer Expedition 2026",
-            "description": "Long-term atmospheric aerosol profiling, marine biogeochemistry in Kongsfjorden, and IndARC mooring deployment.",
+            "expedition_code": "ARCTIC-2026",
+            "name": "Indian Arctic Scientific Expedition 2026",
+            "description": "High-Arctic fjord biogeochemical monitoring, aerosol profiling, and fjord hydrography at Ny-Ålesund.",
             "region": "Arctic",
-            "destination": "Himadri Station, Svalbard",
-            "mission_type": "Aerosol Teleconnections & Marine CTD Profiling",
-            "start_date": datetime(2026, 3, 1),
-            "end_date": datetime(2026, 9, 30),
+            "destination": "Himadri Station & IndARC Mooring",
+            "mission_type": "Fjord Hydrography & Atmospheric Sampling",
+            "start_date": datetime.utcnow() - timedelta(days=30),
+            "end_date": datetime.utcnow() + timedelta(days=150),
             "status": "Active",
             "priority": "High",
-            "budget_crores": 14.2,
-            "cargo_quota_tons": 320.0,
-            "risk_index": 4
+            "budget_crores": 18.2,
+            "cargo_quota_tons": 350.0,
+            "risk_index": 5
         }
     ]
-    
-    exp_objs = {}
-    for e in exp_data:
-        exp = db.query(Expedition).filter(Expedition.expedition_code == e["expedition_code"]).first()
-        if not exp:
-            exp = Expedition(**e)
-            db.add(exp)
-            db.flush()
-        exp_objs[e["expedition_code"]] = exp
+
+    exp_map = {}
+    for e in expeditions_data:
+        exp = Expedition(**e)
+        db.add(exp)
+        db.flush()
+        exp_map[e["expedition_code"]] = exp
 
     # 5. Seed Assets
     assets_data = [
@@ -175,330 +172,216 @@ def seed_database():
             "asset_code": "VSL-VASILIY",
             "name": "MV Vasiliy Golovnin (Chartered Icebreaker)",
             "asset_type": "Ship",
-            "owner_organization": "FESCO / NCPOR Charter",
-            "status": "In Transit",
-            "current_location": "Southern Ocean (58°S, 64°E)",
-            "latitude": -58.1200,
-            "longitude": 64.3000,
-            "assigned_expedition_id": exp_objs["ISEA-44"].id,
-            "capacity_tons": 4200.0,
-            "fuel_pct": 84.0
-        },
-        {
-            "asset_code": "VSL-SAGARKANYA",
-            "name": "ORV Sagar Kanya",
-            "asset_type": "Ship",
-            "owner_organization": "MoES / NCPOR",
+            "owner_organization": "NCPOR Charter",
             "status": "Operational",
-            "current_location": "Goa Port Complex",
-            "latitude": 15.4000,
-            "longitude": 73.8000,
-            "capacity_tons": 1500.0,
-            "fuel_pct": 92.0
+            "current_location": "Southern Ocean (En route to Larsemann Hills)",
+            "latitude": -55.2000,
+            "longitude": 52.4000,
+            "heading_deg": 165.0,
+            "speed_knots": 14.2,
+            "capacity_tons": 6500.0,
+            "fuel_pct": 82.0,
+            "assigned_expedition_id": exp_map["ISEA-44"].id
         },
         {
-            "asset_code": "AIR-KAMOV-1",
-            "name": "Kamov Ka-32 Polar Airlift Helicopter (VT-NCP1)",
+            "asset_code": "AIR-KAMOV-01",
+            "name": "Kamov Ka-32A Heavy Lift Helicopter",
             "asset_type": "Aircraft",
-            "owner_organization": "Pawan Hans / NCPOR",
-            "status": "Available",
-            "current_location": "Bharati Station Helipad",
-            "latitude": -69.4070,
-            "longitude": 76.1950,
-            "assigned_expedition_id": exp_objs["ISEA-44"].id,
-            "capacity_tons": 4.5,
-            "fuel_pct": 90.0
+            "owner_organization": "Indian Air Force Support to NCPOR",
+            "status": "Operational",
+            "current_location": "Helipad Deck, MV Vasiliy Golovnin",
+            "latitude": -55.2000,
+            "longitude": 52.4000,
+            "heading_deg": 0.0,
+            "speed_knots": 0.0,
+            "capacity_tons": 5.0,
+            "fuel_pct": 95.0,
+            "assigned_expedition_id": exp_map["ISEA-44"].id
         },
         {
-            "asset_code": "VEH-PISTENBULLY",
-            "name": "PistenBully 300 Polar Heavy Snowcat",
+            "asset_code": "VEH-PISTEN-04",
+            "name": "PistenBully 300 Polar Heavy Tracked Snowcat",
             "asset_type": "Vehicle",
-            "owner_organization": "NCPOR",
+            "owner_organization": "NCPOR Logistics",
             "status": "Operational",
-            "current_location": "Maitri Workshop Hangar",
-            "latitude": -70.7660,
-            "longitude": 11.7340,
-            "assigned_expedition_id": exp_objs["ISEA-44"].id,
-            "capacity_tons": 6.0,
-            "fuel_pct": 78.0
+            "current_location": "Bharati Vehicle Maintenance Garage",
+            "latitude": -69.4075,
+            "longitude": 76.1908,
+            "heading_deg": 240.0,
+            "speed_knots": 0.0,
+            "capacity_tons": 4.5,
+            "fuel_pct": 88.0,
+            "assigned_expedition_id": exp_map["ISEA-44"].id
         }
     ]
-    
-    asset_objs = {}
+
     for a in assets_data:
-        asset = db.query(Asset).filter(Asset.asset_code == a["asset_code"]).first()
-        if not asset:
-            asset = Asset(**a)
-            db.add(asset)
-            db.flush()
-        asset_objs[a["asset_code"]] = asset
+        ast = Asset(**a)
+        db.add(ast)
 
     # 6. Seed Cargo Manifests
     cargo_data = [
         {
-            "cargo_code": "CRG-BHR-001",
+            "cargo_code": "CRG-DRILL-001",
             "barcode": "890126062001",
-            "name": "Multi-Channel Ice Core Drill Unit Mk-IV",
+            "name": "Multi-Channel Electro-Mechanical Ice Core Drill System",
             "category": "Scientific equipment",
-            "description": "Sub-zero shallow paleoclimate ice corer with 500m titanium drill string.",
-            "quantity": 1.0,
-            "unit": "Units",
-            "weight_kg": 2850.0,
-            "volume_m3": 9.4,
-            "origin": "NCPOR Logistics Complex, Goa",
-            "destination_station_id": station_objs["BHR-ANT"].id,
-            "expedition_id": exp_objs["ISEA-44"].id,
-            "assigned_asset_id": asset_objs["VSL-VASILIY"].id,
+            "description": "500-meter electromechanical coring system with core barrel spares and cutting heads.",
+            "quantity": 1,
+            "weight_kg": 2450.0,
+            "volume_m3": 12.5,
+            "origin": "Goa Port Staging Complex",
+            "destination_station_id": stn_map["BHR-ANT"].id,
+            "expedition_id": exp_map["ISEA-44"].id,
             "status": "In Transit",
             "priority": "Mission Critical",
             "is_cold_chain": False,
-            "current_location": "Vessel Hold - MV Vasiliy Golovnin"
+            "hazard_type": "None",
+            "current_location": "Cargo Hold 2, MV Vasiliy Golovnin"
         },
         {
-            "cargo_code": "CRG-BHR-002",
+            "cargo_code": "CRG-BIO-002",
             "barcode": "890126062002",
-            "name": "Antarctic Cryophilic Bacterial Strains & Algal Cores",
+            "name": "Antarctic Cryophilic Bacterial Strains & Subglacial Water Samples",
             "category": "Scientific equipment",
-            "description": "Biological cryo-specimens requiring continuous sub-zero deep freeze.",
-            "quantity": 4.0,
-            "unit": "Cryo-Boxes",
-            "weight_kg": 140.0,
-            "volume_m3": 0.8,
-            "origin": "Larsemann Hills Field Camp 3",
-            "destination_station_id": station_objs["BHR-ANT"].id,
-            "expedition_id": exp_objs["ISEA-44"].id,
-            "status": "Delivered",
+            "description": "Microbiological samples in vacuum cryo-shippers requiring uninterrupted -80°C preservation.",
+            "quantity": 4,
+            "weight_kg": 180.0,
+            "volume_m3": 1.2,
+            "origin": "Goa Port Cryo Vault",
+            "destination_station_id": stn_map["BHR-ANT"].id,
+            "expedition_id": exp_map["ISEA-44"].id,
+            "status": "In Transit",
             "priority": "Mission Critical",
             "is_cold_chain": True,
             "temp_min_c": -85.0,
-            "temp_max_c": -75.0,
-            "current_temp_c": -79.4,
+            "temp_max_c": -70.0,
+            "current_temp_c": -78.5,
             "is_temp_violated": False,
-            "current_location": "Bharati Cryo Vault Bay 4"
+            "hazard_type": "Cryogenic",
+            "current_location": "Cryo Vault Room A, MV Vasiliy Golovnin"
         },
         {
-            "cargo_code": "CRG-MTR-003",
+            "cargo_code": "CRG-FUEL-003",
             "barcode": "890126062003",
-            "name": "Special Low Pour Point Polar Diesel (D-10 / -50°C Cloud Point)",
+            "name": "Special Polar Grade Diesel (D-10 High Flash / 45,000L)",
             "category": "Fuel",
-            "description": "Anti-freezing diesel for station power generators.",
-            "quantity": 45000.0,
-            "unit": "Liters",
-            "weight_kg": 38000.0,
+            "description": "Special low-temperature diesel blended with pour-point depressants to prevent clouding at -50°C.",
+            "quantity": 45000,
+            "weight_kg": 38250.0,
             "volume_m3": 45.0,
-            "origin": "IOCL Mormugao Terminal",
-            "destination_station_id": station_objs["MTR-ANT"].id,
-            "expedition_id": exp_objs["ISEA-44"].id,
-            "assigned_asset_id": asset_objs["VSL-VASILIY"].id,
+            "origin": "IOCL Mormugao Bunkering",
+            "destination_station_id": stn_map["BHR-ANT"].id,
+            "expedition_id": exp_map["ISEA-44"].id,
             "status": "In Transit",
             "priority": "Mission Critical",
             "is_cold_chain": False,
-            "current_location": "Vessel ISO Tank 4"
+            "hazard_type": "Class 3 Flammable",
+            "current_location": "Fuel Tanker Hold 4, MV Vasiliy Golovnin"
         }
     ]
-    
+
     for c in cargo_data:
-        cargo = db.query(Cargo).filter(Cargo.cargo_code == c["cargo_code"]).first()
-        if not cargo:
-            cargo = Cargo(**c)
-            db.add(cargo)
-            db.flush()
-            db.add(CargoTrackingEvent(
-                cargo_id=cargo.id,
-                status=cargo.status,
-                location=cargo.current_location,
-                recorded_by="System Seeder",
-                notes="Initial manifest registration"
-            ))
+        crg = Cargo(**c)
+        db.add(crg)
+        db.flush()
+
+        # Seed initial tracking event
+        evt = CargoTrackingEvent(
+            cargo_id=crg.id,
+            status="In Transit",
+            location=crg.current_location,
+            handler_id="Officer-in-Charge",
+            scan_method="Optical 2D DataMatrix",
+            temperature_at_handover=-78.5 if crg.is_cold_chain else None,
+            notes="Passed port manifest and vessel loading manifest verification."
+        )
+        db.add(evt)
 
     # 7. Seed Inventory Items
     inv_data = [
         {
-            "item_code": "SKU-DSL-D10",
-            "name": "Polar Special Diesel (D-10 / -50°C Cloud Point)",
+            "item_code": "POL-DSL-D10",
+            "name": "Polar Diesel D-10 (-50°C Antifreeze Blend)",
             "category": "Polar Fuel",
-            "station_id": station_objs["BHR-ANT"].id,
-            "quantity": 184500.0,
+            "station_id": stn_map["BHR-ANT"].id,
+            "quantity": 185000.0,
             "unit": "Liters",
-            "minimum_stock": 80000.0,
-            "reorder_threshold": 120000.0,
-            "burn_rate_per_day": 480.0,
-            "storage_location": "East Fuel Farm Tanks 1-4"
+            "minimum_stock": 75000.0,
+            "reorder_threshold": 95000.0,
+            "burn_rate_per_day": 450.0,
+            "storage_location": "Bharati Main Bulk Fuel Farm (Tanks 1-4)"
         },
         {
-            "item_code": "SKU-JET-A1",
-            "name": "Aviation Turbine Fuel (Jet A-1 for Ka-32 Helo)",
-            "category": "Polar Fuel",
-            "station_id": station_objs["BHR-ANT"].id,
-            "quantity": 42000.0,
-            "unit": "Liters",
-            "minimum_stock": 15000.0,
-            "reorder_threshold": 25000.0,
-            "burn_rate_per_day": 120.0,
-            "storage_location": "Helipad Underground Vault"
-        },
-        {
-            "item_code": "SKU-MRE-SURV",
-            "name": "High-Calorie Freeze-Dried Survival Ration Packs (4,500 kcal)",
+            "item_code": "RAT-MRE-POLAR",
+            "name": "High-Calorie Polar MRE Survival Rations (4,500 kcal/pack)",
             "category": "Survival Food",
-            "station_id": station_objs["BHR-ANT"].id,
-            "quantity": 13680.0,
+            "station_id": stn_map["BHR-ANT"].id,
+            "quantity": 1820.0,
             "unit": "Packs",
-            "minimum_stock": 4000.0,
-            "reorder_threshold": 6000.0,
-            "burn_rate_per_day": 48.0,
-            "storage_location": "Emergency Provisions Vault 2"
+            "minimum_stock": 600.0,
+            "reorder_threshold": 900.0,
+            "burn_rate_per_day": 24.0,
+            "storage_location": "Sub-Zero Emergency Food Bunker B"
         },
         {
-            "item_code": "SKU-MED-O2",
-            "name": "Hyperbaric Medical Oxygen Cylinders (50L)",
+            "item_code": "MED-O2-CYL",
+            "name": "Medical Grade Oxygen Cylinders (47L / 150 bar)",
             "category": "Medical",
-            "station_id": station_objs["MTR-ANT"].id,
-            "quantity": 14.0,
+            "station_id": stn_map["BHR-ANT"].id,
+            "quantity": 38.0,
             "unit": "Cylinders",
-            "minimum_stock": 10.0,
-            "reorder_threshold": 18.0,
+            "minimum_stock": 15.0,
+            "reorder_threshold": 20.0,
             "burn_rate_per_day": 0.1,
-            "storage_location": "Hospital Medical Bay"
-        },
-        {
-            "item_code": "SKU-GEN-INJ",
-            "name": "Cummins Diesel Generator Fuel Injector Assemblies",
-            "category": "Generator Spares",
-            "station_id": station_objs["MTR-ANT"].id,
-            "quantity": 6.0,
-            "unit": "Units",
-            "minimum_stock": 8.0,
-            "reorder_threshold": 12.0,
-            "burn_rate_per_day": 0.05,
-            "storage_location": "Workshop Spare Rack 7"
+            "storage_location": "Station Medical Bay Vault"
         }
     ]
-    
+
     for item in inv_data:
-        inv = db.query(InventoryItem).filter(
-            InventoryItem.item_code == item["item_code"],
-            InventoryItem.station_id == item["station_id"]
-        ).first()
-        if not inv:
-            inv = InventoryItem(**item)
-            db.add(inv)
-            db.flush()
-            db.add(InventoryTransaction(
-                inventory_item_id=inv.id,
-                transaction_type="Stock In",
-                quantity=inv.quantity,
-                destination_location=inv.storage_location,
-                performed_by="System Seeder",
-                reason="Initial seed baseline stock"
-            ))
+        inv = InventoryItem(**item)
+        db.add(inv)
 
-    # 8. Seed Personnel
-    personnel_data = [
-        {
-            "personnel_code": "PRS-IND-01",
-            "name": "Dr. Arvind Swaminathan",
-            "role": "Mission Director & Scientist-G",
-            "organization": "NCPOR / MoES",
-            "blood_group": "O+ve",
-            "fitness_status": "Class-1 Polar Cleared",
-            "assigned_expedition_id": exp_objs["ISEA-44"].id,
-            "assigned_station_id": station_objs["BHR-ANT"].id,
-            "current_status": "On Station",
-            "assigned_shelter": "Habitation Pod A-01",
-            "radio_id": "BHR-TAC-1"
-        },
-        {
-            "personnel_code": "PRS-IND-02",
-            "name": "Wg Cdr Tarun Jaswal (Retd)",
-            "role": "Logistics Lead Officer",
-            "organization": "Indian Air Force / NCPOR",
-            "blood_group": "B+ve",
-            "fitness_status": "Class-1 Polar Cleared",
-            "assigned_expedition_id": exp_objs["ISEA-44"].id,
-            "assigned_station_id": station_objs["BHR-ANT"].id,
-            "current_status": "On Station",
-            "assigned_shelter": "Logistics Center L-02",
-            "radio_id": "BHR-LOG-1"
-        },
-        {
-            "personnel_code": "PRS-IND-03",
-            "name": "Dr. Ananya Roy",
-            "role": "Station Surgeon & Medical Lead",
-            "organization": "AIIMS New Delhi",
-            "blood_group": "A+ve",
-            "fitness_status": "Class-1 Polar Cleared",
-            "assigned_expedition_id": exp_objs["ISEA-44"].id,
-            "assigned_station_id": station_objs["BHR-ANT"].id,
-            "current_status": "On Station",
-            "assigned_shelter": "Medical ICU Unit",
-            "radio_id": "BHR-MED-1"
-        },
-        {
-            "personnel_code": "PRS-IND-04",
-            "name": "Er. Sandeep Bopche",
-            "role": "Station Commander & Chief Engineer",
-            "organization": "Indian Navy / NCPOR",
-            "blood_group": "AB+ve",
-            "fitness_status": "Class-1 Polar Cleared",
-            "assigned_expedition_id": exp_objs["ISEA-44"].id,
-            "assigned_station_id": station_objs["MTR-ANT"].id,
-            "current_status": "On Station",
-            "assigned_shelter": "Maitri Main Command Block",
-            "radio_id": "MTR-CMD-1"
-        }
-    ]
-    
-    for p in personnel_data:
-        person = db.query(Personnel).filter(Personnel.personnel_code == p["personnel_code"]).first()
-        if not person:
-            person = Personnel(**p)
-            db.add(person)
+    # 8. Seed Emergency Incident
+    emg = EmergencyIncident(
+        incident_code="SOS-BHR-2026-01",
+        title="Field Sortie Crevasse Hazard & Stage-3 Blizzard Advisory",
+        incident_type="Severe Weather",
+        description="Severe sudden katabatic blizzard with wind gusting at 92 km/h near Dålk Glacier. Sortie team recalled to shelter.",
+        severity="High",
+        status="Team Assigned",
+        escalation_level=4,
+        latitude=-69.4500,
+        longitude=76.2500,
+        station_id=stn_map["BHR-ANT"].id,
+        expedition_id=exp_map["ISEA-44"].id
+    )
+    db.add(emg)
+    db.flush()
 
-    # 9. Seed Emergency Incident
-    emerg = db.query(EmergencyIncident).filter(EmergencyIncident.incident_code == "INC-2026-08").first()
-    if not emerg:
-        emerg = EmergencyIncident(
-            incident_code="INC-2026-08",
-            title="Katabatic Wind Gale Surge (68 km/h) & Stage-1 Blizzard Advisory",
-            incident_type="Severe Weather",
-            description="Barometric plummet to 974 hPa. Visual range restricted to under 300m at Maitri Oasis. Outdoor traverses suspended.",
-            severity="Medium",
-            status="In Progress",
-            station_id=station_objs["MTR-ANT"].id,
-            reported_by="IMD Station Meteorologist",
-            reported_at=datetime.utcnow() - timedelta(hours=2)
-        )
-        db.add(emerg)
-        db.flush()
-        db.add(IncidentUpdate(
-            incident_id=emerg.id,
-            status="In Progress",
-            message="Advisory broadcast to all outdoor teams. PistenBully recalled to base.",
-            created_by="Station Commander"
-        ))
+    upd = IncidentUpdate(
+        incident_id=emg.id,
+        status="Team Assigned",
+        message="Station Commander triggered Sortie Recall protocol. Emergency SAR unit assigned.",
+        created_by="Station Commander"
+    )
+    db.add(upd)
 
-    # 10. Seed Notifications
-    notif = db.query(Notification).first()
-    if not notif:
-        db.add(Notification(
-            title="⚠️ Low Stock Alert: Cummins Generator Injectors",
-            message="Maitri stock (6 units) is below minimum safety threshold (8 units).",
-            notification_type="Low inventory",
-            severity="warning",
-            link="/inventory"
-        ))
-        db.add(Notification(
-            title="🚢 MV Vasiliy Golovnin Approaching Sea Ice",
-            message="Chartered icebreaker entered Southern Ocean 58°S transect with 3,180T cargo.",
-            notification_type="Cargo dispatched",
-            severity="info",
-            link="/cargo"
-        ))
+    # 9. Seed Audit Log with SHA-256 Hash
+    audit = AuditLog(
+        user_email="admin@polaris.gov.in",
+        action="SYSTEM_INIT_SEED",
+        entity_type="SYSTEM",
+        entity_id="GLOBAL",
+        metadata_json='{"status": "initialized", "stations": 4}',
+        previous_hash="0000000000000000000000000000000000000000000000000000000000000000",
+        current_hash="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    )
+    db.add(audit)
 
     db.commit()
     db.close()
-    print("[SUCCESS] POLARIS Database successfully seeded with demo polar expedition data!")
+    print("POLARIS database seeded with realistic polar dataset and demo accounts.")
 
 if __name__ == "__main__":
     seed_database()

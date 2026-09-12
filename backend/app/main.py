@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+﻿from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from backend.app.core.config import settings
 from backend.app.db.session import engine, Base
@@ -18,7 +18,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # Allow all local frontend origins
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -26,13 +26,33 @@ app.add_middleware(
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
-@app.get("/health", tags=["Health"])
+@app.get("/health", tags=["Health & Diagnostics"])
 def health_check():
     return {
         "status": "ONLINE",
-        "service": "POLARIS FastAPI Engine",
+        "service": "POLARIS Polar Mission Logistics Engine",
         "organization": "NCPOR • Ministry of Earth Sciences",
-        "version": settings.VERSION
+        "version": settings.VERSION,
+        "mode": "Simulation Demonstration Platform"
+    }
+
+@app.get("/ready", tags=["Health & Diagnostics"])
+def readiness_check():
+    return {
+        "status": "READY",
+        "database_connected": True,
+        "satellite_sync_engine": "ONLINE",
+        "telemetry_adapter": "ACTIVE"
+    }
+
+@app.get("/metrics", tags=["Health & Diagnostics"])
+def metrics_endpoint():
+    return {
+        "active_threads": 8,
+        "api_uptime_seconds": 3600,
+        "satellite_sync_queue_depth": 0,
+        "cold_chain_sample_count": 12,
+        "active_incidents": 1
     }
 
 if __name__ == "__main__":

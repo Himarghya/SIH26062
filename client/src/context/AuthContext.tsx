@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+﻿import React, { createContext, useContext, useState, useEffect } from 'react';
 import { polarisApi } from '../api/services';
 
 export interface UserProfile {
@@ -21,12 +21,12 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const DEMO_ACCOUNTS = [
-  { role: 'super_admin', label: 'Super Admin', email: 'admin@polaris.gov.in', name: 'Dr. Arvind Swaminathan (Director NCPOR)' },
-  { role: 'expedition_manager', label: 'Expedition Manager', email: 'expedition@polaris.gov.in', name: 'Dr. Meera Nambiar' },
-  { role: 'logistics_officer', label: 'Logistics Officer', email: 'logistics@polaris.gov.in', name: 'Wg Cdr Tarun Jaswal' },
-  { role: 'station_manager', label: 'Station Manager', email: 'station@polaris.gov.in', name: 'Er. Sandeep Bopche' },
-  { role: 'emergency_coordinator', label: 'Emergency Coordinator', email: 'emergency@polaris.gov.in', name: 'Capt. R. Deshmukh' },
-  { role: 'viewer', label: 'Viewer / Analyst', email: 'viewer@polaris.gov.in', name: 'Aditi Sharma (MoES Analyst)' },
+  { role: 'super_admin', label: 'Super Admin', email: 'admin@polaris.gov.in', name: 'Dr. Demo Administrator (Director NCPOR)' },
+  { role: 'expedition_manager', label: 'Expedition Manager', email: 'expedition@polaris.gov.in', name: 'Demo Expedition Director' },
+  { role: 'logistics_officer', label: 'Logistics Officer', email: 'logistics@polaris.gov.in', name: 'Demo Logistics Officer' },
+  { role: 'station_manager', label: 'Station Manager', email: 'station@polaris.gov.in', name: 'Demo Station Commander (Bharati)' },
+  { role: 'emergency_coordinator', label: 'Emergency Coordinator', email: 'emergency@polaris.gov.in', name: 'Demo SAR Emergency Commander' },
+  { role: 'viewer', label: 'Viewer / Analyst', email: 'viewer@polaris.gov.in', name: 'Demo MoES Scientific Analyst' },
 ];
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {

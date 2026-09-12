@@ -10,9 +10,23 @@ import {
   Clock, 
   FileText, 
   Flame,
-  LifeBuoy
+  LifeBuoy,
+  ArrowRight,
+  ShieldCheck,
+  Navigation
 } from 'lucide-react';
 import { BlizzardModal } from '../components/BlizzardModal';
+
+const ESCALATION_STATES = [
+  'Detected',
+  'Acknowledged',
+  'Triaged',
+  'Team Assigned',
+  'Rescue Dispatched',
+  'On Scene',
+  'Resolved',
+  'Post-Incident Review'
+];
 
 export const EmergencySARPage: React.FC<{
   emergencies?: any[];
@@ -62,9 +76,9 @@ export const EmergencySARPage: React.FC<{
       if (onUpdateStatus) {
         onUpdateStatus(selectedIncident.id, status, note);
       } else {
-        const updated = await polarisApi.updateIncident(selectedIncident.id, {
+        await polarisApi.updateIncident(selectedIncident.id, {
           status,
-          resolution_notes: status === 'Resolved' ? (note || 'Incident marked resolved by commander') : undefined
+          resolution_notes: status === 'Resolved' || status === 'Post-Incident Review' ? (note || 'Incident resolved by commander') : undefined
         });
         if (note) {
           await polarisApi.addIncidentUpdate(selectedIncident.id, {
@@ -94,6 +108,10 @@ export const EmergencySARPage: React.FC<{
     }
   };
 
+  const currentStageIndex = selectedIncident 
+    ? Math.max(0, ESCALATION_STATES.indexOf(selectedIncident.status))
+    : 0;
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -104,7 +122,7 @@ export const EmergencySARPage: React.FC<{
             <span>Search & Rescue (SAR) & Emergency Response Commander</span>
           </h2>
           <p className="text-xs text-slate-400 mt-1">
-            Polar whiteout lockdowns, medical evacuations, crevasse rescues & generator failover response
+            Standard 8-Stage Incident Escalation State Machine, Whiteout Lockdowns & Helo Evacuation
           </p>
         </div>
 
@@ -146,8 +164,8 @@ export const EmergencySARPage: React.FC<{
                 <div className="flex items-center justify-between">
                   <span className="font-mono font-extrabold text-rose-400 text-xs">{code}</span>
                   <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-bold ${
-                    status === 'Resolved' ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' :
-                    status === 'In Progress' || status === 'SAR Deployed' ? 'bg-amber-950 text-amber-300 border border-amber-800 animate-pulse' :
+                    status === 'Resolved' || status === 'Post-Incident Review' ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' :
+                    status === 'Rescue Dispatched' || status === 'On Scene' ? 'bg-amber-950 text-amber-300 border border-amber-800 animate-pulse' :
                     'bg-rose-950 text-rose-300 border border-rose-800 animate-pulse'
                   }`}>
                     {status}
@@ -186,26 +204,54 @@ export const EmergencySARPage: React.FC<{
               </span>
             </div>
 
+            {/* 8-Stage State Machine Stepper */}
+            <div className="p-4 rounded-xl bg-polar-900/90 border border-slate-800 space-y-2.5">
+              <div className="text-[10px] font-mono uppercase text-slate-400 font-bold flex items-center justify-between">
+                <span>Incident Escalation State Machine:</span>
+                <span className="text-cyan-400">Stage {currentStageIndex + 1} of 8: {selectedIncident.status}</span>
+              </div>
+
+              <div className="grid grid-cols-4 sm:grid-cols-8 gap-1 text-[9px] font-mono text-center">
+                {ESCALATION_STATES.map((state, idx) => {
+                  const isDone = idx <= currentStageIndex;
+                  const isCurrent = idx === currentStageIndex;
+                  return (
+                    <button
+                      key={state}
+                      onClick={() => handleUpdateStatus(state, `Escalated state to ${state}`)}
+                      className={`p-1.5 rounded transition ${
+                        isCurrent ? 'bg-cyan-600 text-white font-bold ring-1 ring-cyan-400' :
+                        isDone ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' :
+                        'bg-polar-950 text-slate-500 border border-slate-800 hover:text-slate-300'
+                      }`}
+                    >
+                      {state}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             {/* Assigned SAR Team & Status Controls */}
             <div className="p-4 rounded-xl bg-polar-900/80 border border-slate-800 space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-mono uppercase text-slate-400">Assigned Rescue Units:</span>
                 <span className="text-xs text-cyan-300 font-mono font-bold">
-                  Bharati Medical & Helo Rescue Flight
+                  Bharati Medical Unit & Kamov Ka-32 Helo Flight
                 </span>
               </div>
 
               <div className="pt-2 border-t border-slate-800 flex flex-wrap items-center justify-between gap-2">
-                <span className="text-xs text-slate-400">Update Incident Lifecycle:</span>
+                <span className="text-xs text-slate-400">Quick Directive Action:</span>
                 <div className="flex items-center space-x-2">
                   <button
-                    onClick={() => handleUpdateStatus('In Progress', 'SAR Team dispatched into field')}
+                    onClick={() => handleUpdateStatus('Rescue Dispatched', 'SAR Helicopter dispatched to search coordinates')}
                     className="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold transition"
                   >
-                    Deploy SAR Team
+                    Dispatch SAR Flight
                   </button>
                   <button
-                    onClick={() => handleUpdateStatus('Resolved', 'All personnel accounted and safe.')}
+                    onClick={() => handleUpdateStatus('Resolved', 'All personnel accounted and safe. Evac complete.')}
                     className="px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold transition"
                   >
                     Mark Resolved
@@ -218,7 +264,7 @@ export const EmergencySARPage: React.FC<{
             <div>
               <h4 className="text-xs font-mono font-bold text-slate-300 uppercase mb-3 flex items-center space-x-2">
                 <Clock className="w-4 h-4 text-cyan-400" />
-                <span>SAR Action Directive & Log Timeline</span>
+                <span>SAR Action Directive & Radio Transcript Timeline</span>
               </h4>
 
               <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
@@ -237,7 +283,7 @@ export const EmergencySARPage: React.FC<{
               <form onSubmit={handleAddActionLog} className="mt-3 flex items-center space-x-2">
                 <input
                   type="text"
-                  placeholder="Append operational log note / radio transcript..."
+                  placeholder="Append operational directive / tactical radio transcript..."
                   value={actionNote}
                   onChange={(e) => setActionNote(e.target.value)}
                   className="flex-1 bg-polar-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-rose-500 font-mono"
