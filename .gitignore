@@ -1,4 +1,4 @@
-# Dependencies
+﻿# Dependencies
 node_modules/
 */node_modules/
 
@@ -6,6 +6,21 @@ node_modules/
 dist/
 */dist/
 build/
+
+# Python
+__pycache__/
+*/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.pytest_cache/
+*.db
+*.sqlite
+*.sqlite3
 
 # Logs
 npm-debug.log*

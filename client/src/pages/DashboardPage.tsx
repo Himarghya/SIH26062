@@ -1,266 +1,220 @@
-import React from 'react';
-import { Station, Vessel, CargoItem, Personnel, FieldSortie, EmergencyIncident } from '../types';
-import { PolarMap } from '../components/PolarMap';
+import React, { useState, useEffect } from 'react';
+import { polarisApi } from '../api/services';
+import { PolarLeafletMap } from '../components/maps/PolarLeafletMap';
 import { 
-  Flame, 
-  Users, 
+  Compass, 
+  Layers, 
   Box, 
-  Thermometer, 
-  Wind, 
+  Anchor, 
+  Users, 
+  Truck, 
   ShieldAlert, 
   AlertTriangle, 
-  Anchor, 
-  Radio, 
-  Navigation,
-  Compass,
-  CheckCircle2,
-  Clock
+  Thermometer, 
+  Wind, 
+  CheckCircle2, 
+  Clock, 
+  Activity,
+  ArrowRight
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-interface DashboardPageProps {
-  stations: Station[];
-  vessels: Vessel[];
-  cargo: CargoItem[];
-  personnel: Personnel[];
-  sorties: FieldSortie[];
-  emergencies: EmergencyIncident[];
-  selectedStationId: string;
-  onSelectStation: (id: string) => void;
-  onOpenScanner: () => void;
-  onOpenFuelModal: () => void;
-  onOpenBlizzardModal: () => void;
-}
+export const DashboardPage: React.FC = () => {
+  const [summary, setSummary] = useState<any>(null);
+  const [stations, setStations] = useState<any[]>([]);
+  const [assets, setAssets] = useState<any[]>([]);
+  const [emergencies, setEmergencies] = useState<any[]>([]);
+  const [activityLogs, setActivityLogs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export const DashboardPage: React.FC<DashboardPageProps> = ({
-  stations,
-  vessels,
-  cargo,
-  personnel,
-  sorties,
-  emergencies,
-  selectedStationId,
-  onSelectStation,
-  onOpenScanner,
-  onOpenFuelModal,
-  onOpenBlizzardModal
-}) => {
-  // Aggregate summary metrics
-  const totalWinterers = personnel.filter(p => p.status === 'On Station' || p.status === 'Field Sortie').length;
-  const totalDieselLiters = stations.reduce((acc, s) => acc + s.resources.polarDieselLiters, 0);
-  const coldChainAlerts = cargo.filter(c => c.isColdChain && c.temperatureSensor?.isViolated).length;
-  const activeSortiesCount = sorties.filter(s => s.status === 'Active In Field').length;
-  const activeEmergencies = emergencies.filter(e => e.status !== 'Resolved');
+  const fetchData = async () => {
+    try {
+      const [sumData, stns, asts, emgs, actLogs] = await Promise.all([
+        polarisApi.getDashboardSummary(),
+        polarisApi.getStations(),
+        polarisApi.getAssets(),
+        polarisApi.getIncidents(),
+        polarisApi.getActivityFeed()
+      ]);
+      setSummary(sumData);
+      setStations(stns);
+      setAssets(asts);
+      setEmergencies(emgs);
+      setActivityLogs(actLogs);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  if (loading || !summary) {
+    return (
+      <div className="space-y-6">
+        <div className="h-8 w-64 bg-polar-900 animate-pulse rounded-lg" />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[1,2,3,4].map(i => (
+            <div key={i} className="h-28 bg-polar-900 animate-pulse rounded-2xl" />
+          ))}
+        </div>
+        <div className="h-96 bg-polar-900 animate-pulse rounded-2xl" />
+      </div>
+    );
+  }
+
+  const { kpis, cargo_stats, station_weather } = summary;
+  const activeEmergency = emergencies.find(e => e.status !== 'Resolved');
 
   return (
     <div className="space-y-6">
-      {/* Top Banner Alert if any emergency is active */}
-      {activeEmergencies.length > 0 && (
-        <div className="glass-panel-danger p-4 rounded-xl flex items-center justify-between animate-pulse">
+      {/* Critical Alert Banner if Active Emergency Exists */}
+      {activeEmergency && (
+        <div className="glass-panel-danger p-4 rounded-2xl flex flex-wrap items-center justify-between gap-3 animate-pulse">
           <div className="flex items-center space-x-3">
-            <ShieldAlert className="w-6 h-6 text-rose-400 shrink-0" />
+            <div className="p-2 rounded-xl bg-rose-600 text-white">
+              <ShieldAlert className="w-6 h-6" />
+            </div>
             <div>
               <div className="font-mono font-bold text-rose-200 text-sm flex items-center space-x-2">
-                <span>ACTIVE POLAR EMERGENCY ALERT</span>
-                <span className="px-2 py-0.5 rounded bg-rose-600 text-white text-[10px]">
-                  {activeEmergencies[0].incidentCode}
-                </span>
+                <span>ACTIVE POLAR EMERGENCY</span>
+                <span className="px-2 py-0.5 rounded bg-rose-600 text-white text-[10px]">{activeEmergency.incident_code}</span>
               </div>
-              <p className="text-xs text-rose-300/90 mt-0.5">
-                {activeEmergencies[0].title} — {activeEmergencies[0].details}
-              </p>
+              <p className="text-xs text-rose-300 mt-0.5">{activeEmergency.title} — {activeEmergency.description}</p>
             </div>
           </div>
-          <button
-            onClick={onOpenBlizzardModal}
-            className="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow"
+          <Link
+            to="/emergency"
+            className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs flex items-center space-x-1.5 shadow"
           >
-            Manage SOS
-          </button>
+            <span>Open Incident Commander</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
         </div>
       )}
 
-      {/* Primary KPI Metrics Bar */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Total Polar Crew */}
-        <div className="glass-panel p-4 rounded-xl relative overflow-hidden group hover:border-cyan-500/50 transition">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-mono uppercase text-slate-400">Deployed Winterers</span>
-            <div className="p-2 rounded-lg bg-cyan-950 text-cyan-400">
-              <Users className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-2xl font-black font-mono text-slate-100 mt-2">
-            {totalWinterers} <span className="text-xs font-normal text-slate-400">Scientists & Crew</span>
-          </div>
-          <div className="text-[11px] text-emerald-400 flex items-center space-x-1 mt-1 font-mono">
-            <CheckCircle2 className="w-3 h-3" />
-            <span>100% Medical Clearances Active</span>
-          </div>
+      {/* KPI Cards Row */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="glass-panel p-3.5 rounded-2xl border border-cyan-900/40">
+          <div className="text-[10px] font-mono text-slate-400 uppercase">Active Expeditions</div>
+          <div className="text-2xl font-black font-mono text-slate-100 mt-1">{kpis.active_expeditions}</div>
+          <div className="text-[10px] text-cyan-400 mt-0.5">ISEA-44 & Arctic</div>
         </div>
 
-        {/* Polar Diesel Fuel Reserves */}
-        <div 
-          onClick={onOpenFuelModal}
-          className="glass-panel p-4 rounded-xl relative overflow-hidden group hover:border-amber-500/50 cursor-pointer transition"
-        >
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-mono uppercase text-slate-400">Total Polar Fuel (D-10)</span>
-            <div className="p-2 rounded-lg bg-amber-950 text-amber-400">
-              <Flame className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-2xl font-black font-mono text-amber-300 mt-2">
-            {(totalDieselLiters / 1000).toFixed(1)}k <span className="text-xs font-normal text-slate-400">Liters</span>
-          </div>
-          <div className="text-[11px] text-cyan-400 flex items-center space-x-1 mt-1 font-mono">
-            <span>⚡ AI Projected: ~320 Days Autonomy</span>
-          </div>
+        <div className="glass-panel p-3.5 rounded-2xl border border-cyan-900/40">
+          <div className="text-[10px] font-mono text-slate-400 uppercase">Cargo In Transit</div>
+          <div className="text-2xl font-black font-mono text-amber-300 mt-1">{kpis.cargo_in_transit}</div>
+          <div className="text-[10px] text-amber-400/80 mt-0.5">Vessels & Helo</div>
         </div>
 
-        {/* Cold-Chain IoT Sensor Status */}
-        <div 
-          onClick={onOpenScanner}
-          className={`glass-panel p-4 rounded-xl relative overflow-hidden group transition cursor-pointer ${
-            coldChainAlerts > 0 ? 'border-rose-500/60' : 'hover:border-blue-500/50'
-          }`}
-        >
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-mono uppercase text-slate-400">Cold-Chain (-80°C) Samples</span>
-            <div className={`p-2 rounded-lg ${coldChainAlerts > 0 ? 'bg-rose-950 text-rose-400 animate-pulse' : 'bg-blue-950 text-blue-400'}`}>
-              <Box className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-2xl font-black font-mono text-slate-100 mt-2">
-            {cargo.filter(c => c.isColdChain).length} <span className="text-xs font-normal text-slate-400">Active Sensors</span>
-          </div>
-          <div className={`text-[11px] flex items-center space-x-1 mt-1 font-mono ${
-            coldChainAlerts > 0 ? 'text-rose-400 font-bold' : 'text-emerald-400'
-          }`}>
-            {coldChainAlerts > 0 ? (
-              <>
-                <AlertTriangle className="w-3 h-3" />
-                <span>{coldChainAlerts} Temp Threshold Violations!</span>
-              </>
-            ) : (
-              <span>✅ All sample temperatures within limits</span>
-            )}
-          </div>
+        <div className="glass-panel p-3.5 rounded-2xl border border-cyan-900/40">
+          <div className="text-[10px] font-mono text-slate-400 uppercase">Deployed Crew</div>
+          <div className="text-2xl font-black font-mono text-slate-100 mt-1">{kpis.personnel_deployed}</div>
+          <div className="text-[10px] text-emerald-400 mt-0.5">100% Muster OK</div>
         </div>
 
-        {/* Active Field Sorties & Vessels */}
-        <div className="glass-panel p-4 rounded-xl relative overflow-hidden group hover:border-purple-500/50 transition">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-mono uppercase text-slate-400">Operations In Field</span>
-            <div className="p-2 rounded-lg bg-purple-950 text-purple-400">
-              <Navigation className="w-4 h-4" />
-            </div>
+        <div className="glass-panel p-3.5 rounded-2xl border border-cyan-900/40">
+          <div className="text-[10px] font-mono text-slate-400 uppercase">Operational Assets</div>
+          <div className="text-2xl font-black font-mono text-slate-100 mt-1">{kpis.operational_assets}</div>
+          <div className="text-[10px] text-slate-400 mt-0.5">Ships & Snowcats</div>
+        </div>
+
+        <div className="glass-panel p-3.5 rounded-2xl border border-cyan-900/40">
+          <div className="text-[10px] font-mono text-slate-400 uppercase">Low Stock Alerts</div>
+          <div className={`text-2xl font-black font-mono mt-1 ${kpis.critical_inventory_alerts > 0 ? 'text-rose-400' : 'text-slate-100'}`}>
+            {kpis.critical_inventory_alerts}
           </div>
-          <div className="text-2xl font-black font-mono text-slate-100 mt-2">
-            {activeSortiesCount} <span className="text-xs font-normal text-slate-400">Sorties</span> • {vessels.filter(v => v.status === 'Underway').length} <span className="text-xs font-normal text-slate-400">Vessels</span>
+          <div className="text-[10px] text-slate-400 mt-0.5">Critical items</div>
+        </div>
+
+        <div className="glass-panel p-3.5 rounded-2xl border border-cyan-900/40">
+          <div className="text-[10px] font-mono text-slate-400 uppercase">Active Emergencies</div>
+          <div className={`text-2xl font-black font-mono mt-1 ${kpis.active_emergencies > 0 ? 'text-rose-400 animate-pulse' : 'text-slate-100'}`}>
+            {kpis.active_emergencies}
           </div>
-          <div className="text-[11px] text-purple-300 flex items-center space-x-1 mt-1 font-mono">
-            <span>📡 Radio checks hourly active</span>
-          </div>
+          <div className="text-[10px] text-slate-400 mt-0.5">SAR Response</div>
         </div>
       </div>
 
-      {/* Main Interactive Polar Map */}
-      <PolarMap
+      {/* Main Polar GIS Map */}
+      <PolarLeafletMap
         stations={stations}
-        vessels={vessels}
-        sorties={sorties}
-        selectedStationId={selectedStationId}
-        onSelectStation={onSelectStation}
+        assets={assets}
+        emergencies={emergencies}
+        height="440px"
       />
 
-      {/* Station Live Weather & Telemetry Cards Grid */}
-      <div>
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-bold font-mono uppercase text-slate-200 flex items-center space-x-2">
-            <Thermometer className="w-4 h-4 text-cyan-400" />
-            <span>Real-Time Polar Meteorological Feeds & Station Telemetry</span>
-          </h3>
-          <span className="text-xs text-slate-400 font-mono">Updates live every 4s via WebSocket</span>
-        </div>
+      {/* Station Meteorological & Activity Feed Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Stations Live Status */}
+        <div className="lg:col-span-2 glass-panel p-5 rounded-2xl space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="font-bold text-sm uppercase font-mono text-slate-100 flex items-center space-x-2">
+              <Thermometer className="w-4 h-4 text-cyan-400" />
+              <span>Research Stations & Sub-Zero Telemetry</span>
+            </h3>
+            <span className="text-[10px] text-cyan-400 font-mono">Live Sat-Link AWS</span>
+          </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {stations.map((station) => {
-            const isSelected = selectedStationId === station.id;
-            const isLockdown = station.weather.blizzardLevel === 'STAGE_3_WHITEOUT_LOCKDOWN';
-            const isAdvisory = station.weather.blizzardLevel === 'STAGE_1_ADVISORY' || station.weather.blizzardLevel === 'STAGE_2_WARNING';
-
-            return (
-              <div
-                key={station.id}
-                onClick={() => onSelectStation(station.id)}
-                className={`p-4 rounded-xl cursor-pointer transition border ${
-                  isSelected 
-                    ? 'bg-polar-850 border-cyan-400 ring-1 ring-cyan-400 shadow-lg shadow-cyan-500/10' 
-                    : isLockdown
-                    ? 'bg-rose-950/60 border-rose-600/70'
-                    : isAdvisory
-                    ? 'bg-amber-950/60 border-amber-600/70'
-                    : 'glass-panel hover:border-slate-600'
-                }`}
-              >
-                {/* Station Title & Status */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {station_weather.map((st: any) => (
+              <div key={st.id} className="p-3.5 rounded-xl bg-polar-900/80 border border-slate-800 space-y-2">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="font-bold text-slate-100 text-sm">{station.name}</h4>
-                    <span className="text-[10px] text-slate-400 font-mono">{station.region} • {station.code}</span>
+                    <h4 className="font-bold text-slate-100 text-xs">{st.name}</h4>
+                    <span className="text-[10px] text-slate-400 font-mono">{st.code} • {st.region}</span>
                   </div>
-                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-semibold ${
-                    isLockdown ? 'bg-rose-600 text-white animate-pulse' :
-                    isAdvisory ? 'bg-amber-500 text-polar-950 font-bold' :
-                    'bg-cyan-950 text-cyan-300 border border-cyan-800/60'
+                  <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
+                    st.blizzard_level === 'STAGE_3_WHITEOUT_LOCKDOWN' ? 'bg-rose-950 text-rose-300 border border-rose-600 animate-pulse' :
+                    st.blizzard_level === 'STAGE_1_ADVISORY' ? 'bg-amber-950 text-amber-300 border border-amber-600' :
+                    'bg-cyan-950 text-cyan-300 border border-cyan-800'
                   }`}>
-                    {station.weather.blizzardLevel.replace('STAGE_', 'STG-')}
+                    {st.blizzard_level}
                   </span>
                 </div>
 
-                {/* Weather Readings */}
-                <div className="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-slate-800 text-xs">
+                <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-800/80 text-xs">
                   <div>
                     <div className="text-[10px] text-slate-400 flex items-center space-x-1">
                       <Thermometer className="w-3 h-3 text-cyan-400" />
                       <span>Ambient</span>
                     </div>
-                    <div className="font-mono font-bold text-slate-100 text-base mt-0.5">
-                      {station.weather.temperatureC}°C
-                    </div>
-                    <div className="text-[10px] text-cyan-400 font-mono">
-                      Chill: {station.weather.windChillC}°C
-                    </div>
+                    <div className="font-mono font-bold text-slate-100">{st.temperature_c}°C</div>
                   </div>
-
                   <div>
                     <div className="text-[10px] text-slate-400 flex items-center space-x-1">
                       <Wind className="w-3 h-3 text-blue-400" />
-                      <span>Wind Speed</span>
+                      <span>Wind</span>
                     </div>
-                    <div className="font-mono font-bold text-slate-100 text-base mt-0.5">
-                      {station.weather.windSpeedKmh} <span className="text-[10px] font-normal text-slate-400">km/h</span>
-                    </div>
-                    <div className="text-[10px] text-slate-400 truncate">
-                      {station.weather.windDirection}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Reserves & Personnel */}
-                <div className="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-300">
-                  <div className="flex items-center space-x-1">
-                    <Flame className="w-3 h-3 text-amber-400" />
-                    <span>{(station.resources.polarDieselLiters / 1000).toFixed(0)}k L D-10</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <Users className="w-3 h-3 text-emerald-400" />
-                    <span>{station.activePersonnel} Crew</span>
+                    <div className="font-mono font-bold text-slate-100">{st.wind_speed_kmh} km/h</div>
                   </div>
                 </div>
               </div>
-            );
-          })}
+            ))}
+          </div>
+        </div>
+
+        {/* Audit Activity Stream */}
+        <div className="glass-panel p-5 rounded-2xl space-y-3">
+          <h3 className="font-bold text-sm uppercase font-mono text-slate-100 flex items-center space-x-2">
+            <Activity className="w-4 h-4 text-cyan-400" />
+            <span>Operational Log Stream</span>
+          </h3>
+
+          <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
+            {activityLogs.map((log: any) => (
+              <div key={log.id} className="p-2.5 rounded-xl bg-polar-900/60 border border-slate-800/80 text-xs space-y-0.5">
+                <div className="flex items-center justify-between text-[10px] font-mono text-slate-400">
+                  <span className="text-cyan-400 font-bold">[{log.action}]</span>
+                  <span>{new Date(log.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                </div>
+                <div className="text-slate-300 text-[11px] truncate">{log.user_email}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

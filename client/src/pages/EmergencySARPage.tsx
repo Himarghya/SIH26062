@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { EmergencyIncident, Station } from '../types';
+﻿import React, { useState, useEffect } from 'react';
+import { polarisApi } from '../api/services';
 import { 
   ShieldAlert, 
   AlertTriangle, 
@@ -12,30 +12,86 @@ import {
   Flame,
   LifeBuoy
 } from 'lucide-react';
+import { BlizzardModal } from '../components/BlizzardModal';
 
-interface EmergencySARPageProps {
-  emergencies: EmergencyIncident[];
-  stations: Station[];
-  onTriggerSOS: (incident: Partial<EmergencyIncident>) => void;
-  onUpdateStatus: (id: string, status: EmergencyIncident['status'], note?: string) => void;
-  onOpenBlizzardModal: () => void;
-}
-
-export const EmergencySARPage: React.FC<EmergencySARPageProps> = ({
-  emergencies,
-  stations,
-  onTriggerSOS,
-  onUpdateStatus,
-  onOpenBlizzardModal
+export const EmergencySARPage: React.FC<{
+  emergencies?: any[];
+  stations?: any[];
+  onTriggerSOS?: (incident: any) => void;
+  onUpdateStatus?: (id: string, status: any, note?: string) => void;
+  onOpenBlizzardModal?: () => void;
+}> = ({ 
+  emergencies: propEmergencies, 
+  stations: propStations, 
+  onTriggerSOS, 
+  onUpdateStatus, 
+  onOpenBlizzardModal 
 }) => {
-  const [selectedIncident, setSelectedIncident] = useState<EmergencyIncident>(emergencies[0]);
+  const [emergencies, setEmergencies] = useState<any[]>(propEmergencies || []);
+  const [stations, setStations] = useState<any[]>(propStations || []);
+  const [selectedIncident, setSelectedIncident] = useState<any>(null);
   const [actionNote, setActionNote] = useState('');
+  const [showBlizzardModal, setShowBlizzardModal] = useState(false);
 
-  const handleAddActionLog = (e: React.FormEvent) => {
+  const fetchEmergencyData = async () => {
+    try {
+      const [emgs, stns] = await Promise.all([
+        polarisApi.getIncidents(),
+        polarisApi.getStations()
+      ]);
+      setEmergencies(emgs);
+      setStations(stns);
+      if (emgs.length > 0) setSelectedIncident(emgs[0]);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    if (!propEmergencies || propEmergencies.length === 0) {
+      fetchEmergencyData();
+    } else {
+      setEmergencies(propEmergencies);
+      if (propEmergencies.length > 0) setSelectedIncident(propEmergencies[0]);
+    }
+  }, [propEmergencies]);
+
+  const handleUpdateStatus = async (status: string, note?: string) => {
+    if (!selectedIncident) return;
+    try {
+      if (onUpdateStatus) {
+        onUpdateStatus(selectedIncident.id, status, note);
+      } else {
+        const updated = await polarisApi.updateIncident(selectedIncident.id, {
+          status,
+          resolution_notes: status === 'Resolved' ? (note || 'Incident marked resolved by commander') : undefined
+        });
+        if (note) {
+          await polarisApi.addIncidentUpdate(selectedIncident.id, {
+            update_text: note,
+            reported_by: 'Emergency Response Commander'
+          });
+        }
+        await fetchEmergencyData();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleAddActionLog = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!actionNote.trim() || !selectedIncident) return;
-    onUpdateStatus(selectedIncident.id, selectedIncident.status, actionNote);
-    setActionNote('');
+    try {
+      await polarisApi.addIncidentUpdate(selectedIncident.id, {
+        update_text: actionNote,
+        reported_by: 'Emergency Response Commander'
+      });
+      setActionNote('');
+      await fetchEmergencyData();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -53,7 +109,10 @@ export const EmergencySARPage: React.FC<EmergencySARPageProps> = ({
         </div>
 
         <button
-          onClick={onOpenBlizzardModal}
+          onClick={() => {
+            if (onOpenBlizzardModal) onOpenBlizzardModal();
+            else setShowBlizzardModal(true);
+          }}
           className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs flex items-center space-x-2 shadow-lg shadow-rose-600/30 transition animate-pulse"
         >
           <AlertTriangle className="w-4 h-4" />
@@ -67,9 +126,12 @@ export const EmergencySARPage: React.FC<EmergencySARPageProps> = ({
         <div className="space-y-3">
           <h3 className="text-xs font-mono font-bold text-slate-400 uppercase">Active Incident Board</h3>
           {emergencies.map((inc) => {
-            const station = stations.find(s => s.id === inc.stationId);
+            const stnId = inc.station_id || inc.stationId;
+            const station = stations.find(s => s.id === stnId);
             const isSelected = selectedIncident?.id === inc.id;
-            const isCritical = inc.severity === 'Critical (Life Threat)';
+            const code = inc.incident_code || inc.incidentCode;
+            const title = inc.title;
+            const status = inc.status;
 
             return (
               <div
@@ -78,28 +140,26 @@ export const EmergencySARPage: React.FC<EmergencySARPageProps> = ({
                 className={`p-4 rounded-xl cursor-pointer transition border ${
                   isSelected
                     ? 'bg-rose-950/40 border-rose-500 ring-1 ring-rose-500/50 shadow-lg'
-                    : isCritical
-                    ? 'glass-panel-danger hover:border-rose-600'
                     : 'glass-panel hover:border-slate-700'
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono font-extrabold text-rose-400 text-xs">{inc.incidentCode}</span>
+                  <span className="font-mono font-extrabold text-rose-400 text-xs">{code}</span>
                   <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-bold ${
-                    inc.status === 'Resolved' ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' :
-                    inc.status === 'SAR Deployed' ? 'bg-amber-950 text-amber-300 border border-amber-800 animate-pulse' :
+                    status === 'Resolved' ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' :
+                    status === 'In Progress' || status === 'SAR Deployed' ? 'bg-amber-950 text-amber-300 border border-amber-800 animate-pulse' :
                     'bg-rose-950 text-rose-300 border border-rose-800 animate-pulse'
                   }`}>
-                    {inc.status}
+                    {status}
                   </span>
                 </div>
 
-                <h4 className="font-bold text-slate-100 text-sm mt-2">{inc.title}</h4>
-                <p className="text-xs text-slate-400 line-clamp-2 mt-1">{inc.details}</p>
+                <h4 className="font-bold text-slate-100 text-sm mt-2">{title}</h4>
+                <p className="text-xs text-slate-400 line-clamp-2 mt-1">{inc.description || inc.details}</p>
 
                 <div className="mt-3 pt-2 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
-                  <span>{station?.name || 'Antarctic Base'}</span>
-                  <span>{new Date(inc.reportedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                  <span>{station?.name || 'Bharati Station'}</span>
+                  <span>{new Date(inc.reported_at || inc.reportedAt || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                 </div>
               </div>
             );
@@ -113,12 +173,12 @@ export const EmergencySARPage: React.FC<EmergencySARPageProps> = ({
               <div>
                 <div className="flex items-center space-x-2">
                   <span className="text-xs font-mono px-2.5 py-1 rounded bg-rose-950 text-rose-300 border border-rose-700/60 font-bold">
-                    {selectedIncident.incidentCode}
+                    {selectedIncident.incident_code || selectedIncident.incidentCode}
                   </span>
-                  <span className="text-xs text-rose-400 font-mono font-semibold">{selectedIncident.type}</span>
+                  <span className="text-xs text-rose-400 font-mono font-semibold">{selectedIncident.incident_type || selectedIncident.type}</span>
                 </div>
                 <h3 className="text-lg font-bold text-slate-100 mt-2">{selectedIncident.title}</h3>
-                <p className="text-xs text-slate-300 mt-1">{selectedIncident.details}</p>
+                <p className="text-xs text-slate-300 mt-1">{selectedIncident.description || selectedIncident.details}</p>
               </div>
 
               <span className="px-3 py-1 rounded-lg bg-rose-600/30 border border-rose-500/60 text-rose-300 font-mono font-bold text-xs">
@@ -131,7 +191,7 @@ export const EmergencySARPage: React.FC<EmergencySARPageProps> = ({
               <div className="flex items-center justify-between">
                 <span className="text-xs font-mono uppercase text-slate-400">Assigned Rescue Units:</span>
                 <span className="text-xs text-cyan-300 font-mono font-bold">
-                  {selectedIncident.sarTeamAssigned?.join(', ') || 'Station Emergency Medical Team'}
+                  Bharati Medical & Helo Rescue Flight
                 </span>
               </div>
 
@@ -139,13 +199,13 @@ export const EmergencySARPage: React.FC<EmergencySARPageProps> = ({
                 <span className="text-xs text-slate-400">Update Incident Lifecycle:</span>
                 <div className="flex items-center space-x-2">
                   <button
-                    onClick={() => onUpdateStatus(selectedIncident.id, 'SAR Deployed', 'SAR Rescue Team Dispatched into field')}
+                    onClick={() => handleUpdateStatus('In Progress', 'SAR Team dispatched into field')}
                     className="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold transition"
                   >
                     Deploy SAR Team
                   </button>
                   <button
-                    onClick={() => onUpdateStatus(selectedIncident.id, 'Resolved', 'Incident safely resolved. All personnel accounted.')}
+                    onClick={() => handleUpdateStatus('Resolved', 'All personnel accounted and safe.')}
                     className="px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold transition"
                   >
                     Mark Resolved
@@ -162,13 +222,13 @@ export const EmergencySARPage: React.FC<EmergencySARPageProps> = ({
               </h4>
 
               <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
-                {selectedIncident.actionLog.map((log, idx) => (
+                {(selectedIncident.updates || selectedIncident.actionLog || []).map((log: any, idx: number) => (
                   <div key={idx} className="p-3 rounded-xl bg-polar-900/60 border border-slate-800/80 text-xs space-y-1">
                     <div className="flex items-center justify-between text-slate-400 text-[10px] font-mono">
-                      <span>{new Date(log.timestamp).toLocaleString()}</span>
-                      <span className="text-cyan-400 font-bold">{log.operator}</span>
+                      <span>{new Date(log.created_at || log.timestamp || Date.now()).toLocaleString()}</span>
+                      <span className="text-cyan-400 font-bold">{log.reported_by || log.operator || 'Field Commander'}</span>
                     </div>
-                    <p className="text-slate-200">{log.note}</p>
+                    <p className="text-slate-200">{log.update_text || log.note}</p>
                   </div>
                 ))}
               </div>
@@ -193,6 +253,21 @@ export const EmergencySARPage: React.FC<EmergencySARPageProps> = ({
           </div>
         )}
       </div>
+
+      {/* Global Blizzard & SOS Modal */}
+      <BlizzardModal
+        isOpen={showBlizzardModal}
+        onClose={() => setShowBlizzardModal(false)}
+        stations={stations}
+        onTriggerLockdown={async (stationId, level) => {
+          await polarisApi.setBlizzardLevel(stationId, level);
+          await fetchEmergencyData();
+        }}
+        onTriggerSOS={async (incident) => {
+          await polarisApi.createIncident(incident);
+          await fetchEmergencyData();
+        }}
+      />
     </div>
   );
 };

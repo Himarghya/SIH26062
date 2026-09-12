@@ -1,15 +1,25 @@
-{
-  "name": "polar-logistics",
+﻿{
+  "name": "polaris-polar-logistics",
   "version": "1.0.0",
-  "private": true,
+  "description": "POLARIS — Integrated Polar Expedition Logistics and Asset Management System",
   "scripts": {
-    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
-    "dev:server": "npm run dev --prefix server",
-    "dev:client": "npm run dev --prefix client",
-    "build": "npm run build --prefix server && npm run build --prefix client",
-    "start": "node server/dist/index.js"
+    "dev": "npm run dev --prefix client",
+    "build": "npm run build --prefix client",
+    "client": "npm run dev --prefix client",
+    "test:backend": "python -m pytest backend/app/tests",
+    "seed": "python -m backend.app.db.seed",
+    "backend": "uvicorn backend.app.main:app --port 8000 --reload"
   },
-  "devDependencies": {
-    "concurrently": "^10.0.5"
-  }
+  "keywords": [
+    "sih2026",
+    "polar-logistics",
+    "ncpor",
+    "moes",
+    "antarctica",
+    "fastapi",
+    "react",
+    "leaflet"
+  ],
+  "author": "POLARIS Team",
+  "license": "MIT"
 }

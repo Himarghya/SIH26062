@@ -1,0 +1,31 @@
+﻿version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: polaris_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - SECRET_KEY=polaris_super_secret_polar_mission_command_key_2026!
+      - DATABASE_URL=sqlite:///./polaris.db
+      - ENVIRONMENT=production
+    volumes:
+      - backend_data:/app
+    restart: unless-stopped
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: polaris_frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  backend_data:
