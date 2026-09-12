@@ -11,7 +11,7 @@
   }
 
   body {
-    @apply bg-[#f8fafc] text-slate-800 antialiased font-sans selection:bg-emerald-500 selection:text-white;
+    @apply bg-[#f8fafc] text-slate-900 antialiased font-sans selection:bg-emerald-500 selection:text-white;
     background-image: 
       radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16, 185, 129, 0.12), transparent 70%),
       radial-gradient(ellipse 60% 40% at 90% 10%, rgba(245, 158, 11, 0.09), transparent 60%),
@@ -39,10 +39,11 @@
 
   /* Global input, select, textarea styling in light theme */
   input:not([type='checkbox']):not([type='radio']), select, textarea {
-    color: #0f172a !important;
+    color: #020617 !important;
+    font-weight: 500;
   }
   input::placeholder, textarea::placeholder {
-    color: #94a3b8 !important;
+    color: #64748b !important;
   }
 }
 
@@ -54,7 +55,7 @@
   border: 1px solid rgba(226, 232, 240, 0.95);
   box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  color: #1e293b;
+  color: #0f172a;
 }
 
 .glass-panel:hover {

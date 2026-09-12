@@ -175,16 +175,16 @@ export const DashboardPage: React.FC = () => {
               const autonomyPercent = Math.min(100, Math.round((daysRemaining / 90) * 100));
 
               return (
-                <div key={st.id} className="p-4 rounded-xl bg-slate-50/80 border border-slate-200 space-y-3 hover:border-emerald-400 transition shadow-xs">
+                <div key={st.id} className="p-4 rounded-xl bg-slate-50/90 border border-slate-300 space-y-3 hover:border-emerald-500 transition shadow-xs">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h4 className="font-bold text-slate-900 text-sm">{st.name}</h4>
-                      <span className="text-[10px] text-slate-500 font-mono">{st.code} • {st.region}</span>
+                      <h4 className="font-bold text-slate-950 text-sm">{st.name}</h4>
+                      <span className="text-[11px] text-slate-700 font-mono font-medium">{st.code} • {st.region}</span>
                     </div>
                     <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
-                      st.blizzard_level === 'STAGE_3_WHITEOUT_LOCKDOWN' ? 'bg-rose-100 text-rose-800 border border-rose-300 animate-pulse' :
-                      st.blizzard_level === 'STAGE_1_ADVISORY' ? 'bg-amber-100 text-amber-800 border border-amber-300' :
-                      'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                      st.blizzard_level === 'STAGE_3_WHITEOUT_LOCKDOWN' ? 'bg-rose-100 text-rose-900 border border-rose-300 animate-pulse' :
+                      st.blizzard_level === 'STAGE_1_ADVISORY' ? 'bg-amber-100 text-amber-900 border border-amber-300' :
+                      'bg-emerald-100 text-emerald-900 border border-emerald-300'
                     }`}>
                       {st.blizzard_level}
                     </span>
@@ -192,30 +192,30 @@ export const DashboardPage: React.FC = () => {
 
                   {/* Surface Temp & Wind Grid */}
                   <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-200 text-xs">
-                    <div className="p-2 rounded-lg bg-white border border-slate-200">
-                      <div className="text-[10px] text-slate-500 flex items-center space-x-1 font-mono">
-                        <Thermometer className="w-3 h-3 text-emerald-600" />
+                    <div className="p-2.5 rounded-lg bg-white border border-slate-300">
+                      <div className="text-[10px] text-slate-700 flex items-center space-x-1 font-mono font-bold">
+                        <Thermometer className="w-3 h-3 text-emerald-700" />
                         <span>Ambient Temp</span>
                       </div>
-                      <div className="font-mono font-bold text-slate-900 text-sm mt-0.5">{st.temperature_c}°C</div>
+                      <div className="font-mono font-black text-slate-950 text-sm mt-0.5">{st.temperature_c}°C</div>
                     </div>
-                    <div className="p-2 rounded-lg bg-white border border-slate-200">
-                      <div className="text-[10px] text-slate-500 flex items-center space-x-1 font-mono">
-                        <Wind className="w-3 h-3 text-teal-600" />
+                    <div className="p-2.5 rounded-lg bg-white border border-slate-300">
+                      <div className="text-[10px] text-slate-700 flex items-center space-x-1 font-mono font-bold">
+                        <Wind className="w-3 h-3 text-teal-700" />
                         <span>Wind Speed</span>
                       </div>
-                      <div className="font-mono font-bold text-slate-900 text-sm mt-0.5">{st.wind_speed_kmh} km/h</div>
+                      <div className="font-mono font-black text-slate-950 text-sm mt-0.5">{st.wind_speed_kmh} km/h</div>
                     </div>
                   </div>
 
                   {/* Winter Autonomy Forecast Gauge */}
                   <div className="space-y-1 text-xs">
                     <div className="flex justify-between text-[11px] font-mono">
-                      <span className="text-slate-600 flex items-center space-x-1">
-                        <Fuel className="w-3 h-3 text-emerald-600" />
+                      <span className="text-slate-800 font-bold flex items-center space-x-1">
+                        <Fuel className="w-3 h-3 text-emerald-700" />
                         <span>Wintering Autonomy:</span>
                       </span>
-                      <span className="font-bold text-emerald-700">{daysRemaining} Days Remaining</span>
+                      <span className="font-bold text-emerald-900">{daysRemaining} Days Remaining</span>
                     </div>
                     <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
                       <div 
@@ -244,13 +244,13 @@ export const DashboardPage: React.FC = () => {
 
           <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
             {activityLogs.map((log: any) => (
-              <div key={log.id} className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-1 hover:border-emerald-300 transition shadow-2xs">
-                <div className="flex items-center justify-between text-[10px] font-mono text-slate-500">
-                  <span className="text-emerald-700 font-bold">[{log.action}]</span>
-                  <span>{new Date(log.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+              <div key={log.id} className="p-2.5 rounded-xl bg-slate-50/90 border border-slate-300 text-xs space-y-1 hover:border-emerald-400 transition shadow-2xs">
+                <div className="flex items-center justify-between text-[10px] font-mono">
+                  <span className="text-emerald-800 font-bold">[{log.action}]</span>
+                  <span className="text-slate-600 font-semibold">{new Date(log.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                 </div>
-                <div className="text-slate-800 text-[11px] truncate font-semibold">{log.user_email}</div>
-                <div className="text-[10px] text-slate-500 font-mono truncate">
+                <div className="text-slate-900 text-[11px] truncate font-bold">{log.user_email}</div>
+                <div className="text-[10px] text-slate-700 font-mono font-medium truncate">
                   Hash: {log.current_hash ? log.current_hash.slice(0, 16) + '...' : 'Verified SHA-256 Block'}
                 </div>
               </div>
