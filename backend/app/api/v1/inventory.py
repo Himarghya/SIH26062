@@ -151,6 +151,90 @@ def get_inventory_forecast(
         "disclaimer": "Forecast estimate — requires operational validation by Station Logistics Officer."
     }
 
+@router.get("/autonomy-derivation")
+def get_autonomy_derivation(
+    ambient_temp_c: float = -28.5,
+    wind_speed_kmh: float = 68.0,
+    crew_count: int = 25,
+    current_user = Depends(get_current_user)
+) -> Dict[str, Any]:
+    """
+    Evaluates:
+    Autonomy Days = min_{i in {Fuel, Food, O2}} ( Stock_i / (Daily Burn_i * Crew * Weather Multiplier_i) )
+    """
+    # 1. Wind Chill Calculation
+    if wind_speed_kmh < 4.8:
+        wind_chill = ambient_temp_c
+    else:
+        v_exp = wind_speed_kmh ** 0.16
+        wind_chill = 13.12 + (0.6215 * ambient_temp_c) - (11.37 * v_exp) + (0.3965 * ambient_temp_c * v_exp)
+    
+    delta_t = max(0.0, 0.0 - ambient_temp_c)
+    wind_ratio = max(0.0, wind_speed_kmh) / 50.0
+    
+    # 2. Resource configs
+    configs = {
+        "Fuel": {
+            "name": "Polar Jet A-1 / D-10 Diesel",
+            "stock": 45000.0,
+            "unit": "Liters",
+            "base_burn_per_person": 8.5,
+            "alpha_t": 0.015,
+            "beta_v": 0.25
+        },
+        "Food": {
+            "name": "High-Calorie Polar Rations",
+            "stock": 2800.0,
+            "unit": "kg",
+            "base_burn_per_person": 2.4,
+            "alpha_t": 0.006,
+            "beta_v": 0.0
+        },
+        "O2": {
+            "name": "Life-Support Medical O2",
+            "stock": 1500.0,
+            "unit": "kg",
+            "base_burn_per_person": 0.84,
+            "alpha_t": 0.001,
+            "beta_v": 0.10
+        }
+    }
+    
+    breakdown = {}
+    min_days = float("inf")
+    bottleneck = ""
+    
+    for category, cfg in configs.items():
+        multiplier = max(1.0, 1.0 + (cfg["alpha_t"] * delta_t) + (cfg["beta_v"] * wind_ratio))
+        daily_burn = cfg["base_burn_per_person"] * crew_count * multiplier
+        days = cfg["stock"] / daily_burn if daily_burn > 0 else 0.0
+        
+        breakdown[category] = {
+            "name": cfg["name"],
+            "current_stock": cfg["stock"],
+            "unit": cfg["unit"],
+            "weather_multiplier": round(multiplier, 3),
+            "effective_daily_burn": round(daily_burn, 2),
+            "autonomy_days": round(days, 1),
+            "safety_stock_90d": round(daily_burn * 90, 0),
+            "reorder_point": round((daily_burn * 60) + (daily_burn * 90), 0)
+        }
+        
+        if days < min_days:
+            min_days = days
+            bottleneck = category
+            
+    return {
+        "ambient_temp_c": ambient_temp_c,
+        "wind_speed_kmh": wind_speed_kmh,
+        "wind_chill_c": round(wind_chill, 2),
+        "crew_count": crew_count,
+        "limiting_resource": bottleneck,
+        "mission_autonomy_days": round(min_days, 1),
+        "resource_breakdown": breakdown,
+        "mathematical_formula": "Autonomy Days = min_{i in {Fuel, Food, O2}} ( Stock_i / (Daily Burn_i * Crew * Weather Multiplier_i) )"
+    }
+
 @router.get("/{id}", response_model=InventoryItemResponse)
 def get_inventory_item_by_id(
     id: str,

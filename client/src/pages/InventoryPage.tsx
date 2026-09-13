@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { StockTransactionModal } from '../components/inventory/StockTransactionModal';
 import { FuelOptimizerModal } from '../components/FuelOptimizerModal';
+import { AutonomyDerivationPanel } from '../components/AutonomyDerivationPanel';
 
 export const InventoryPage: React.FC<{
   inventory?: any[];
@@ -111,33 +112,8 @@ export const InventoryPage: React.FC<{
 
       {/* Explicit Wintering Autonomy Mathematical Formulas Box */}
       {showFormulas && (
-        <div className="glass-panel p-4 rounded-2xl border border-indigo-200 bg-indigo-50/40 text-xs font-mono space-y-2.5 animate-fadeIn shadow-sm">
-          <div className="flex items-center justify-between text-indigo-900 font-bold">
-            <div className="flex items-center space-x-2">
-              <Info className="w-4 h-4 text-indigo-600" />
-              <span>Wintering Autonomy & Stockout Forecasting Engine (Deterministic Mathematical Model)</span>
-            </div>
-            <span className="text-[10px] text-slate-500 font-normal">NCPOR Standard Logistics Protocol</span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-3 pt-1 text-[11px] text-slate-700">
-            <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
-              <div className="text-slate-500 text-[10px] uppercase font-bold">1. Estimated Remaining Days</div>
-              <div className="font-bold text-emerald-700 mt-0.5">Days = Stock / Daily Burn Rate</div>
-            </div>
-            <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
-              <div className="text-slate-500 text-[10px] uppercase font-bold">2. Safety Stock Buffer</div>
-              <div className="font-bold text-indigo-700 mt-0.5">Safety Stock = Daily Burn × 90 Days</div>
-            </div>
-            <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
-              <div className="text-slate-500 text-[10px] uppercase font-bold">3. Reorder Point (ROP)</div>
-              <div className="font-bold text-amber-700 mt-0.5">ROP = Lead-Demand + Safety Stock</div>
-            </div>
-            <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
-              <div className="text-slate-500 text-[10px] uppercase font-bold">4. Wintering Risk Triage</div>
-              <div className="font-bold text-rose-700 mt-0.5">Days &lt; 180d → Critical Risk</div>
-            </div>
-          </div>
+        <div className="space-y-4 animate-fadeIn">
+          <AutonomyDerivationPanel initialTemp={-28.5} initialWind={68} initialCrew={25} />
         </div>
       )}
 
