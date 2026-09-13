@@ -160,16 +160,16 @@ export const DashboardPage: React.FC = () => {
 
       {/* Live Ambient Readings & Autonomy Mathematical Model Derivation Panel */}
       <div className="space-y-3">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
           <div className="flex items-center space-x-2">
-            <Calculator className="w-5 h-5 text-emerald-600" />
-            <h3 className="font-bold text-sm uppercase font-mono text-slate-900">
-              Live Ambient Sensor Readings & Mathematical Formula Derivation
+            <Calculator className="w-5 h-5 text-emerald-600 shrink-0" />
+            <h3 className="font-bold text-xs sm:text-sm uppercase font-mono text-slate-900">
+              Live Sensor Readings & Formula Derivation
             </h3>
           </div>
           <button
             onClick={() => setShowAutonomyDerivation(!showAutonomyDerivation)}
-            className="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 text-xs font-mono font-bold flex items-center space-x-1.5 transition shadow-2xs cursor-pointer"
+            className="self-start sm:self-auto px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 text-[11px] sm:text-xs font-mono font-bold flex items-center space-x-1.5 transition shadow-2xs cursor-pointer active:scale-95"
           >
             <Calculator className="w-3.5 h-3.5 text-emerald-600" />
             <span>{showAutonomyDerivation ? 'Collapse Derivation Model' : 'Expand Formula Derivation'}</span>
