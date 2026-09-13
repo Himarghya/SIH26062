@@ -374,10 +374,26 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
           <span>Click any planned route to inspect dynamic Route Risk Score (Weather + Ice + Terrain + Asset readiness).</span>
         </div>
         <div className="flex items-center space-x-3">
-          <button onClick={() => setSelectedRoute(ROUTE_RISKS.antarctic)} className="text-cyan-700 font-bold hover:text-cyan-900 hover:underline">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setSelectedRoute(ROUTE_RISKS.antarctic);
+            }}
+            className="text-cyan-700 font-bold hover:text-cyan-900 hover:underline cursor-pointer px-1 py-0.5 rounded transition"
+          >
             Inspect Antarctic Corridor (67/100)
           </button>
-          <button onClick={() => setSelectedRoute(ROUTE_RISKS.arctic)} className="text-emerald-700 font-bold hover:text-emerald-900 hover:underline">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setSelectedRoute(ROUTE_RISKS.arctic);
+            }}
+            className="text-emerald-700 font-bold hover:text-emerald-900 hover:underline cursor-pointer px-1 py-0.5 rounded transition"
+          >
             Inspect Arctic Transect (34/100)
           </button>
         </div>
@@ -548,7 +564,7 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
 
         {/* Floating Route Risk Inspector Card */}
         {selectedRoute && (
-          <div className="absolute top-4 right-4 z-20 w-80 sm:w-96 bg-white/95 border border-amber-400 rounded-xl p-4 shadow-2xl backdrop-blur-md animate-fadeIn text-xs space-y-3 text-slate-800">
+          <div className="absolute top-4 right-4 z-[1050] w-80 sm:w-96 bg-white/95 border border-amber-400 rounded-xl p-4 shadow-2xl backdrop-blur-md animate-fadeIn text-xs space-y-3 text-slate-800">
             <div className="flex items-center justify-between border-b border-slate-200 pb-2">
               <div className="flex items-center space-x-2">
                 <Route className="w-4 h-4 text-amber-600" />
@@ -613,7 +629,7 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
 
         {/* Floating PostGIS Proximity Query Result Modal */}
         {showProximityTool && (
-          <div className="absolute bottom-4 left-4 z-20 w-80 sm:w-[420px] bg-white/95 border border-indigo-300 rounded-xl p-4 shadow-2xl backdrop-blur-md animate-fadeIn text-xs space-y-3 text-slate-800">
+          <div className="absolute bottom-4 left-4 z-[1050] w-80 sm:w-[420px] bg-white/95 border border-indigo-300 rounded-xl p-4 shadow-2xl backdrop-blur-md animate-fadeIn text-xs space-y-3 text-slate-800">
             <div className="flex items-center justify-between border-b border-slate-200 pb-2">
               <div className="flex items-center space-x-2">
                 <Crosshair className="w-4 h-4 text-indigo-600" />
