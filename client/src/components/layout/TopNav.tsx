@@ -75,18 +75,20 @@ export const TopNav: React.FC<TopNavProps> = ({
           )}
         </button>
 
-        {/* Scenario Simulation Launcher */}
-        <button
-          onClick={onOpenDigitalTwin}
-          className="hidden md:flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-mono text-xs font-bold shadow-xs transition whitespace-nowrap shrink-0 border border-slate-900"
-          title="Launch Deterministic Scenario Simulation"
-        >
-          <PlayCircle className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-          <span>Scenario Sim</span>
-        </button>
+        {/* Scenario Simulation Launcher (Super Admin & Emergency Commander) */}
+        {(user?.role === 'super_admin' || user?.role === 'emergency_coordinator') && (
+          <button
+            onClick={onOpenDigitalTwin}
+            className="hidden md:flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-mono text-xs font-bold shadow-xs transition whitespace-nowrap shrink-0 border border-slate-900"
+            title="Launch Deterministic Scenario Simulation"
+          >
+            <PlayCircle className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+            <span>Scenario Sim</span>
+          </button>
+        )}
 
-        {/* AI ML Engine Console Launcher */}
-        {onOpenMlConsole && (
+        {/* AI ML Engine Console Launcher (Super Admin, Expedition Manager, Station Manager) */}
+        {onOpenMlConsole && (user?.role === 'super_admin' || user?.role === 'expedition_manager' || user?.role === 'station_manager') && (
           <button
             onClick={onOpenMlConsole}
             className="hidden lg:flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-cyan-700 hover:bg-cyan-800 text-white font-mono text-xs font-bold shadow-xs transition whitespace-nowrap shrink-0 border border-cyan-800"
@@ -96,18 +98,32 @@ export const TopNav: React.FC<TopNavProps> = ({
             <span>ML Engine</span>
           </button>
         )}
+
+        {/* QR Scanner Tool (Super Admin & Logistics Officer) */}
+        {(user?.role === 'super_admin' || user?.role === 'logistics_officer') && onOpenQrScanner && (
+          <button
+            onClick={onOpenQrScanner}
+            className="hidden sm:flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-emerald-800 font-mono text-xs font-bold shadow-2xs transition whitespace-nowrap shrink-0"
+            title="Open Cargo QR Scanner"
+          >
+            <QrCode className="w-3.5 h-3.5 text-emerald-700" />
+            <span>QR Scanner</span>
+          </button>
+        )}
       </div>
 
       {/* Right Controls */}
       <div className="flex items-center space-x-2.5 shrink-0">
-        {/* Urgent Blizzard SOS Trigger */}
-        <button
-          onClick={onOpenBlizzardSOS}
-          className="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-300 text-rose-800 font-bold text-xs shadow-2xs transition whitespace-nowrap"
-        >
-          <ShieldAlert className="w-3.5 h-3.5 text-rose-700 animate-pulse" />
-          <span>BLIZZARD SOS</span>
-        </button>
+        {/* Urgent Blizzard SOS Trigger (Super Admin, Emergency Coordinator, Station Commander) */}
+        {(user?.role === 'super_admin' || user?.role === 'emergency_coordinator' || user?.role === 'station_manager') && (
+          <button
+            onClick={onOpenBlizzardSOS}
+            className="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-300 text-rose-800 font-bold text-xs shadow-2xs transition whitespace-nowrap"
+          >
+            <ShieldAlert className="w-3.5 h-3.5 text-rose-700 animate-pulse" />
+            <span>BLIZZARD SOS</span>
+          </button>
+        )}
 
         {/* In-App Notifications Button */}
         <div className="relative">

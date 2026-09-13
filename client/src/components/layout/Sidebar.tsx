@@ -26,7 +26,29 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => {
   const { user } = useAuth();
 
-  const navigationItems = [
+  const ROLE_NAV_PERMISSIONS: Record<string, string[]> = {
+    super_admin: [
+      '/dashboard', '/expeditions', '/cargo', '/inventory', 
+      '/personnel', '/assets', '/map', '/emergency', '/analytics', '/settings'
+    ],
+    expedition_manager: [
+      '/dashboard', '/expeditions', '/personnel', '/map', '/analytics'
+    ],
+    logistics_officer: [
+      '/dashboard', '/cargo', '/inventory', '/assets', '/analytics'
+    ],
+    station_manager: [
+      '/dashboard', '/inventory', '/personnel', '/map', '/emergency'
+    ],
+    emergency_coordinator: [
+      '/dashboard', '/emergency', '/assets', '/map', '/personnel'
+    ],
+    viewer: [
+      '/dashboard', '/map', '/analytics', '/expeditions'
+    ],
+  };
+
+  const allNavigationItems = [
     { name: 'Dashboard', path: '/dashboard', icon: Compass },
     { name: 'Expeditions', path: '/expeditions', icon: Layers },
     { name: 'Cargo Tracking', path: '/cargo', icon: Box },
@@ -38,6 +60,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
     { name: 'Analytics', path: '/analytics', icon: BarChart3 },
     { name: 'System Settings', path: '/settings', icon: Settings },
   ];
+
+  const userRole = user?.role || 'viewer';
+  const allowedPaths = ROLE_NAV_PERMISSIONS[userRole] || ROLE_NAV_PERMISSIONS.viewer;
+  const navigationItems = allNavigationItems.filter(item => allowedPaths.includes(item.path));
 
   return (
     <aside 

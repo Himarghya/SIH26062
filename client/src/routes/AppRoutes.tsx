@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { AppLayout } from '../components/layout/AppLayout';
@@ -36,6 +36,17 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
   return <>{children}</>;
 };
 
+const RoleRoute: React.FC<{ allowedRoles: string[]; children: React.ReactNode }> = ({ allowedRoles, children }) => {
+  const { user } = useAuth();
+  const currentRole = user?.role || 'viewer';
+
+  if (!allowedRoles.includes(currentRole)) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return <>{children}</>;
+};
+
 export const AppRoutes: React.FC = () => {
   return (
     <Routes>
@@ -53,17 +64,96 @@ export const AppRoutes: React.FC = () => {
         }
       >
         <Route path="dashboard" element={<DashboardPage />} />
-        <Route path="expeditions" element={<ExpeditionsPage />} />
-        <Route path="expeditions/:id" element={<ExpeditionDetailsPage />} />
-        <Route path="cargo" element={<CargoPage />} />
-        <Route path="cargo/:id" element={<CargoDetailsPage />} />
-        <Route path="inventory" element={<InventoryPage />} />
-        <Route path="personnel" element={<PersonnelPage />} />
-        <Route path="assets" element={<AssetsPage />} />
-        <Route path="emergency" element={<EmergencySARPage />} />
-        <Route path="map" element={<MapPage />} />
-        <Route path="analytics" element={<AnalyticsPage />} />
-        <Route path="settings" element={<SettingsPage />} />
+        
+        {/* Role Protected Subsystems */}
+        <Route 
+          path="expeditions" 
+          element={
+            <RoleRoute allowedRoles={['super_admin', 'expedition_manager', 'viewer']}>
+              <ExpeditionsPage />
+            </RoleRoute>
+          } 
+        />
+        <Route 
+          path="expeditions/:id" 
+          element={
+            <RoleRoute allowedRoles={['super_admin', 'expedition_manager', 'viewer']}>
+              <ExpeditionDetailsPage />
+            </RoleRoute>
+          } 
+        />
+        <Route 
+          path="cargo" 
+          element={
+            <RoleRoute allowedRoles={['super_admin', 'logistics_officer']}>
+              <CargoPage />
+            </RoleRoute>
+          } 
+        />
+        <Route 
+          path="cargo/:id" 
+          element={
+            <RoleRoute allowedRoles={['super_admin', 'logistics_officer']}>
+              <CargoDetailsPage />
+            </RoleRoute>
+          } 
+        />
+        <Route 
+          path="inventory" 
+          element={
+            <RoleRoute allowedRoles={['super_admin', 'logistics_officer', 'station_manager']}>
+              <InventoryPage />
+            </RoleRoute>
+          } 
+        />
+        <Route 
+          path="personnel" 
+          element={
+            <RoleRoute allowedRoles={['super_admin', 'expedition_manager', 'station_manager', 'emergency_coordinator']}>
+              <PersonnelPage />
+            </RoleRoute>
+          } 
+        />
+        <Route 
+          path="assets" 
+          element={
+            <RoleRoute allowedRoles={['super_admin', 'logistics_officer', 'emergency_coordinator']}>
+              <AssetsPage />
+            </RoleRoute>
+          } 
+        />
+        <Route 
+          path="emergency" 
+          element={
+            <RoleRoute allowedRoles={['super_admin', 'emergency_coordinator', 'station_manager']}>
+              <EmergencySARPage />
+            </RoleRoute>
+          } 
+        />
+        <Route 
+          path="map" 
+          element={
+            <RoleRoute allowedRoles={['super_admin', 'expedition_manager', 'station_manager', 'emergency_coordinator', 'viewer']}>
+              <MapPage />
+            </RoleRoute>
+          } 
+        />
+        <Route 
+          path="analytics" 
+          element={
+            <RoleRoute allowedRoles={['super_admin', 'expedition_manager', 'logistics_officer', 'viewer']}>
+              <AnalyticsPage />
+            </RoleRoute>
+          } 
+        />
+        <Route 
+          path="settings" 
+          element={
+            <RoleRoute allowedRoles={['super_admin']}>
+              <SettingsPage />
+            </RoleRoute>
+          } 
+        />
       </Route>
 
       {/* Fallback */}
