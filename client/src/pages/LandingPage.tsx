@@ -15,7 +15,11 @@ import {
   Wifi,
   Activity,
   Layers,
-  Sparkles
+  Sparkles,
+  QrCode,
+  Lock,
+  BarChart3,
+  Server
 } from 'lucide-react';
 
 export const LandingPage: React.FC = () => {
@@ -40,7 +44,7 @@ export const LandingPage: React.FC = () => {
                 POLARIS
               </span>
               <span className="text-[10px] text-emerald-700 font-mono uppercase bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-300 font-bold">
-                v2.6 SIH-26062
+                SIH-26062 • MoES
               </span>
             </div>
             <span className="block text-[9px] text-slate-500 font-mono uppercase tracking-widest font-semibold">
@@ -51,10 +55,17 @@ export const LandingPage: React.FC = () => {
 
         <div className="flex items-center space-x-3">
           <Link
+            to="/pwa"
+            className="px-4 py-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-800 font-bold text-xs flex items-center space-x-1.5 transition shadow-sm"
+          >
+            <QrCode className="w-3.5 h-3.5 text-cyan-600" />
+            <span className="hidden sm:inline">Field PWA</span>
+          </Link>
+          <Link
             to="/login"
             className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 hover:from-emerald-500 hover:to-indigo-500 text-white font-bold text-xs flex items-center space-x-2 shadow-lg shadow-emerald-600/25 transition transform hover:-translate-y-0.5"
           >
-            <span>Launch Mission Control</span>
+            <span>Mission Control</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -89,22 +100,27 @@ export const LandingPage: React.FC = () => {
       </div>
 
       {/* Hero Section */}
-      <section className="relative px-6 py-16 md:py-24 max-w-6xl mx-auto text-center space-y-6 z-10">
+      <section className="relative px-6 py-14 md:py-20 max-w-6xl mx-auto text-center space-y-6 z-10">
         <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-mono font-bold shadow-sm">
           <Radio className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
-          <span>Integrated Polar Expedition Logistics & Asset Management System</span>
+          <span>Integrated Logistics & Supply Chain Management for Polar Research Stations</span>
         </div>
 
         <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-slate-900 uppercase font-sans leading-none">
-          Command The Extremes. <br />
+          POLARIS <br />
           <span className="gradient-text-aurora">
-            Zero-Trust. Zero-Loss.
+            Offline-First Polar Command
           </span>
         </h1>
 
-        <p className="max-w-2xl mx-auto text-slate-600 text-sm md:text-base leading-relaxed font-normal">
-          A unified operational command center for India’s research stations in Antarctica (<em className="text-emerald-700 not-italic font-bold">Bharati</em>, <em className="text-emerald-700 not-italic font-bold">Maitri</em>) and the Arctic (<em className="text-indigo-700 not-italic font-bold">Himadri</em>, <em className="text-indigo-700 not-italic font-bold">IndARC</em>). Engineered with offline-first satellite synchronization, cryptographic SHA-256 audit trails, and multi-factor route risk intelligence.
+        <p className="max-w-3xl mx-auto text-slate-600 text-sm md:text-base leading-relaxed font-normal">
+          An offline-first polar logistics command platform that eliminates winter isolation risks, transforms real-time ambient telemetry and supply chain data into predictive life-support autonomy forecasts and continuous cryogenic cold-chain monitoring for Indian polar research stations (<strong>Bharati</strong>, <strong>Maitri</strong>, <strong>Himadri</strong>).
         </p>
+
+        {/* Prototype Verification Callout */}
+        <div className="inline-block bg-cyan-50 border border-cyan-300 px-4 py-2 rounded-2xl text-xs font-mono font-bold text-cyan-900">
+          ✨ Fully functional prototype, verified across all 5 core operational modules.
+        </div>
 
         {/* CTA Group */}
         <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
@@ -112,67 +128,163 @@ export const LandingPage: React.FC = () => {
             to="/login"
             className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 hover:from-emerald-500 hover:to-indigo-500 text-white font-black text-sm flex items-center space-x-2.5 shadow-xl shadow-emerald-600/30 transition transform hover:-translate-y-1"
           >
-            <span>Enter Command Center</span>
+            <span>Launch Commander Desktop</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
-          <a
-            href="#capabilities"
-            className="px-7 py-3.5 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-800 text-sm font-bold transition shadow-sm hover:shadow"
+          <Link
+            to="/pwa"
+            className="px-7 py-3.5 rounded-2xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-800 text-sm font-bold transition shadow-sm hover:shadow flex items-center space-x-2"
           >
-            Explore Technical Capabilities
-          </a>
+            <QrCode className="w-4 h-4 text-cyan-600" />
+            <span>Open Field Operator PWA</span>
+          </Link>
         </div>
       </section>
 
-      {/* Feature Cards Grid */}
-      <section id="capabilities" className="px-6 py-12 max-w-6xl mx-auto space-y-8 z-10">
+      {/* 6 Core Platform Pillars Grid */}
+      <section className="px-6 py-8 max-w-6xl mx-auto space-y-6 z-10">
         <div className="text-center space-y-1.5">
           <h2 className="text-2xl font-black font-mono uppercase text-slate-900 gradient-text-aurora">
-            Mission-Critical Polar Capabilities
+            Core Architecture Pillars
           </h2>
           <p className="text-xs text-slate-500 font-mono">
             Designed for sub-zero isolation, 2.4 kbps narrowband satellite uplinks, and harsh wintering autonomy
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="glass-panel p-6 rounded-2xl space-y-3 relative overflow-hidden group hover:border-emerald-400 hover:shadow-xl transition duration-300">
-            <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-300 flex items-center justify-center text-emerald-600 shadow-sm">
-              <Compass className="w-6 h-6 group-hover:rotate-45 transition duration-300" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          
+          {/* Pillar 1 */}
+          <div className="glass-panel p-5 rounded-2xl space-y-2.5 border border-slate-200 hover:border-emerald-400 transition shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-300 flex items-center justify-center text-emerald-600">
+              <Compass className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-base text-slate-900">Decision-Support GIS Map</h3>
+            <h3 className="font-bold text-sm text-slate-900">5-Module Polar Command</h3>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Real-time multi-layer polar projection integration with multi-factor route risk assessment (67/100 High Risk corridors) and PostGIS proximity asset searching (<code className="text-emerald-700 font-bold bg-emerald-50 px-1 py-0.5 rounded">ST_DWithin 50km</code>).
+              Weather, cargo, crew, SAR, and polar mapping — unified in one responsive real-time command dashboard.
             </p>
           </div>
 
-          <div className="glass-panel p-6 rounded-2xl space-y-3 relative overflow-hidden group hover:border-indigo-400 hover:shadow-xl transition duration-300">
-            <div className="w-12 h-12 rounded-xl bg-indigo-50 border border-indigo-300 flex items-center justify-center text-indigo-600 shadow-sm">
-              <Box className="w-6 h-6 group-hover:scale-110 transition duration-300" />
+          {/* Pillar 2 */}
+          <div className="glass-panel p-5 rounded-2xl space-y-2.5 border border-slate-200 hover:border-cyan-400 transition shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-cyan-50 border border-cyan-300 flex items-center justify-center text-cyan-600">
+              <Cpu className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-base text-slate-900">Cold-Chain IoT & Custody</h3>
+            <h3 className="font-bold text-sm text-slate-900">4-Model AI Suite</h3>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Continuous temperature tracking for -80°C biological ice core specimens with duration-aware violation logic, sensor heartbeat health, and optical QR custody handover logging.
+              XGBoost storm predictor, LSTM fuel burn regressor (R²=0.94), Random Forest cryo detector, and multicriteria SAR rescue scoring.
             </p>
           </div>
 
-          <div className="glass-panel p-6 rounded-2xl space-y-3 relative overflow-hidden group hover:border-rose-400 hover:shadow-xl transition duration-300">
-            <div className="w-12 h-12 rounded-xl bg-rose-50 border border-rose-300 flex items-center justify-center text-rose-600 shadow-sm">
-              <ShieldAlert className="w-6 h-6 group-hover:animate-pulse transition duration-300" />
+          {/* Pillar 3 */}
+          <div className="glass-panel p-5 rounded-2xl space-y-2.5 border border-slate-200 hover:border-indigo-400 transition shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-300 flex items-center justify-center text-indigo-600">
+              <Users className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-base text-slate-900">8-Stage Emergency SAR</h3>
+            <h3 className="font-bold text-sm text-slate-900">6 Role-Based Workspaces</h3>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Formal incident escalation state machine with automated unaccounted personnel muster auto-escalation and VHF/HF/Iridium emergency communication packages.
+              Dedicated dashboards for Super Admin, Expedition Leader, Logistics Officer, Station Manager, SAR Coordinator, and Analyst.
+            </p>
+          </div>
+
+          {/* Pillar 4 */}
+          <div className="glass-panel p-5 rounded-2xl space-y-2.5 border border-slate-200 hover:border-amber-400 transition shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-300 flex items-center justify-center text-amber-600">
+              <BarChart3 className="w-5 h-5" />
+            </div>
+            <h3 className="font-bold text-sm text-slate-900">What-If Expedition Planner</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Deterministic scenario simulations computing multi-resource Leontief survival curves across Fuel, Food & O₂ stockpiles.
+            </p>
+          </div>
+
+          {/* Pillar 5 */}
+          <div className="glass-panel p-5 rounded-2xl space-y-2.5 border border-slate-200 hover:border-teal-400 transition shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-teal-50 border border-teal-300 flex items-center justify-center text-teal-600">
+              <Wifi className="w-5 h-5" />
+            </div>
+            <h3 className="font-bold text-sm text-slate-900">Offline 2.4 kbps Sat-Sync</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Compact JSON patch delta synchronization over Iridium SBD and S-band links with local IndexedDB/SQLite offline buffers.
+            </p>
+          </div>
+
+          {/* Pillar 6 */}
+          <div className="glass-panel p-5 rounded-2xl space-y-2.5 border border-slate-200 hover:border-rose-400 transition shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-rose-50 border border-rose-300 flex items-center justify-center text-rose-600">
+              <Thermometer className="w-5 h-5" />
+            </div>
+            <h3 className="font-bold text-sm text-slate-900">9-Stage Cold-Chain Tracking</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Prevents thermal excursions across the 9-stage multimodal journey from Goa Logistics Port to Antarctic -80°C subglacial cryo vaults.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      {/* "WHY WE STAND OUT?" Section */}
+      <section className="px-6 py-10 max-w-6xl mx-auto space-y-6 z-10">
+        <div className="text-center space-y-1">
+          <span className="px-3 py-1 bg-slate-900 text-white text-xs font-mono font-bold rounded-full uppercase tracking-wider">
+            Competitive Edge
+          </span>
+          <h2 className="text-2xl font-black font-mono uppercase text-slate-900 mt-2">
+            Why We Stand Out?
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="p-4 rounded-2xl bg-white border border-slate-300 shadow-sm space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-cyan-100 text-cyan-800 flex items-center justify-center font-bold text-sm">
+              ⚛️
+            </div>
+            <h4 className="font-bold text-xs text-slate-900">Physics & Leontief Autonomy</h4>
+            <p className="text-[11px] text-slate-600 leading-relaxed">
+              Solves multi-resource bottleneck (Fuel/Food/O₂) with live NOAA wind chill multipliers.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-white border border-slate-300 shadow-sm space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-sm">
+              📡
+            </div>
+            <h4 className="font-bold text-xs text-slate-900">Offline-First Resilience</h4>
+            <p className="text-[11px] text-slate-600 leading-relaxed">
+              Full IndexedDB mutation buffer & 2.4 kbps Iridium SBD micro-delta sync.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-white border border-slate-300 shadow-sm space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-rose-100 text-rose-800 flex items-center justify-center font-bold text-sm">
+              🛡️
+            </div>
+            <h4 className="font-bold text-xs text-slate-900">Deterministic SAR Engine</h4>
+            <p className="text-[11px] text-slate-600 leading-relaxed">
+              8-stage rapid rescue escalation ranking helicopter vs snowcat in seconds.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-white border border-slate-300 shadow-sm space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-800 flex items-center justify-center font-bold text-sm">
+              🔐
+            </div>
+            <h4 className="font-bold text-xs text-slate-900">Tamper-Evident SHA-256 Ledger</h4>
+            <p className="text-[11px] text-slate-600 leading-relaxed">
+              Cryptographic audit trail for supply adjustments and Antarctic treaty compliance.
             </p>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="mt-auto px-6 py-6 border-t border-slate-200 bg-white/80 backdrop-blur-md text-center text-xs text-slate-500 font-mono z-10">
-        POLARIS • National Centre for Polar and Ocean Research (NCPOR) • Ministry of Earth Sciences (MoES), Government of India
+      <footer className="mt-auto px-6 py-6 border-t border-slate-200 bg-white/80 backdrop-blur-md text-center text-xs text-slate-500 font-mono z-10 flex flex-wrap items-center justify-between gap-2 max-w-6xl mx-auto w-full">
+        <div>POLARIS • National Centre for Polar and Ocean Research (NCPOR) • Ministry of Earth Sciences (MoES)</div>
+        <div className="flex items-center space-x-3">
+          <Link to="/pwa" className="underline hover:text-slate-800 font-bold">Field PWA Mode</Link>
+          <Link to="/login" className="underline hover:text-slate-800 font-bold">Commander Desktop</Link>
+        </div>
       </footer>
     </div>
   );
 };
-

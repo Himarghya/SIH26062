@@ -37,35 +37,36 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const ROLE_NAV_PERMISSIONS: Record<string, string[]> = {
     super_admin: [
       '/dashboard', '/expeditions', '/cargo', '/inventory', 
-      '/personnel', '/assets', '/map', '/emergency', '/analytics', '/settings'
+      '/personnel', '/assets', '/map', '/emergency', '/analytics', '/field-pwa', '/settings'
     ],
     expedition_manager: [
-      '/dashboard', '/expeditions', '/personnel', '/map', '/analytics'
+      '/dashboard', '/expeditions', '/personnel', '/map', '/analytics', '/field-pwa'
     ],
     logistics_officer: [
-      '/dashboard', '/cargo', '/inventory', '/assets', '/analytics'
+      '/dashboard', '/cargo', '/inventory', '/assets', '/analytics', '/field-pwa'
     ],
     station_manager: [
-      '/dashboard', '/inventory', '/personnel', '/map', '/emergency'
+      '/dashboard', '/inventory', '/personnel', '/map', '/emergency', '/field-pwa'
     ],
     emergency_coordinator: [
-      '/dashboard', '/emergency', '/assets', '/map', '/personnel'
+      '/dashboard', '/emergency', '/assets', '/map', '/personnel', '/field-pwa'
     ],
     viewer: [
-      '/dashboard', '/map', '/analytics', '/expeditions'
+      '/dashboard', '/map', '/analytics', '/expeditions', '/field-pwa'
     ],
   };
 
   const allNavigationItems = [
     { name: 'Dashboard', path: '/dashboard', icon: Compass },
+    { name: 'Field Operator PWA', path: '/field-pwa', icon: Box },
     { name: 'Expeditions', path: '/expeditions', icon: Layers },
-    { name: 'Cargo Tracking', path: '/cargo', icon: Box },
+    { name: 'Cargo & 9-Stage Cold Chain', path: '/cargo', icon: Box },
     { name: 'Station Inventory', path: '/inventory', icon: Anchor },
     { name: 'Personnel & Muster', path: '/personnel', icon: Users },
     { name: 'Asset Management', path: '/assets', icon: Truck },
     { name: 'Polar Map & GIS', path: '/map', icon: Map },
     { name: 'Emergency Command', path: '/emergency', icon: ShieldAlert, alert: true },
-    { name: 'Analytics', path: '/analytics', icon: BarChart3 },
+    { name: 'What-If Analytics', path: '/analytics', icon: BarChart3 },
     { name: 'System Settings', path: '/settings', icon: Settings },
   ];
 

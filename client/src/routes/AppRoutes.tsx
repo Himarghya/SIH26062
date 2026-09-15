@@ -16,6 +16,7 @@ import { EmergencySARPage } from '../pages/EmergencySARPage';
 import { MapPage } from '../pages/MapPage';
 import { AnalyticsPage } from '../pages/AnalyticsPage';
 import { SettingsPage } from '../pages/SettingsPage';
+import { FieldPwaPage } from '../pages/FieldPwaPage';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
@@ -50,9 +51,10 @@ const RoleRoute: React.FC<{ allowedRoles: string[]; children: React.ReactNode }>
 export const AppRoutes: React.FC = () => {
   return (
     <Routes>
-      {/* Public Landing & Authentication */}
+      {/* Public Landing, PWA Standalone & Authentication */}
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/pwa" element={<FieldPwaPage />} />
 
       {/* Authenticated Application Command Center */}
       <Route
@@ -64,6 +66,8 @@ export const AppRoutes: React.FC = () => {
         }
       >
         <Route path="dashboard" element={<DashboardPage />} />
+        <Route path="pwa" element={<FieldPwaPage />} />
+        <Route path="field-pwa" element={<FieldPwaPage />} />
         
         {/* Role Protected Subsystems */}
         <Route 
