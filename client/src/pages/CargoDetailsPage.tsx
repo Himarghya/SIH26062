@@ -100,6 +100,73 @@ export const CargoDetailsPage: React.FC = () => {
         </div>
       </div>
 
+      {/* 9-Stage Multimodal Polar Cold-Chain Stepper */}
+      <div className="bg-white border border-slate-200 p-5 rounded-2xl space-y-4 shadow-xs">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h3 className="font-bold text-xs font-mono uppercase text-slate-900 flex items-center space-x-2">
+            <MapPin className="w-4 h-4 text-emerald-600" />
+            <span>9-Stage Polar Multimodal Cold-Chain Route (Goa → Antarctica)</span>
+          </h3>
+          <span className="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-300 font-bold">
+            Live Milestone Stepper
+          </span>
+        </div>
+
+        {/* Stepper Graphic */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-9 gap-2 pt-2">
+          {[
+            { step: 1, title: 'Goa NCPOR Hub', desc: 'Pre-chill & Packaging', icon: '📦' },
+            { step: 2, title: 'Mormugao Berth', desc: 'Customs & Port Load', icon: '⚓' },
+            { step: 3, title: 'Indian Ocean', desc: 'Reefer Monitoring', icon: '🚢' },
+            { step: 4, title: 'Southern Ocean', desc: 'Roaring 40s Crossing', icon: '🌊' },
+            { step: 5, title: 'Fast-Ice Mooring', desc: 'Larsemann Coast', icon: '🧊' },
+            { step: 6, title: 'Helicopter Lift', desc: 'Kamov Ka-32 Sling', icon: '🚁' },
+            { step: 7, title: 'Traverse Sled', desc: 'PistenBully Snow Convoy', icon: '🚜' },
+            { step: 8, title: 'Station Dock', desc: 'De-icing Air Lock', icon: '🏢' },
+            { step: 9, title: '-80°C Vault', desc: 'Deep Cryo Storage', icon: '❄️' },
+          ].map((stage) => {
+            const isPassed = stage.step <= 3;
+            const isCurrent = stage.step === 3;
+
+            return (
+              <div
+                key={stage.step}
+                className={`p-2.5 rounded-xl border text-center transition flex flex-col items-center justify-between ${
+                  isCurrent
+                    ? 'bg-emerald-50 border-emerald-500 shadow-sm ring-2 ring-emerald-400/30'
+                    : isPassed
+                    ? 'bg-slate-50 border-emerald-300 text-slate-700'
+                    : 'bg-slate-50/50 border-slate-200 text-slate-400'
+                }`}
+              >
+                <div className="text-xl mb-1">{stage.icon}</div>
+                <div className="text-[10px] font-mono font-bold text-slate-800">
+                  {stage.step}. {stage.title}
+                </div>
+                <div className="text-[9px] text-slate-500 mt-0.5 leading-tight">
+                  {stage.desc}
+                </div>
+                <div className="mt-2">
+                  {isCurrent ? (
+                    <span className="px-1.5 py-0.2 rounded bg-emerald-600 text-white font-mono text-[9px] font-bold animate-pulse">
+                      CURRENT
+                    </span>
+                  ) : isPassed ? (
+                    <span className="text-emerald-600 font-mono text-[9px] font-bold">
+                      ✓ DONE
+                    </span>
+                  ) : (
+                    <span className="text-slate-400 font-mono text-[9px]">
+                      QUEUED
+                    </span>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Tracking Timeline */}
       <div className="bg-white border border-slate-200 p-5 rounded-2xl space-y-4 shadow-xs">
         <h3 className="font-bold text-xs font-mono uppercase text-slate-900 flex items-center space-x-2">
