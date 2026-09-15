@@ -2,30 +2,31 @@
 ### Problem Statement ID: 26062 | National Centre for Polar and Ocean Research (NCPOR) • Ministry of Earth Sciences (MoES)
 
 > **"One Command Center. Every Expedition. Every Asset. Every Prediction."**  
-> Centralized mission command, predictive machine learning engine, cold-chain cryo-compliance (-80°C), multi-station wintering inventory optimization, personnel muster roll-call, and Search & Rescue (SAR) emergency response for Indian Antarctic (*Bharati*, *Maitri*) and Arctic (*Himadri*, *IndARC Mooring*) scientific expeditions.
+> Centralized mission command, predictive machine learning engine, cold-chain cryo-compliance (-80°C), multi-station wintering inventory optimization, personnel muster roll-call, Field Operator PWA, and Search & Rescue (SAR) emergency response for Indian Antarctic (*Bharati*, *Maitri*) and Arctic (*Himadri*, *IndARC Mooring*) scientific expeditions.
 
 ---
 
 ## ⚡ Executive Summary (SIH Solution Pillars)
 
-* **Complete 5-Module Polar Command & Field Feeds:** Connects live weather telemetry, QR cargo manifests (-80°C cryo chain), crew muster rosters, and emergency SAR triggers with interactive polar GIS mapping — tracking GPS waypoints, base inventory ledgers, and real-time blizzard alert levels across all stations.
-* **What-If Expedition Planner & 4-Model AI Suite:** Runs an interactive mission planner (testing cargo weights and +30-day extensions) alongside 4 ML tools (blizzard, fuel burn, cryo anomaly, and SAR ranker) plus a physics calculator solving live Fuel, Food, and O2 survival autonomy under severe wind chill stress.
-* **Offline 2.4 kbps Sat-Sync & 6 Role Dashboards:** Syncs critical deltas over slow 2.4 kbps Iridium links using local IndexedDB buffers and tamper-evident SHA-256 audit logs, giving 6 tailored dashboards to Super Admins, Expedition Leaders, Logistics Officers, Station Commanders, SAR Teams, and Analysts in FastAPI.
+* **Complete 5-Module Polar Command & Field PWA:** Connects live weather telemetry, optical QR/RFID cargo manifests (-80°C cryo chain), crew muster rosters, and emergency SAR triggers with interactive polar GIS mapping — tracking GPS waypoints, base inventory ledgers, and real-time blizzard alert levels across all stations.
+* **What-If Expedition Planner & 4-Model AI Suite:** Runs an interactive mission planner (testing cargo weights and +30-day extensions) alongside 4 ML tools (blizzard classification, fuel burn regression, cryo anomaly detection, and SAR asset ranker) plus a physics calculator solving live Fuel, Food, and O₂ survival autonomy under severe wind chill stress.
+* **Offline 2.4 kbps Sat-Sync & 6 Role Dashboards:** Syncs critical deltas over slow 2.4 kbps Iridium links using local IndexedDB buffers and tamper-evident SHA-256 audit logs, giving 6 tailored dashboards to Super Admins, Expedition Leaders, Logistics Officers, Station Commanders, SAR Teams, and Field Operators.
 
 ---
 
 ## 🎯 Key Challenges Solved
 
-* **8-Month Isolation & Stockout Blindspots:** Replaces static spreadsheets with a Leontief Bottleneck Solver, coupling live ambient cold (-28.5°C) and gale winds (68 km/h) into dynamic fuel, food, and O2 survival autonomy forecasts.
-* **Sub-Zero Bio-Specimen Cold-Chain Loss:** Enforces 9-stage custody tracking and Isolation Forest anomaly detection, preventing thermal breach across -80°C ice cores and -20°C provisions.
+* **8-Month Isolation & Stockout Blindspots:** Replaces static spreadsheets with a Leontief Bottleneck Solver, coupling live ambient cold (-28.5°C) and gale winds (68 km/h) into dynamic fuel, food, and O₂ survival autonomy forecasts.
+* **Sub-Zero Bio-Specimen Cold-Chain Loss:** Enforces a visual 9-stage multimodal custody tracking chain and Isolation Forest anomaly detection, preventing thermal breach across -80°C ice cores and -20°C provisions.
 * **Glacial Whiteout Emergencies & Slow SAR:** Automates an 8-stage Search & Rescue escalation state machine with multi-criteria asset ranking (Kamov helo / snowcat), computing terrain safety and radius within seconds.
 * **Narrowband Satellite Link & Blackouts:** Employs an offline-first IndexedDB buffer with 2.4 kbps Iridium SBD delta-sync, idempotent conflict resolution, and SHA-256 hash-chained ledgers for tamper-evident operational traceability.
+* **Rugged Field Check-In via Mobile PWA:** Dedicated lightweight Field PWA (`/pwa`) for field scientists and traverse drivers, enabling optical 2D barcode scanning, cryogenic probe telemetry, and GPS muster sync without app store installation.
 
 ---
 
 ## 🏆 Feasibility Matrix for POLARIS
 
-* **1. Technical Feasibility:** Built on mature FastAPI, React 19, SQLite/PostGIS, and lightweight Scikit-Learn models. Separates deterministic physics formulas (fuel/food/O2 autonomy) from ML where it genuinely improves prediction, running smoothly on rugged field laptops without heavy cloud GPU servers.
+* **1. Technical Feasibility:** Built on mature FastAPI, React 19, SQLite/PostGIS, and lightweight Scikit-Learn models. Separates deterministic physics formulas (fuel/food/O₂ autonomy) from ML where it genuinely improves prediction, running smoothly on rugged field laptops without heavy cloud GPU servers.
 * **2. Operational & Practical Feasibility:** 6 tailored role dashboards give each officer only what they need with zero learning curve. Daily workflows use fast QR barcode scans for cargo custody, one-click muster check-ins, and a standardized 8-stage SAR checklist during whiteout emergencies.
 * **3. Economic & Financial Feasibility:** Requires zero expensive new sensor hardware by ingesting existing station AWS sensors and GPS logs. Micro-delta payloads (~280 bytes) slash costly satellite data charges, while -80°C cryo monitoring prevents losing invaluable Antarctic ice-core bio-specimens.
 * **4. Sustainability & Scalability:** Operates 100% offline via local IndexedDB storage through weeks of solar storms and total communication blackouts. Easily scales across all current and future Indian polar stations (*Bharati, Maitri, Himadri, IndARC*) with tamper-evident SHA-256 audit ledgers for long-term accountability.
@@ -37,15 +38,16 @@
 2. [Physics-Based Autonomy & Live Ambient Derivation Model](#-2-physics-based-autonomy--live-ambient-derivation-model)
 3. [Satellite Bandwidth & 2.4 kbps Offline Sync Architecture](#-3-satellite-bandwidth--offline-delta-sync-architecture)
 4. [POLARIS ML Predictive Engine (4 Production Models)](#-4-polaris-ml-predictive-engine)
-5. [6 Persona-Adaptive Role Command Dashboards (RBAC)](#-5-6-persona-adaptive-role-command-dashboards-rbac)
-6. [GIS & Polar Mapping Engine](#-6-gis--polar-mapping-engine)
-7. [Station Coverage: Antarctica & Arctic](#-7-station-coverage-antarctica--arctic)
-8. [Cargo Chain-of-Custody & Cold-Chain Compliance (-80°C)](#-8-cargo-chain-of-custody--cold-chain-compliance)
-9. [Search & Rescue (SAR) 8-Stage State Machine](#-9-search--rescue-sar-8-stage-state-machine)
-10. [Tamper-Evident SHA-256 Audit Ledger](#-10-tamper-evident-sha-256-audit-ledger)
-11. [How to Run Locally](#-11-how-to-run-locally)
-12. [Automated Test Suite & Verification](#-12-automated-test-suite)
-13. [Evaluator Demo Flow (5-Minute Pitch)](#-13-recommended-5-minute-evaluator-presentation-flow)
+5. [Field Operator PWA & Mobile Ergonomics](#-5-field-operator-pwa--mobile-ergonomics)
+6. [6 Persona-Adaptive Role Command Dashboards (RBAC)](#-6-6-persona-adaptive-role-command-dashboards-rbac)
+7. [GIS & Polar Mapping Engine](#-7-gis--polar-mapping-engine)
+8. [Station Coverage: Antarctica & Arctic](#-8-station-coverage-antarctica--arctic)
+9. [9-Stage Cargo Multimodal Cold-Chain Route](#-9-9-stage-cargo-multimodal-cold-chain-route)
+10. [Search & Rescue (SAR) 8-Stage State Machine](#-10-search--rescue-sar-8-stage-state-machine)
+11. [Tamper-Evident SHA-256 Audit Ledger](#-11-tamper-evident-sha-256-audit-ledger)
+12. [How to Run Locally](#-12-how-to-run-locally)
+13. [Automated Test Suite & Verification](#-13-automated-test-suite)
+14. [Evaluator Demo Flow (5-Minute Pitch)](#-14-recommended-5-minute-evaluator-presentation-flow)
 
 ---
 
@@ -55,10 +57,11 @@
 graph TD
     subgraph UI_Layer ["1. Presentation Layer (React 19 + TypeScript + Vite + Tailwind CSS)"]
         Dash["6-Role Command Centers"]
+        PWA["Rugged Field Operator PWA (/pwa)"]
         GIS["Polar Leaflet GIS (4 Basemaps)"]
         AutonomyUI["Live Ambient Derivation Panel"]
         MLConsole["ML Predictive Command Console"]
-        CargoUI["Cold-Chain & QR/DataMatrix Scanner"]
+        CargoUI["9-Stage Cold-Chain & QR/RFID Scanner"]
         InvUI["Wintering Autonomy Ledger & ROP"]
         SarUI["SAR 8-Stage Escalation Board"]
         PersonnelUI["Biometric Crew Muster & Roster"]
@@ -73,7 +76,7 @@ graph TD
     subgraph API_Layer ["3. Backend API Gateway (FastAPI 0.115+ / Python 3.11+)"]
         AuthAPI["/api/v1/auth (JWT Bearer)"]
         StationAPI["/api/v1/stations (AWS Telemetry)"]
-        CargoAPI["/api/v1/cargo (Chain-of-Custody)"]
+        CargoAPI["/api/v1/cargo (9-Stage Custody Chain)"]
         InvAPI["/api/v1/inventory (Autonomy & Derivation Solver)"]
         EmergencyAPI["/api/v1/emergency (SAR State Machine)"]
         MLAPI["/predict & /api/v1/ml (XGBoost + Isolation Forest)"]
@@ -146,7 +149,17 @@ POLARIS operates seamlessly over narrowband **2.4 kbps Iridium SBD (Short Burst 
 
 ---
 
-## 👥 5. 6 Persona-Adaptive Role Command Dashboards (RBAC)
+## 📱 5. Field Operator PWA & Mobile Ergonomics
+
+Accessible directly at `/pwa` and optimized for small touchscreen field tablets and rugged mobile devices:
+* **Optical 2D Barcode & RFID Scanner**: Instant specimen and pallet scanning with auditory/haptic feedback.
+* **GPS Field Check-In**: One-tap coordinate stamping for traverse vehicles and field stations.
+* **-80°C Cryogenic Sensor Live Monitor**: Real-time core telemetry tracking liquid nitrogen levels and thermal excursion timers.
+* **Biometric Muster Roll Call**: Real-time personnel verification with offline storage buffer and automatic satellite sync upon reconnect.
+
+---
+
+## 👥 6. 6 Persona-Adaptive Role Command Dashboards (RBAC)
 
 POLARIS dynamically tailors the interface, navigation, and tools according to 6 operational personas:
 
@@ -161,7 +174,7 @@ POLARIS dynamically tailors the interface, navigation, and tools according to 6 
 
 ---
 
-## 🗺️ 6. GIS & Polar Mapping Engine
+## 🗺️ 7. GIS & Polar Mapping Engine
 
 * Built on Leaflet.js with **zero external API keys or watermark rate limits**.
 * **4 Polar Basemaps**: Tactical Dark Canvas, Satellite Recon & Polar Ice, Subsea Bathymetry, and OpenStreetMap.
@@ -169,7 +182,7 @@ POLARIS dynamically tailors the interface, navigation, and tools according to 6 
 
 ---
 
-## 🏔️ 7. Station Coverage: Antarctica & Arctic
+## 🏔️ 8. Station Coverage: Antarctica & Arctic
 
 1. **Bharati Station (Antarctica • $69.4072^\circ\text{S}, 76.1906^\circ\text{E}$)**: Year-round manned facility in Larsemann Hills.
 2. **Maitri Station (Antarctica • $70.7667^\circ\text{S}, 11.7333^\circ\text{E}$)**: Inland rocky oasis station in Schirmacher Oasis.
@@ -178,19 +191,23 @@ POLARIS dynamically tailors the interface, navigation, and tools according to 6 
 
 ---
 
-## 📦 8. Cargo Chain-of-Custody & Cold-Chain Compliance
+## 📦 9. 9-Stage Cargo Multimodal Cold-Chain Route
 
-### 9-Stage Custody Lifecycle Chain:
-$$\text{Created} \rightarrow \text{Packed} \rightarrow \text{QC Passed} \rightarrow \text{Port Loaded} \rightarrow \text{Vessel Departed} \rightarrow \text{Air Transfer} \rightarrow \text{Station Arrival} \rightarrow \text{Vault Inspected} \rightarrow \text{Delivered}$$
+Full milestone lifecycle from Goa headquarters to Antarctic cryo-vaults:
 
-### Monitored Preservation Bands:
-* **Cryogenic Deep Ice & Bio-Samples**: $-80^\circ\text{C}$ target (Band: $-85^\circ\text{C}$ to $-70^\circ\text{C}$) with automated liquid nitrogen alarms.
-* **Frozen Emergency Provisions**: $-20^\circ\text{C}$ target (Band: $-25^\circ\text{C}$ to $-15^\circ\text{C}$).
-* **Medical Vaccines & Reagents**: $+4^\circ\text{C}$ target (Band: $+2^\circ\text{C}$ to $+8^\circ\text{C}$).
+1. **Stage 1: Goa NCPOR Hub** — Specimen packaging & $-80^\circ\text{C}$ pre-chill initialization.
+2. **Stage 2: Mormugao Berth** — Customs inspection & refrigerated reefer hold loading.
+3. **Stage 3: Indian Ocean Transit** — Continuous temperature logging aboard *MV Vasiliy Golovnin*.
+4. **Stage 4: Southern Ocean Crossing** — Roaring Forties navigation & thermal stability monitoring.
+5. **Stage 5: Fast-Ice Mooring** — Larsemann Hills coastal anchorage.
+6. **Stage 6: Helicopter Lift** — Kamov Ka-32 sling transfer to station helipad.
+7. **Stage 7: Traverse Sled Convoy** — PistenBully over-ice sled transport.
+8. **Stage 8: Station Receiving Bay** — De-icing airlock check-in & barcode verification.
+9. **Stage 9: Station Cryo Vault** — $-80^\circ\text{C}$ long-term specimen quarantine and cataloging.
 
 ---
 
-## 🚨 9. Search & Rescue (SAR) 8-Stage State Machine
+## 🚨 10. Search & Rescue (SAR) 8-Stage State Machine
 
 $$\text{1. Detection} \rightarrow \text{2. Triage} \rightarrow \text{3. Mobilize} \rightarrow \text{4. Grid Search} \rightarrow \text{5. Contact} \rightarrow \text{6. Evacuation} \rightarrow \text{7. Arrival} \rightarrow \text{8. Debrief}$$
 
@@ -199,7 +216,7 @@ $$\text{1. Detection} \rightarrow \text{2. Triage} \rightarrow \text{3. Mobilize
 
 ---
 
-## 🔐 10. Tamper-Evident SHA-256 Audit Ledger
+## 🔐 11. Tamper-Evident SHA-256 Audit Ledger
 
 Every critical action (cargo scan, stock burn log, sortie dispatch, muster check-in) is cryptographically chained for tamper-evident operational traceability:
 
@@ -207,7 +224,7 @@ $$\text{Record Hash} = \text{SHA256}(\text{Previous Hash} + \text{Timestamp} + \
 
 ---
 
-## ⚡ 11. How to Run Locally
+## ⚡ 12. How to Run Locally
 
 ### Prerequisites:
 - Python 3.10+
@@ -224,17 +241,18 @@ python -m uvicorn backend.app.main:app --port 8000 --reload
 * API Docs: [http://localhost:8000/api/v1/docs](http://localhost:8000/api/v1/docs)
 * Autonomy Derivation API: `GET http://localhost:8000/api/v1/inventory/autonomy-derivation`
 
-**Terminal 2 — Frontend User Interface:**
+**Terminal 2 — Frontend User Interface & Field PWA:**
 ```powershell
 cd polar-logistics/client
 npm install
 npm run dev
 ```
-* Web Application: [http://localhost:5173](http://localhost:5173)
+* Web Application & Commander: [http://localhost:5173](http://localhost:5173)
+* Field Operator PWA: [http://localhost:5173/pwa](http://localhost:5173/pwa)
 
 ---
 
-## 🧪 12. Automated Test Suite
+## 🧪 13. Automated Test Suite
 
 ```powershell
 python -m pytest backend/app/tests -v
@@ -245,14 +263,14 @@ python -m pytest backend/app/tests -v
 
 ---
 
-## 🎯 13. Recommended 5-Minute Evaluator Presentation Flow
+## 🎯 14. Recommended 5-Minute Evaluator Presentation Flow
 
 1. **0:00–0:30 (Mission Challenge & One-Liner)**: State the extreme polar isolation problem (8 months cut-off, $-50^\circ\text{C}$, $2.4\text{ kbps}$ links) and introduce POLARIS.
 2. **0:30–1:15 (Mission Command & Polar GIS)**: Showcase the 4 basemaps and camera fly-tos (*Bharati $\rightarrow$ Maitri $\rightarrow$ Himadri $\rightarrow$ IndARC*).
 3. **1:15–2:15 (Live Ambient Autonomy Derivation)**: Open the **Autonomy Derivation Panel** ($-28.5^\circ\text{C}$, $68\text{ km/h}$). Demonstrate the live wind-chill ($T_{wc} = -49.1^\circ\text{C}$), weather multipliers ($M_{\text{Fuel}}=1.768\times$), and Leontief bottleneck solver.
 4. **2:15–3:15 (Cold-Chain & 4-Model ML Engine)**: Scan a $-80^\circ\text{C}$ 2D DataMatrix bio-container and open the ML Command Console for instant Blizzard/Fuel inference.
 5. **3:15–4:15 (SAR Emergency Command & 6-Role Switcher)**: Switch active roles (*Expedition Manager $\rightarrow$ Logistics Officer $\rightarrow$ SAR Commander*) to prove persona-tailored command grids.
-6. **4:15–5:00 (Offline Satellite Delta-Sync & Audit Ledger)**: Toggle offline mode, enqueue mutations, trigger $2.4\text{ kbps}$ delta-sync, and show the tamper-evident SHA-256 audit ledger.
+6. **4:15–5:00 (Offline Satellite Delta-Sync & Field PWA)**: Toggle offline mode, demonstrate the Field PWA on mobile, enqueue mutations, trigger $2.4\text{ kbps}$ delta-sync, and show the tamper-evident SHA-256 audit ledger.
 
 ---
 
