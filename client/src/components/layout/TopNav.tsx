@@ -11,7 +11,8 @@ import {
   ChevronDown,
   Wifi,
   Info,
-  Cpu
+  Cpu,
+  Menu
 } from 'lucide-react';
 import { useAuth, DEMO_ACCOUNTS } from '../../context/AuthContext';
 import { NotificationsPopover } from '../notifications/NotificationsPopover';
@@ -22,6 +23,7 @@ interface TopNavProps {
   onOpenBlizzardSOS: () => void;
   onOpenSatelliteSync: () => void;
   onOpenMlConsole?: () => void;
+  onToggleMobileSidebar?: () => void;
   isOffline: boolean;
   pendingQueueCount: number;
 }
@@ -32,6 +34,7 @@ export const TopNav: React.FC<TopNavProps> = ({
   onOpenBlizzardSOS,
   onOpenSatelliteSync,
   onOpenMlConsole,
+  onToggleMobileSidebar,
   isOffline,
   pendingQueueCount
 }) => {
@@ -40,11 +43,23 @@ export const TopNav: React.FC<TopNavProps> = ({
   const [showNotifications, setShowNotifications] = useState(false);
 
   return (
-    <header className="h-16 bg-white/95 backdrop-blur-md border-b border-slate-300 px-4 md:px-6 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
-      {/* Left: Operational Mode & Transparency Pill */}
-      <div className="flex items-center space-x-2.5 overflow-x-auto no-scrollbar">
+    <header className="h-16 bg-white/95 backdrop-blur-md border-b border-slate-300 px-3 md:px-6 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
+      {/* Left: Mobile Hamburger & Operational Mode */}
+      <div className="flex items-center space-x-2 md:space-x-2.5 overflow-x-auto no-scrollbar">
+        {/* Mobile Hamburger Menu Button */}
+        {onToggleMobileSidebar && (
+          <button
+            onClick={onToggleMobileSidebar}
+            className="p-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 hover:text-slate-900 border border-slate-300 transition shadow-2xs md:hidden shrink-0"
+            title="Open Navigation Menu"
+            aria-label="Open Navigation Menu"
+          >
+            <Menu className="w-4 h-4" />
+          </button>
+        )}
+
         {/* Simulation Transparency Label */}
-        <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-300 text-slate-800 text-xs font-mono whitespace-nowrap shrink-0 shadow-2xs">
+        <div className="flex items-center space-x-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-300 text-slate-800 text-xs font-mono whitespace-nowrap shrink-0 shadow-2xs">
           <Info className="w-3.5 h-3.5 text-cyan-700" />
           <span className="font-bold hidden sm:inline">Simulation Demo</span>
           <span className="font-bold sm:hidden">Sim</span>
@@ -53,7 +68,7 @@ export const TopNav: React.FC<TopNavProps> = ({
         {/* Satellite Sync Status Indicator */}
         <button
           onClick={onOpenSatelliteSync}
-          className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-mono font-bold border transition whitespace-nowrap shrink-0 shadow-2xs ${
+          className={`flex items-center space-x-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-mono font-bold border transition whitespace-nowrap shrink-0 shadow-2xs ${
             isOffline
               ? 'bg-amber-50 border-amber-300 text-amber-900 animate-pulse'
               : 'bg-slate-100 hover:bg-slate-200/90 border-slate-300 text-slate-800'
@@ -113,15 +128,17 @@ export const TopNav: React.FC<TopNavProps> = ({
       </div>
 
       {/* Right Controls */}
-      <div className="flex items-center space-x-2.5 shrink-0">
+      <div className="flex items-center space-x-1.5 sm:space-x-2.5 shrink-0">
         {/* Urgent Blizzard SOS Trigger (Super Admin, Emergency Coordinator, Station Commander) */}
         {(user?.role === 'super_admin' || user?.role === 'emergency_coordinator' || user?.role === 'station_manager') && (
           <button
             onClick={onOpenBlizzardSOS}
-            className="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-300 text-rose-800 font-bold text-xs shadow-2xs transition whitespace-nowrap"
+            className="flex items-center space-x-1 sm:space-x-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-300 text-rose-800 font-bold text-xs shadow-2xs transition whitespace-nowrap"
+            title="Trigger Blizzard Emergency SOS"
           >
             <ShieldAlert className="w-3.5 h-3.5 text-rose-700 animate-pulse" />
-            <span>BLIZZARD SOS</span>
+            <span className="hidden sm:inline">BLIZZARD SOS</span>
+            <span className="sm:hidden font-mono text-[11px]">SOS</span>
           </button>
         )}
 
@@ -130,6 +147,7 @@ export const TopNav: React.FC<TopNavProps> = ({
           <button
             onClick={() => setShowNotifications(!showNotifications)}
             className="p-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-300 text-slate-800 hover:text-slate-950 relative transition shadow-2xs"
+            title="Notifications"
           >
             <Bell className="w-4 h-4" />
             <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-cyan-600 animate-ping" />
@@ -144,7 +162,7 @@ export const TopNav: React.FC<TopNavProps> = ({
         <div className="relative">
           <button
             onClick={() => setShowRoleMenu(!showRoleMenu)}
-            className="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-900 text-xs transition shadow-2xs"
+            className="flex items-center space-x-1.5 sm:space-x-2 px-2 sm:px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-900 text-xs transition shadow-2xs"
           >
             <div className="w-6 h-6 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-[10px] shrink-0 shadow-xs">
               {user?.name?.[0] || 'U'}
@@ -157,7 +175,7 @@ export const TopNav: React.FC<TopNavProps> = ({
           </button>
 
           {showRoleMenu && (
-            <div className="absolute right-0 mt-2 w-72 bg-white border border-slate-300 rounded-2xl shadow-xl p-2 z-50 animate-fadeIn text-slate-900">
+            <div className="absolute right-0 mt-2 w-72 max-w-[calc(100vw-24px)] bg-white border border-slate-300 rounded-2xl shadow-xl p-2 z-50 animate-fadeIn text-slate-900">
               <div className="px-3 py-2 border-b border-slate-200 text-xs">
                 <div className="font-mono text-[10px] text-slate-600 uppercase font-bold">Switch Active Demo Role:</div>
               </div>

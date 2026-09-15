@@ -13,6 +13,7 @@ import { ChevronRight, Home } from 'lucide-react';
 
 export const AppLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [showDigitalTwin, setShowDigitalTwin] = useState(false);
   const [showQrScanner, setShowQrScanner] = useState(false);
   const [showBlizzardSOS, setShowBlizzardSOS] = useState(false);
@@ -62,19 +63,30 @@ export const AppLayout: React.FC = () => {
   const location = useLocation();
   const pathParts = location.pathname.split('/').filter(Boolean);
 
+  // Close mobile sidebar on route change
+  useEffect(() => {
+    setMobileSidebarOpen(false);
+  }, [location.pathname]);
+
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-800 flex">
+    <div className="min-h-screen bg-[#f8fafc] text-slate-800 flex overflow-x-hidden">
       {/* Sidebar */}
-      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+      <Sidebar 
+        collapsed={collapsed} 
+        setCollapsed={setCollapsed} 
+        mobileOpen={mobileSidebarOpen}
+        setMobileOpen={setMobileSidebarOpen}
+      />
 
       {/* Main Content Area */}
-      <div className={`flex-1 flex flex-col transition-all duration-300 ${collapsed ? 'md:ml-20' : 'md:ml-64'}`}>
+      <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ${collapsed ? 'md:ml-20' : 'md:ml-64'}`}>
         <TopNav
           onOpenDigitalTwin={() => setShowDigitalTwin(true)}
           onOpenQrScanner={() => setShowQrScanner(true)}
           onOpenBlizzardSOS={() => setShowBlizzardSOS(true)}
           onOpenSatelliteSync={() => setShowSatelliteSync(true)}
           onOpenMlConsole={() => setShowMlConsole(true)}
+          onToggleMobileSidebar={() => setMobileSidebarOpen(prev => !prev)}
           isOffline={isOffline}
           pendingQueueCount={offlineQueue.length}
         />
