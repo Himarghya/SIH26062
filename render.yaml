@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: polaris-polar-logistics
+    runtime: python
+    region: oregon
+    plan: free
+    buildCommand: bash render-build.sh
+    startCommand: uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: NODE_VERSION
+        value: 20.10.0
+      - key: SECRET_KEY
+        generateValue: true
+      - key: PROJECT_NAME
+        value: "POLARIS — Integrated Polar Expedition Logistics System"
+      - key: API_V1_STR
+        value: "/api/v1"
