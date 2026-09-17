@@ -109,7 +109,7 @@ export const AnalyticsPage: React.FC = () => {
 
         <button
           onClick={() => setShowMlModal(true)}
-          className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold font-mono text-xs shadow-md shadow-emerald-600/20 transition"
+          className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-slate-900   hover: hover: text-white font-bold font-mono text-xs shadow-md shadow-emerald-600/20 transition"
         >
           <Cpu className="w-4 h-4 animate-pulse" />
           <span>LAUNCH ML COMMAND CONSOLE</span>
@@ -117,7 +117,7 @@ export const AnalyticsPage: React.FC = () => {
       </div>
 
       {/* ML Capabilities Interactive Banner */}
-      <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-50/90 via-teal-50/80 to-cyan-50/90 border border-emerald-200/90 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xs">
+      <div className="p-4 rounded-2xl bg-slate-900    border border-emerald-200/90 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xs">
         <div className="flex items-center space-x-3">
           <div className="p-3 rounded-xl bg-emerald-100 text-emerald-700 border border-emerald-200">
             <Sparkles className="w-6 h-6 animate-pulse" />

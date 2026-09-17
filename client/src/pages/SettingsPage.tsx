@@ -120,7 +120,7 @@ export const SettingsPage: React.FC = () => {
           <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between shadow-sm">
             <div>
               <div className="text-slate-500 text-[10px] font-mono font-bold">FASTAPI CORE</div>
-              <div className="text-emerald-700 font-bold font-mono">🟢 ONLINE</div>
+              <div className="text-emerald-700 font-bold font-mono"> ONLINE</div>
             </div>
             <span className="text-[10px] text-slate-500 font-mono">24ms</span>
           </div>
@@ -128,7 +128,7 @@ export const SettingsPage: React.FC = () => {
           <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between shadow-sm">
             <div>
               <div className="text-slate-500 text-[10px] font-mono font-bold">DB / POSTGIS</div>
-              <div className="text-emerald-700 font-bold font-mono">🟢 READY</div>
+              <div className="text-emerald-700 font-bold font-mono"> READY</div>
             </div>
             <span className="text-[10px] text-slate-500 font-mono">SQLite/PG</span>
           </div>
@@ -136,7 +136,7 @@ export const SettingsPage: React.FC = () => {
           <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between shadow-sm">
             <div>
               <div className="text-slate-500 text-[10px] font-mono font-bold">OSM GIS TILES</div>
-              <div className="text-emerald-700 font-bold font-mono">🟢 ACTIVE</div>
+              <div className="text-emerald-700 font-bold font-mono"> ACTIVE</div>
             </div>
             <span className="text-[10px] text-slate-500 font-mono">CDN</span>
           </div>
@@ -144,7 +144,7 @@ export const SettingsPage: React.FC = () => {
           <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between shadow-sm">
             <div>
               <div className="text-slate-500 text-[10px] font-mono font-bold">SAT-LINK SYNC</div>
-              <div className="text-emerald-700 font-bold font-mono">🟢 ACTIVE</div>
+              <div className="text-emerald-700 font-bold font-mono"> ACTIVE</div>
             </div>
             <span className="text-[10px] text-slate-500 font-mono">Iridium</span>
           </div>
@@ -152,7 +152,7 @@ export const SettingsPage: React.FC = () => {
           <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between shadow-sm">
             <div>
               <div className="text-slate-500 text-[10px] font-mono font-bold">EVENT ENGINE</div>
-              <div className="text-emerald-700 font-bold font-mono">🟢 RUNNING</div>
+              <div className="text-emerald-700 font-bold font-mono"> RUNNING</div>
             </div>
             <span className="text-[10px] text-slate-500 font-mono">0 Lag</span>
           </div>
@@ -248,7 +248,7 @@ export const SettingsPage: React.FC = () => {
               <button
                 type="submit"
                 disabled={isUpdating}
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 disabled:opacity-50 text-white font-bold text-xs flex items-center space-x-2 shadow-md shadow-emerald-600/20 transition"
+                className="px-5 py-2.5 rounded-xl bg-slate-900   hover: hover: disabled:opacity-50 text-white font-bold text-xs flex items-center space-x-2 shadow-md shadow-emerald-600/20 transition"
               >
                 <Save className="w-4 h-4" />
                 <span>{isUpdating ? 'Applying Override...' : 'Apply Weather / Lockdown Directives'}</span>
@@ -282,7 +282,7 @@ export const SettingsPage: React.FC = () => {
             <button
               onClick={handleVerifyLedger}
               disabled={isVerifyingChain}
-              className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-mono font-bold text-xs flex items-center space-x-1.5 shadow-md shadow-emerald-600/20 transition"
+              className="px-4 py-2 rounded-xl bg-slate-900   hover: hover: text-white font-mono font-bold text-xs flex items-center space-x-1.5 shadow-md shadow-emerald-600/20 transition"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${isVerifyingChain ? 'animate-spin' : ''}`} />
               <span>Verify Continuous Hash Chain</span>
@@ -298,7 +298,7 @@ export const SettingsPage: React.FC = () => {
         }`}>
           <div className="flex items-center space-x-3">
             <div className={`p-2.5 rounded-xl font-bold font-mono text-xs shadow-sm ${chainVerified ? 'bg-emerald-600 text-white' : 'bg-rose-600 text-white'}`}>
-              {chainVerified ? '🟢 100% VERIFIED' : '🚨 INTEGRITY FAILURE'}
+              {chainVerified ? ' 100% VERIFIED' : ' INTEGRITY FAILURE'}
             </div>
             <div>
               <div className="font-bold font-mono text-sm">
@@ -372,12 +372,12 @@ export const SettingsPage: React.FC = () => {
               {PERMISSION_MATRIX.map((row, idx) => (
                 <tr key={idx} className="hover:bg-slate-50/80 transition">
                   <td className="py-2.5 px-3.5 font-semibold text-slate-900">{row.action}</td>
-                  <td className="py-2.5 px-2 text-center">{row.admin ? <span className="text-emerald-700 font-bold">✓</span> : <span className="text-slate-300">—</span>}</td>
-                  <td className="py-2.5 px-2 text-center">{row.expedition ? <span className="text-emerald-700 font-bold">✓</span> : <span className="text-slate-300">—</span>}</td>
-                  <td className="py-2.5 px-2 text-center">{row.logistics ? <span className="text-emerald-700 font-bold">✓</span> : <span className="text-slate-300">—</span>}</td>
-                  <td className="py-2.5 px-2 text-center">{row.station ? <span className="text-emerald-700 font-bold">✓</span> : <span className="text-slate-300">—</span>}</td>
-                  <td className="py-2.5 px-2 text-center">{row.emergency ? <span className="text-emerald-700 font-bold">✓</span> : <span className="text-slate-300">—</span>}</td>
-                  <td className="py-2.5 px-2 text-center">{row.viewer ? <span className="text-emerald-700 font-bold">✓</span> : <span className="text-slate-300">—</span>}</td>
+                  <td className="py-2.5 px-2 text-center">{row.admin ? <span className="text-emerald-700 font-bold"></span> : <span className="text-slate-300">—</span>}</td>
+                  <td className="py-2.5 px-2 text-center">{row.expedition ? <span className="text-emerald-700 font-bold"></span> : <span className="text-slate-300">—</span>}</td>
+                  <td className="py-2.5 px-2 text-center">{row.logistics ? <span className="text-emerald-700 font-bold"></span> : <span className="text-slate-300">—</span>}</td>
+                  <td className="py-2.5 px-2 text-center">{row.station ? <span className="text-emerald-700 font-bold"></span> : <span className="text-slate-300">—</span>}</td>
+                  <td className="py-2.5 px-2 text-center">{row.emergency ? <span className="text-emerald-700 font-bold"></span> : <span className="text-slate-300">—</span>}</td>
+                  <td className="py-2.5 px-2 text-center">{row.viewer ? <span className="text-emerald-700 font-bold"></span> : <span className="text-slate-300">—</span>}</td>
                 </tr>
               ))}
             </tbody>

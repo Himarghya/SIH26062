@@ -51,9 +51,9 @@ export const AutonomyDerivationPanel: React.FC<{
 
   // Preset Presets for quick mobile tapping
   const presets = [
-    { label: '📡 Live Telemetry (-28.5°C, 68 km/h)', temp: -28.5, wind: 68, crew: 25 },
-    { label: '🌪️ Blizzard Lockdown (-42°C, 110 km/h)', temp: -42.0, wind: 110, crew: 25 },
-    { label: '☀️ Polar Summer (-12°C, 25 km/h)', temp: -12.0, wind: 25, crew: 45 },
+    { label: ' Live Telemetry (-28.5°C, 68 km/h)', temp: -28.5, wind: 68, crew: 25 },
+    { label: '️ Blizzard Lockdown (-42°C, 110 km/h)', temp: -42.0, wind: 110, crew: 25 },
+    { label: '️ Polar Summer (-12°C, 25 km/h)', temp: -12.0, wind: 25, crew: 45 },
   ];
 
   // Station Stock Presets
@@ -150,7 +150,7 @@ export const AutonomyDerivationPanel: React.FC<{
       {/* Panel Top Header - Fully Flexible for Mobile */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-3 sm:pb-4">
         <div className="flex items-start sm:items-center space-x-3">
-          <div className="p-2 sm:p-2.5 rounded-xl sm:rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/20 shrink-0">
+          <div className="p-2 sm:p-2.5 rounded-xl sm:rounded-2xl bg-slate-900   text-white shadow-md shadow-emerald-500/20 shrink-0">
             <Calculator className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
           <div>
@@ -281,7 +281,7 @@ export const AutonomyDerivationPanel: React.FC<{
       </div>
 
       {/* Core Mathematical Model Equations Box - Responsive Typography & Layout */}
-      <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 text-white font-mono space-y-2.5 sm:space-y-3 shadow-lg">
+      <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-900    text-white font-mono space-y-2.5 sm:space-y-3 shadow-lg">
         <div className="flex items-center justify-between text-[11px] sm:text-xs text-indigo-300 font-bold border-b border-slate-700 pb-2">
           <div className="flex items-center space-x-1.5 sm:space-x-2">
             <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
@@ -401,7 +401,7 @@ export const AutonomyDerivationPanel: React.FC<{
               <div className="text-[11px] sm:text-xs font-mono font-semibold text-slate-700 truncate">
                 Autonomy = min({calculations.items.map(i => `${i.autonomyDays}d`).join(', ')})
               </div>
-              <div className="p-2 sm:p-2.5 rounded-xl bg-gradient-to-r from-rose-50 to-amber-50 border border-rose-200 font-mono text-xs">
+              <div className="p-2 sm:p-2.5 rounded-xl bg-slate-900   border border-rose-200 font-mono text-xs">
                 <div className="text-[9px] uppercase font-bold text-rose-700">Critical Bottleneck:</div>
                 <div className="text-sm sm:text-base font-black text-rose-950 mt-0.5">
                   {calculations.bottleneckCategory} ({calculations.overallAutonomyDays} Days)
@@ -501,7 +501,7 @@ export const AutonomyDerivationPanel: React.FC<{
       </div>
 
       {/* Summary Banner - Stacks nicely on mobile screens */}
-      <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-indigo-50 border border-emerald-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-900    border border-emerald-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-start sm:items-center space-x-2.5 sm:space-x-3">
           <div className="p-2 rounded-xl bg-emerald-600 text-white shadow-sm shrink-0">
             <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -529,10 +529,10 @@ export const AutonomyDerivationPanel: React.FC<{
                 : 'text-rose-700'
           }`}>
             {calculations.overallAutonomyDays >= 270 
-              ? '✅ OPTIMAL RESERVE' 
+              ? ' OPTIMAL RESERVE' 
               : calculations.overallAutonomyDays >= 180 
-                ? '⚠️ WARNING BUFFER ACTIVE' 
-                : '🚨 CRITICAL STOCK ALERT'}
+                ? '️ WARNING BUFFER ACTIVE' 
+                : ' CRITICAL STOCK ALERT'}
           </div>
         </div>
       </div>

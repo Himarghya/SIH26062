@@ -110,7 +110,7 @@ export const AppLayout: React.FC = () => {
         )}
 
         {/* Breadcrumb strip */}
-        <div className="px-6 py-2 border-b border-slate-200/80 bg-white/70 backdrop-blur-xs flex items-center space-x-2 text-xs text-slate-500 font-mono">
+        <div className="px-6 py-2 border-b border-slate-200/80 bg-white/70 -xs flex items-center space-x-2 text-xs text-slate-500 font-mono">
           <Link to="/dashboard" className="hover:text-emerald-700 flex items-center space-x-1 font-bold text-slate-700">
             <Home className="w-3.5 h-3.5" />
             <span>POLARIS</span>

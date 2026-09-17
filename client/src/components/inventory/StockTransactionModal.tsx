@@ -41,9 +41,9 @@ export const StockTransactionModal: React.FC<StockTransactionModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-md animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50  animate-fadeIn">
       <div className="relative w-full max-w-md bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-2xl">
-        <div className="bg-gradient-to-r from-emerald-50 via-teal-50 to-indigo-50 px-6 py-4 flex items-center justify-between border-b border-slate-200">
+        <div className="bg-slate-900    px-6 py-4 flex items-center justify-between border-b border-slate-200">
           <div className="flex items-center space-x-2">
             <Anchor className="w-5 h-5 text-emerald-600" />
             <h3 className="font-bold text-sm text-slate-900 font-mono uppercase">Record Stock Movement</h3>
@@ -112,7 +112,7 @@ export const StockTransactionModal: React.FC<StockTransactionModalProps> = ({
             <button
               type="submit"
               disabled={loading}
-              className="px-5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 disabled:opacity-50 text-white font-bold shadow-md shadow-emerald-600/20 transition"
+              className="px-5 py-2 rounded-xl bg-slate-900   hover: hover: disabled:opacity-50 text-white font-bold shadow-md shadow-emerald-600/20 transition"
             >
               {loading ? "Recording..." : "Record Transaction"}
             </button>

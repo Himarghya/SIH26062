@@ -72,7 +72,7 @@ export const FieldPwaPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col items-center p-3 sm:p-6 font-sans">
       {/* Top Mobile PWA Header */}
-      <div className="w-full max-w-md bg-slate-800/90 border border-slate-700 rounded-3xl p-4 shadow-2xl backdrop-blur-xl flex flex-col gap-4">
+      <div className="w-full max-w-md bg-slate-800/90 border border-slate-700 rounded-3xl p-4 shadow-2xl  flex flex-col gap-4">
         
         {/* Device Status Bar */}
         <div className="flex items-center justify-between text-xs font-mono text-slate-400 border-b border-slate-700/80 pb-3">
@@ -185,9 +185,9 @@ export const FieldPwaPage: React.FC = () => {
             <button
               onClick={simulateScan}
               disabled={isScanning}
-              className="w-full py-3.5 bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-xl shadow-lg transition"
+              className="w-full py-3.5 bg-slate-900   hover: hover: text-white font-bold text-xs font-mono uppercase tracking-wider rounded-xl shadow-lg transition"
             >
-              {isScanning ? 'Acquiring optical lock...' : '⚡ Trigger Optical / RFID Scanner'}
+              {isScanning ? 'Acquiring optical lock...' : ' Trigger Optical / RFID Scanner'}
             </button>
           </div>
         )}
@@ -233,9 +233,9 @@ export const FieldPwaPage: React.FC = () => {
 
             <button
               type="submit"
-              className="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-xl shadow-lg transition"
+              className="w-full py-3.5 bg-slate-900   hover: hover: text-white font-bold text-xs font-mono uppercase tracking-wider rounded-xl shadow-lg transition"
             >
-              📍 Submit GPS Field Check-In
+               Submit GPS Field Check-In
             </button>
           </form>
         )}
@@ -291,7 +291,7 @@ export const FieldPwaPage: React.FC = () => {
                   </div>
                   {m.status === 'MUSTERED' ? (
                     <span className="px-2.5 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 rounded-lg font-bold text-[10px]">
-                      ✓ {m.time}
+                       {m.time}
                     </span>
                   ) : (
                     <button

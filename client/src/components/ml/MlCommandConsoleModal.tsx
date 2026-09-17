@@ -213,7 +213,7 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-md animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50  animate-fadeIn">
       <div className="relative w-full max-w-5xl bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh] text-slate-800">
         {/* Modal Top Bar */}
         <div className="bg-slate-50 px-6 py-4 flex items-center justify-between border-b border-slate-200">
@@ -960,7 +960,7 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
 
                   <div className="space-y-3 font-mono">
                     {aResult.map((asset: any, idx: number) => {
-                      const medal = idx === 0 ? '🥇 1st Choice' : idx === 1 ? '🥈 2nd Choice' : '🥉 3rd Choice';
+                      const medal = idx === 0 ? ' 1st Choice' : idx === 1 ? ' 2nd Choice' : ' 3rd Choice';
                       const isTop = idx === 0;
                       return (
                         <div

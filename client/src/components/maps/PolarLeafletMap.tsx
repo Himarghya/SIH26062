@@ -49,12 +49,12 @@ const createMarkerIcon = (emoji: string, bg: string, border: string, glow: strin
   });
 };
 
-const stationIcon = createMarkerIcon('🧊', '#0284c7', '#38bdf8', '#00f2fe');
-const shipIcon = createMarkerIcon('🚢', '#d97706', '#f59e0b', '#fbbf24');
-const heloIcon = createMarkerIcon('🚁', '#059669', '#10b981', '#34d399');
-const vehicleIcon = createMarkerIcon('🚜', '#7c3aed', '#8b5cf6', '#a78bfa');
-const cargoIcon = createMarkerIcon('📦', '#0891b2', '#06b6d4', '#67e8f9');
-const emergencyIcon = createMarkerIcon('⚠️', '#dc2626', '#ef4444', '#f87171', true);
+const stationIcon = createMarkerIcon('', '#0284c7', '#38bdf8', '#00f2fe');
+const shipIcon = createMarkerIcon('', '#d97706', '#f59e0b', '#fbbf24');
+const heloIcon = createMarkerIcon('', '#059669', '#10b981', '#34d399');
+const vehicleIcon = createMarkerIcon('', '#7c3aed', '#8b5cf6', '#a78bfa');
+const cargoIcon = createMarkerIcon('', '#0891b2', '#06b6d4', '#67e8f9');
+const emergencyIcon = createMarkerIcon('️', '#dc2626', '#ef4444', '#f87171', true);
 
 // Component to handle programmatically flying map to region
 const MapViewController: React.FC<{ center: [number, number]; zoom: number }> = ({ center, zoom }) => {
@@ -276,10 +276,10 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
             onChange={(e) => setSelectedBasemap(e.target.value)}
             className="bg-slate-50 border border-slate-300 hover:border-cyan-500 rounded-lg px-2.5 py-1 text-[11px] text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-cyan-500/20 font-mono transition cursor-pointer shadow-2xs"
           >
-            <option value="satellite">🛰️ Satellite Recon (Polar Ice)</option>
-            <option value="dark">🌙 Dark Tactical Canvas</option>
-            <option value="ocean">🌊 Subsea Bathymetry</option>
-            <option value="osm">🗺️ OpenStreetMap Standard</option>
+            <option value="satellite">️ Satellite Recon (Polar Ice)</option>
+            <option value="dark"> Dark Tactical Canvas</option>
+            <option value="ocean"> Subsea Bathymetry</option>
+            <option value="osm">️ OpenStreetMap Standard</option>
           </select>
         </div>
 
@@ -330,7 +330,7 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
               activeLayers.stations ? 'bg-cyan-100 border-cyan-300 text-cyan-900 font-bold shadow-2xs' : 'bg-slate-50 border-slate-200 text-slate-500 hover:bg-slate-100'
             }`}
           >
-            <span>🧊 Stations ({stations.length})</span>
+            <span> Stations ({stations.length})</span>
           </button>
           <button
             onClick={() => setActiveLayers(p => ({ ...p, assets: !p.assets }))}
@@ -338,7 +338,7 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
               activeLayers.assets ? 'bg-amber-100 border-amber-300 text-amber-900 font-bold shadow-2xs' : 'bg-slate-50 border-slate-200 text-slate-500 hover:bg-slate-100'
             }`}
           >
-            <span>🚢 Fleet ({assets.length})</span>
+            <span> Fleet ({assets.length})</span>
           </button>
           <button
             onClick={() => setActiveLayers(p => ({ ...p, cargo: !p.cargo }))}
@@ -346,7 +346,7 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
               activeLayers.cargo ? 'bg-blue-100 border-blue-300 text-blue-900 font-bold shadow-2xs' : 'bg-slate-50 border-slate-200 text-slate-500 hover:bg-slate-100'
             }`}
           >
-            <span>📦 Cargo ({cargo.length})</span>
+            <span> Cargo ({cargo.length})</span>
           </button>
           <button
             onClick={() => setActiveLayers(p => ({ ...p, emergencies: !p.emergencies }))}
@@ -354,7 +354,7 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
               activeLayers.emergencies ? 'bg-rose-100 border-rose-300 text-rose-900 font-bold shadow-2xs' : 'bg-slate-50 border-slate-200 text-slate-500 hover:bg-slate-100'
             }`}
           >
-            <span>⚠️ Incidents ({emergencies.filter(e => e.status !== 'Resolved').length})</span>
+            <span>️ Incidents ({emergencies.filter(e => e.status !== 'Resolved').length})</span>
           </button>
           <button
             onClick={() => setActiveLayers(p => ({ ...p, routes: !p.routes }))}
@@ -362,7 +362,7 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
               activeLayers.routes ? 'bg-emerald-100 border-emerald-300 text-emerald-900 font-bold shadow-2xs' : 'bg-slate-50 border-slate-200 text-slate-500 hover:bg-slate-100'
             }`}
           >
-            <span>📍 Risk Routes</span>
+            <span> Risk Routes</span>
           </button>
         </div>
       </div>
@@ -516,7 +516,7 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
                     <div>Weight: <strong>{c.weight_kg ?? c.weightKg} kg</strong></div>
                     {c.is_cold_chain && (
                       <div className="text-[11px] text-cyan-700 font-semibold">
-                        ❄️ Cryo Specimen (-80°C Monitored)
+                        ️ Cryo Specimen (-80°C Monitored)
                       </div>
                     )}
                     <div className="pt-1 border-t text-right">
@@ -540,7 +540,7 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
                 <Popup>
                   <div className="p-1 text-slate-900 text-xs space-y-1">
                     <div className="flex items-center justify-between border-b pb-1">
-                      <span className="font-bold text-rose-800">🚨 {e.incident_code || e.incidentCode}</span>
+                      <span className="font-bold text-rose-800"> {e.incident_code || e.incidentCode}</span>
                       <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 font-bold">
                         {e.severity}
                       </span>
@@ -564,7 +564,7 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
 
         {/* Floating Route Risk Inspector Card */}
         {selectedRoute && (
-          <div className="absolute top-4 right-4 z-[1050] w-80 sm:w-96 bg-white/95 border border-amber-400 rounded-xl p-4 shadow-2xl backdrop-blur-md animate-fadeIn text-xs space-y-3 text-slate-800">
+          <div className="absolute top-4 right-4 z-[1050] w-80 sm:w-96 bg-white/95 border border-amber-400 rounded-xl p-4 shadow-2xl  animate-fadeIn text-xs space-y-3 text-slate-800">
             <div className="flex items-center justify-between border-b border-slate-200 pb-2">
               <div className="flex items-center space-x-2">
                 <Route className="w-4 h-4 text-amber-600" />
@@ -629,7 +629,7 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
 
         {/* Floating PostGIS Proximity Query Result Modal */}
         {showProximityTool && (
-          <div className="absolute bottom-4 left-4 z-[1050] w-80 sm:w-[420px] bg-white/95 border border-indigo-300 rounded-xl p-4 shadow-2xl backdrop-blur-md animate-fadeIn text-xs space-y-3 text-slate-800">
+          <div className="absolute bottom-4 left-4 z-[1050] w-80 sm:w-[420px] bg-white/95 border border-indigo-300 rounded-xl p-4 shadow-2xl  animate-fadeIn text-xs space-y-3 text-slate-800">
             <div className="flex items-center justify-between border-b border-slate-200 pb-2">
               <div className="flex items-center space-x-2">
                 <Crosshair className="w-4 h-4 text-indigo-600" />

@@ -81,7 +81,7 @@ export const MapPage: React.FC = () => {
       {/* Quick Summary Chips */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="bg-white border border-slate-200 p-3.5 rounded-2xl flex items-center space-x-3 shadow-xs">
-          <div className="p-2 rounded-xl bg-teal-50 border border-teal-200 text-teal-800 font-bold text-base">🧊</div>
+          <div className="p-2 rounded-xl bg-teal-50 border border-teal-200 text-teal-800 font-bold text-base"></div>
           <div>
             <div className="text-[10px] font-mono text-slate-500 font-medium">TRACKED BASES</div>
             <div className="text-base font-bold font-mono text-slate-900">{stations.length} Stations</div>
@@ -89,7 +89,7 @@ export const MapPage: React.FC = () => {
         </div>
 
         <div className="bg-white border border-slate-200 p-3.5 rounded-2xl flex items-center space-x-3 shadow-xs">
-          <div className="p-2 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 font-bold text-base">🚢</div>
+          <div className="p-2 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 font-bold text-base"></div>
           <div>
             <div className="text-[10px] font-mono text-slate-500 font-medium">FLEET ASSETS</div>
             <div className="text-base font-bold font-mono text-amber-700">{assets.length} Units</div>
@@ -97,7 +97,7 @@ export const MapPage: React.FC = () => {
         </div>
 
         <div className="bg-white border border-slate-200 p-3.5 rounded-2xl flex items-center space-x-3 shadow-xs">
-          <div className="p-2 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-800 font-bold text-base">📦</div>
+          <div className="p-2 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-800 font-bold text-base"></div>
           <div>
             <div className="text-[10px] font-mono text-slate-500 font-medium">ACTIVE CONSIGNMENTS</div>
             <div className="text-base font-bold font-mono text-indigo-700">{cargo.length} Shipments</div>
@@ -105,7 +105,7 @@ export const MapPage: React.FC = () => {
         </div>
 
         <div className="bg-white border border-slate-200 p-3.5 rounded-2xl flex items-center space-x-3 shadow-xs">
-          <div className="p-2 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 font-bold text-base">⚠️</div>
+          <div className="p-2 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 font-bold text-base">️</div>
           <div>
             <div className="text-[10px] font-mono text-slate-500 font-medium">ACTIVE SAR DISTRESS</div>
             <div className="text-base font-bold font-mono text-rose-700">

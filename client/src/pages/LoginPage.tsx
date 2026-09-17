@@ -54,8 +54,8 @@ export const LoginPage: React.FC = () => {
       <div className="w-full max-w-lg space-y-6 relative z-10">
         {/* Logo & Title */}
         <div className="text-center space-y-2">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-indigo-600 flex items-center justify-center font-black text-white shadow-xl shadow-emerald-500/25 mx-auto text-3xl">
-            🧊
+          <div className="w-16 h-16 rounded-2xl bg-slate-900    flex items-center justify-center font-black text-white shadow-xl shadow-emerald-500/25 mx-auto text-3xl">
+            
           </div>
           <h1 className="text-2xl sm:text-3xl font-black tracking-wider text-slate-900 uppercase font-mono gradient-text-aurora">
             POLARIS COMMAND ACCESS
@@ -109,7 +109,7 @@ export const LoginPage: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 hover:from-emerald-500 hover:to-indigo-500 disabled:opacity-50 text-white font-black text-xs flex items-center justify-center space-x-2 shadow-xl shadow-emerald-600/25 transition transform hover:-translate-y-0.5"
+              className="w-full py-3.5 rounded-xl bg-slate-900    hover: hover: disabled:opacity-50 text-white font-black text-xs flex items-center justify-center space-x-2 shadow-xl shadow-emerald-600/25 transition transform hover:-translate-y-0.5"
             >
               <span>{isLoading ? "Authenticating Session..." : "Sign In to Command Center"}</span>
               <ArrowRight className="w-4 h-4" />

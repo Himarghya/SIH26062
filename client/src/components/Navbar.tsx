@@ -59,14 +59,14 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
+    <header className="sticky top-0 z-40 bg-white/90  border-b border-slate-200">
       {/* Top Telemetry & Status Bar */}
       <div className="flex flex-wrap items-center justify-between px-4 py-2 text-xs border-b border-slate-100 bg-slate-50/80">
         {/* Brand & Organization */}
         <div className="flex items-center space-x-3">
           <div className="flex items-center space-x-2">
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-emerald-600 to-teal-700 flex items-center justify-center font-bold text-white shadow-xs">
-              🧊
+            <div className="w-7 h-7 rounded-lg bg-slate-900   flex items-center justify-center font-bold text-white shadow-xs">
+              
             </div>
             <div>
               <span className="font-black text-sm tracking-wider text-slate-900">
@@ -93,10 +93,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               onChange={(e) => setSelectedStationId(e.target.value)}
               className="bg-transparent text-slate-900 font-bold text-xs focus:outline-none cursor-pointer"
             >
-              <option value="all" className="bg-white text-slate-900">🌐 All Polar Stations</option>
+              <option value="all" className="bg-white text-slate-900"> All Polar Stations</option>
               {stations.map(st => (
                 <option key={st.id} value={st.id} className="bg-white text-slate-900">
-                  {st.region === 'Arctic' ? '🐻' : '🐧'} {st.name} ({st.code})
+                  {st.region === 'Arctic' ? '' : ''} {st.name} ({st.code})
                 </option>
               ))}
             </select>

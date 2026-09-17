@@ -206,7 +206,7 @@ export const PersonnelPage: React.FC<{
         <div className="p-4 rounded-2xl bg-rose-50 border border-rose-300 flex flex-wrap items-center justify-between gap-3 text-xs shadow-sm">
           <div className="flex items-center space-x-3">
             <div className="p-2 rounded-xl bg-rose-600 text-white font-bold font-mono shadow-sm">
-              ⚠ UNACCOUNTED: {missingMusterCount}
+               UNACCOUNTED: {missingMusterCount}
             </div>
             <div>
               <div className="font-bold text-rose-950 uppercase font-mono">
@@ -222,7 +222,7 @@ export const PersonnelPage: React.FC<{
             onClick={handleEscalateToSAR}
             className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold font-mono text-xs flex items-center space-x-2 shadow-md transition"
           >
-            <span>🚨 Escalate to SAR Emergency Dispatch</span>
+            <span> Escalate to SAR Emergency Dispatch</span>
           </button>
         </div>
       )}
@@ -399,7 +399,7 @@ export const PersonnelPage: React.FC<{
                 if (filterStation !== 'all') setSelectedStation(filterStation);
                 setShowAddModal(true);
               }}
-              className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-mono text-xs font-bold transition flex items-center space-x-1.5 shadow-md shadow-emerald-600/20"
+              className="px-4 py-2 rounded-xl bg-slate-900   hover: hover: text-white font-mono text-xs font-bold transition flex items-center space-x-1.5 shadow-md shadow-emerald-600/20"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Deploy Personnel Here</span>
@@ -410,7 +410,7 @@ export const PersonnelPage: React.FC<{
 
       {/* Deploy Personnel Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-md animate-fadeIn">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50  animate-fadeIn">
           <div className="relative w-full max-w-xl bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <h3 className="text-base font-bold text-slate-900 font-mono uppercase flex items-center space-x-2">
               <Users className="w-5 h-5 text-emerald-600" />
@@ -419,7 +419,7 @@ export const PersonnelPage: React.FC<{
 
             {submitError && (
               <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-300 text-rose-700 text-xs font-mono font-semibold">
-                ⚠ {submitError}
+                 {submitError}
               </div>
             )}
 
@@ -548,7 +548,7 @@ export const PersonnelPage: React.FC<{
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 disabled:opacity-50 text-white font-bold transition flex items-center space-x-1.5 shadow-md shadow-emerald-600/20"
+                  className="px-5 py-2 rounded-xl bg-slate-900   hover: hover: disabled:opacity-50 text-white font-bold transition flex items-center space-x-1.5 shadow-md shadow-emerald-600/20"
                 >
                   {isSubmitting ? (
                     <span>Enrolling...</span>

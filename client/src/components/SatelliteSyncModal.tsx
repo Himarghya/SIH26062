@@ -85,7 +85,7 @@ export const SatelliteSyncModal: React.FC<SatelliteSyncModalProps> = ({
   const musterCount = queue.filter(q => q.entity === 'personnel').length;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-md animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50  animate-fadeIn">
       <div className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-2xl text-slate-800">
         {/* Header */}
         <div className="bg-slate-50 px-6 py-4 flex items-center justify-between border-b border-slate-200">
@@ -103,7 +103,7 @@ export const SatelliteSyncModal: React.FC<SatelliteSyncModalProps> = ({
                     ? 'bg-amber-100 text-amber-900 border border-amber-300 animate-pulse' 
                     : 'bg-emerald-100 text-emerald-900 border border-emerald-300'
                 }`}>
-                  {isOffline ? '⚠ STATION ISOLATION / OFFLINE' : '● SAT-LINK ONLINE'}
+                  {isOffline ? ' STATION ISOLATION / OFFLINE' : '● SAT-LINK ONLINE'}
                 </span>
               </div>
               <p className="text-xs text-slate-500 font-medium">

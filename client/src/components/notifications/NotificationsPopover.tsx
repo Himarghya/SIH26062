@@ -153,7 +153,7 @@ export const NotificationsPopover: React.FC<NotificationsPopoverProps> = ({ onCl
                       ? 'bg-amber-500 text-white'
                       : 'bg-emerald-600 text-white'
                   }`}>
-                    {alert.severity === 'critical' ? '🔴 CRITICAL' : alert.severity === 'warning' ? '🟠 WARNING' : '🟢 INFO'}
+                    {alert.severity === 'critical' ? ' CRITICAL' : alert.severity === 'warning' ? ' WARNING' : ' INFO'}
                   </span>
                   <span className="text-slate-700 font-bold">[{alert.station}]</span>
                   <span className="text-slate-500">• {alert.source}</span>

@@ -76,7 +76,7 @@ export const CargoDetailsPage: React.FC = () => {
               <div className="text-xs text-slate-600 font-medium">Safe Envelope: {cargo.temp_min_c}°C to {cargo.temp_max_c}°C</div>
             </div>
           </div>
-          <span className="font-mono text-xs font-bold text-emerald-700">✅ Sensor Battery 94%</span>
+          <span className="font-mono text-xs font-bold text-emerald-700"> Sensor Battery 94%</span>
         </div>
       )}
 
@@ -115,15 +115,15 @@ export const CargoDetailsPage: React.FC = () => {
         {/* Stepper Graphic */}
         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-9 gap-2 pt-2">
           {[
-            { step: 1, title: 'Goa NCPOR Hub', desc: 'Pre-chill & Packaging', icon: '📦' },
-            { step: 2, title: 'Mormugao Berth', desc: 'Customs & Port Load', icon: '⚓' },
-            { step: 3, title: 'Indian Ocean', desc: 'Reefer Monitoring', icon: '🚢' },
-            { step: 4, title: 'Southern Ocean', desc: 'Roaring 40s Crossing', icon: '🌊' },
-            { step: 5, title: 'Fast-Ice Mooring', desc: 'Larsemann Coast', icon: '🧊' },
-            { step: 6, title: 'Helicopter Lift', desc: 'Kamov Ka-32 Sling', icon: '🚁' },
-            { step: 7, title: 'Traverse Sled', desc: 'PistenBully Snow Convoy', icon: '🚜' },
-            { step: 8, title: 'Station Dock', desc: 'De-icing Air Lock', icon: '🏢' },
-            { step: 9, title: '-80°C Vault', desc: 'Deep Cryo Storage', icon: '❄️' },
+            { step: 1, title: 'Goa NCPOR Hub', desc: 'Pre-chill & Packaging', icon: '' },
+            { step: 2, title: 'Mormugao Berth', desc: 'Customs & Port Load', icon: '' },
+            { step: 3, title: 'Indian Ocean', desc: 'Reefer Monitoring', icon: '' },
+            { step: 4, title: 'Southern Ocean', desc: 'Roaring 40s Crossing', icon: '' },
+            { step: 5, title: 'Fast-Ice Mooring', desc: 'Larsemann Coast', icon: '' },
+            { step: 6, title: 'Helicopter Lift', desc: 'Kamov Ka-32 Sling', icon: '' },
+            { step: 7, title: 'Traverse Sled', desc: 'PistenBully Snow Convoy', icon: '' },
+            { step: 8, title: 'Station Dock', desc: 'De-icing Air Lock', icon: '' },
+            { step: 9, title: '-80°C Vault', desc: 'Deep Cryo Storage', icon: '️' },
           ].map((stage) => {
             const isPassed = stage.step <= 3;
             const isCurrent = stage.step === 3;
@@ -153,7 +153,7 @@ export const CargoDetailsPage: React.FC = () => {
                     </span>
                   ) : isPassed ? (
                     <span className="text-emerald-600 font-mono text-[9px] font-bold">
-                      ✓ DONE
+                       DONE
                     </span>
                   ) : (
                     <span className="text-slate-400 font-mono text-[9px]">

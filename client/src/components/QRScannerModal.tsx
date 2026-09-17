@@ -48,10 +48,10 @@ export const QRScannerModal: React.FC<QRScannerModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-md animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50  animate-fadeIn">
       <div className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-2xl">
         {/* Header */}
-        <div className="bg-gradient-to-r from-emerald-50 via-teal-50 to-indigo-50 px-6 py-4 flex items-center justify-between border-b border-slate-200">
+        <div className="bg-slate-900    px-6 py-4 flex items-center justify-between border-b border-slate-200">
           <div className="flex items-center space-x-3">
             <div className="p-2.5 rounded-xl bg-emerald-100 border border-emerald-300 text-emerald-800 shadow-sm">
               <QrCode className="w-6 h-6 animate-pulse" />
@@ -194,7 +194,7 @@ export const QRScannerModal: React.FC<QRScannerModalProps> = ({
 
                 <button
                   onClick={handleApplyUpdate}
-                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs flex items-center space-x-1.5 shadow-md shadow-emerald-600/20 transition"
+                  className="px-5 py-2 rounded-xl bg-slate-900   hover: hover: text-white font-bold text-xs flex items-center space-x-1.5 shadow-md shadow-emerald-600/20 transition"
                 >
                   <span>Apply Transfer</span>
                   <ArrowRight className="w-3.5 h-3.5" />

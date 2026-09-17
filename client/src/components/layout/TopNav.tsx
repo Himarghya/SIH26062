@@ -43,7 +43,7 @@ export const TopNav: React.FC<TopNavProps> = ({
   const [showNotifications, setShowNotifications] = useState(false);
 
   return (
-    <header className="h-16 bg-white/95 backdrop-blur-md border-b border-slate-300 px-3 md:px-6 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
+    <header className="h-16 bg-white/95  border-b border-slate-300 px-3 md:px-6 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
       {/* Left: Mobile Hamburger & Operational Mode */}
       <div className="flex items-center space-x-2 md:space-x-2.5 overflow-x-auto no-scrollbar">
         {/* Mobile Hamburger Menu Button */}

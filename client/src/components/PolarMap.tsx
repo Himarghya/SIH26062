@@ -39,7 +39,7 @@ export const PolarMap: React.FC<PolarMapProps> = ({
   );
 
   return (
-    <div className="relative w-full rounded-xl overflow-hidden glass-panel border border-cyan-900/40 bg-gradient-to-b from-polar-950 to-polar-900 shadow-2xl">
+    <div className="relative w-full rounded-xl overflow-hidden glass-panel border border-cyan-900/40 bg-slate-900   shadow-2xl">
       {/* Map Control Header */}
       <div className="flex flex-wrap items-center justify-between px-4 py-3 bg-polar-900/80 border-b border-cyan-900/30 gap-2">
         <div className="flex items-center space-x-2">
@@ -70,7 +70,7 @@ export const PolarMap: React.FC<PolarMapProps> = ({
                   : 'text-slate-400 hover:text-slate-200'
               }`}
             >
-              ❄️ Arctic (North Pole)
+              ️ Arctic (North Pole)
             </button>
           </div>
 
@@ -114,7 +114,7 @@ export const PolarMap: React.FC<PolarMapProps> = ({
 
         {/* Radar Sweep Effect */}
         <div className="absolute w-[420px] h-[420px] rounded-full pointer-events-none overflow-hidden opacity-20">
-          <div className="w-full h-full animate-radar origin-center bg-gradient-to-tr from-cyan-400/40 via-transparent to-transparent" />
+          <div className="w-full h-full animate-radar origin-center bg-slate-900   " />
         </div>
 
         {/* SVG Landmass & Coastline Render */}
@@ -196,7 +196,7 @@ export const PolarMap: React.FC<PolarMapProps> = ({
                     strokeDasharray="2 2"
                   />
                   <text x="690" y="305" fill="#f43f5e" fontSize="10" fontFamily="monospace" textAnchor="middle">
-                    ⚠️ Dalk Glacial Crevasses
+                    ️ Dalk Glacial Crevasses
                   </text>
                 </g>
               )}
@@ -327,7 +327,7 @@ export const PolarMap: React.FC<PolarMapProps> = ({
             className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-20"
           >
             <div className="flex items-center space-x-1 px-1.5 py-0.5 rounded bg-purple-950/90 border border-purple-400 text-purple-200 text-[10px] font-mono shadow-lg animate-pulse">
-              <span>🛷 Sortie: Dalk Glac.</span>
+              <span> Sortie: Dalk Glac.</span>
             </div>
           </div>
         ))}
@@ -380,7 +380,7 @@ export const PolarMap: React.FC<PolarMapProps> = ({
             <>
               <div className="flex items-center space-x-3">
                 <div className="p-2 rounded-lg bg-amber-950 border border-amber-800/60 text-amber-300 font-bold">
-                  🚢
+                  
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-100 text-sm">{selectedPin.data.name}</h4>
@@ -388,7 +388,7 @@ export const PolarMap: React.FC<PolarMapProps> = ({
                 </div>
               </div>
               <div className="text-slate-300">
-                <span>Voyage: <strong className="text-cyan-300">{selectedPin.data.origin}</strong> ➔ <strong className="text-cyan-300">{selectedPin.data.destination}</strong></span>
+                <span>Voyage: <strong className="text-cyan-300">{selectedPin.data.origin}</strong>  <strong className="text-cyan-300">{selectedPin.data.destination}</strong></span>
               </div>
               <button onClick={() => setSelectedPin(null)} className="text-slate-400 hover:text-slate-200 px-2 py-1 rounded bg-slate-800">
                 Close
@@ -400,7 +400,7 @@ export const PolarMap: React.FC<PolarMapProps> = ({
             <>
               <div className="flex items-center space-x-3">
                 <div className="p-2 rounded-lg bg-purple-950 border border-purple-800/60 text-purple-300 font-bold">
-                  🛷
+                  
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-100 text-sm">{selectedPin.data.title}</h4>

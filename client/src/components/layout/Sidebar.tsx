@@ -80,13 +80,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {mobileOpen && (
         <div 
           onClick={() => setMobileOpen(false)}
-          className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-40 md:hidden transition-opacity duration-300"
+          className="fixed inset-0 bg-slate-900/60 -xs z-40 md:hidden transition-opacity duration-300"
           aria-hidden="true"
         />
       )}
 
       <aside 
-        className={`fixed top-0 left-0 z-50 h-screen transition-all duration-300 bg-white/95 backdrop-blur-xl border-r border-slate-300 flex flex-col shadow-xl md:shadow-xs ${
+        className={`fixed top-0 left-0 z-50 h-screen transition-all duration-300 bg-white/95  border-r border-slate-300 flex flex-col shadow-xl md:shadow-xs ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         } ${
           collapsed ? 'md:w-20' : 'md:w-64'
@@ -96,8 +96,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="h-16 flex items-center justify-between px-4 border-b border-slate-300 bg-slate-50/90">
           {(!collapsed || mobileOpen) && (
             <div className="flex items-center space-x-2.5">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-700 to-indigo-700 flex items-center justify-center font-black text-white shadow-sm text-sm shrink-0">
-                🧊
+              <div className="w-8 h-8 rounded-xl bg-slate-900   flex items-center justify-center font-black text-white shadow-sm text-sm shrink-0">
+                
               </div>
               <div>
                 <span className="font-black text-sm tracking-wider text-slate-900">
@@ -111,8 +111,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
           )}
 
           {collapsed && !mobileOpen && (
-            <div className="mx-auto w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-700 to-indigo-700 flex items-center justify-center font-black text-white shadow-sm text-sm">
-              🧊
+            <div className="mx-auto w-8 h-8 rounded-xl bg-slate-900   flex items-center justify-center font-black text-white shadow-sm text-sm">
+              
             </div>
           )}
 
@@ -151,7 +151,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 className={({ isActive }) =>
                   `flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 group relative ${
                     isActive
-                      ? 'bg-gradient-to-r from-emerald-500/15 via-teal-500/10 to-transparent text-emerald-800 border border-emerald-500/30 shadow-sm'
+                      ? 'bg-slate-900    text-emerald-800 border border-emerald-500/30 shadow-sm'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 border border-transparent'
                   } ${collapsed && !mobileOpen ? 'justify-center px-0' : ''}`
                 }

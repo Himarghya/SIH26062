@@ -279,7 +279,7 @@ export const ExpeditionsPage: React.FC<{
 
       {/* Charter New Expedition Modal */}
       {showCreateModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-md animate-fadeIn">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50  animate-fadeIn">
           <div className="relative w-full max-w-xl bg-white border border-slate-200 rounded-2xl p-6 shadow-2xl space-y-4 text-slate-800">
             <h3 className="text-base font-bold text-slate-900 font-mono uppercase">Charter New Polar Scientific Expedition</h3>
             

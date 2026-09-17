@@ -72,7 +72,7 @@ export const DigitalTwinModal: React.FC<DigitalTwinModalProps> = ({ isOpen, onCl
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-md animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50  animate-fadeIn">
       <div className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-2xl text-slate-800">
         {/* Header */}
         <div className="bg-slate-50 px-6 py-4 flex items-center justify-between border-b border-slate-200">
@@ -130,7 +130,7 @@ export const DigitalTwinModal: React.FC<DigitalTwinModalProps> = ({ isOpen, onCl
             <p className="text-xs text-slate-700 font-medium leading-relaxed">
               {currentStep === 4 
                 ? "All 4 stages executed deterministically. Check the Dashboard, Cargo, Inventory, and Emergency pages to see real updated state!"
-                : scenarioSteps[currentStep]?.desc || "Click below to execute the end-to-end expedition logistics workflow."}
+                : scenarioSteps[currentStep]?.desc || "Click below to execute the end- expedition logistics workflow."}
             </p>
           </div>
 
