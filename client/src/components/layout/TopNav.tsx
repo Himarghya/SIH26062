@@ -94,10 +94,10 @@ export const TopNav: React.FC<TopNavProps> = ({
         {(user?.role === 'super_admin' || user?.role === 'emergency_coordinator') && (
           <button
             onClick={onOpenDigitalTwin}
-            className="hidden md:flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-mono text-xs font-bold shadow-xs transition whitespace-nowrap shrink-0 border border-slate-900"
+            className="hidden md:flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-mono text-xs font-bold shadow-xs transition whitespace-nowrap shrink-0 border border-indigo-700"
             title="Launch Deterministic Scenario Simulation"
           >
-            <PlayCircle className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+            <PlayCircle className="w-3.5 h-3.5 text-indigo-100 animate-pulse" />
             <span>Scenario Sim</span>
           </button>
         )}
@@ -106,10 +106,10 @@ export const TopNav: React.FC<TopNavProps> = ({
         {onOpenMlConsole && (user?.role === 'super_admin' || user?.role === 'expedition_manager' || user?.role === 'station_manager') && (
           <button
             onClick={onOpenMlConsole}
-            className="hidden lg:flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-cyan-700 hover:bg-cyan-800 text-white font-mono text-xs font-bold shadow-xs transition whitespace-nowrap shrink-0 border border-cyan-800"
+            className="hidden lg:flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white font-mono text-xs font-bold shadow-xs transition whitespace-nowrap shrink-0 border border-cyan-700"
             title="Open POLARIS ML Predictive Command Console"
           >
-            <Cpu className="w-3.5 h-3.5 text-cyan-200 animate-pulse" />
+            <Cpu className="w-3.5 h-3.5 text-cyan-100 animate-pulse" />
             <span>ML Engine</span>
           </button>
         )}
@@ -164,7 +164,7 @@ export const TopNav: React.FC<TopNavProps> = ({
             onClick={() => setShowRoleMenu(!showRoleMenu)}
             className="flex items-center space-x-1.5 sm:space-x-2 px-2 sm:px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-900 text-xs transition shadow-2xs"
           >
-            <div className="w-6 h-6 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-[10px] shrink-0 shadow-xs">
+            <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-cyan-600 to-blue-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0 shadow-xs">
               {user?.name?.[0] || 'U'}
             </div>
             <div className="text-left hidden xl:block">

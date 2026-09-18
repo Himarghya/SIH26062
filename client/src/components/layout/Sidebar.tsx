@@ -93,17 +93,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
         } w-72 md:w-auto`}
       >
         {/* Brand Header */}
-        <div className="h-16 flex items-center justify-between px-4 border-b border-slate-300 bg-slate-50/90">
+        <div className="h-16 flex items-center justify-between px-4 border-b border-slate-200 bg-slate-50/90">
           {(!collapsed || mobileOpen) && (
             <div className="flex items-center space-x-2.5">
-              <div className="w-8 h-8 rounded-xl bg-slate-900   flex items-center justify-center font-black text-white shadow-sm text-sm shrink-0">
-                
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-600 flex items-center justify-center font-black text-white shadow-xs text-sm shrink-0">
+                ❄️
               </div>
               <div>
                 <span className="font-black text-sm tracking-wider text-slate-900">
                   POLARIS
                 </span>
-                <span className="block text-[8.5px] text-cyan-800 font-mono uppercase tracking-widest font-bold">
+                <span className="block text-[8.5px] text-cyan-700 font-mono uppercase tracking-widest font-bold">
                   NCPOR • MoES (Goa)
                 </span>
               </div>
@@ -111,8 +111,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
           )}
 
           {collapsed && !mobileOpen && (
-            <div className="mx-auto w-8 h-8 rounded-xl bg-slate-900   flex items-center justify-center font-black text-white shadow-sm text-sm">
-              
+            <div className="mx-auto w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-600 flex items-center justify-center font-black text-white shadow-xs text-sm">
+              ❄️
             </div>
           )}
 
@@ -151,14 +151,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 className={({ isActive }) =>
                   `flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 group relative ${
                     isActive
-                      ? 'bg-slate-900    text-emerald-800 border border-emerald-500/30 shadow-sm'
+                      ? 'bg-cyan-50 text-cyan-800 border border-cyan-300/80 shadow-xs'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 border border-transparent'
                   } ${collapsed && !mobileOpen ? 'justify-center px-0' : ''}`
                 }
                 title={collapsed && !mobileOpen ? item.name : undefined}
               >
                 <Icon className={`w-4 h-4 shrink-0 transition-transform duration-200 group-hover:scale-110 ${
-                  item.alert ? 'text-rose-600 animate-pulse' : 'group-hover:text-emerald-600 text-slate-500'
+                  item.alert ? 'text-rose-600 animate-pulse' : 'group-hover:text-cyan-700 text-slate-500'
                 }`} />
                 {(!collapsed || mobileOpen) && (
                   <span className="truncate tracking-wide">{item.name}</span>
