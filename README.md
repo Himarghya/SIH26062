@@ -32,7 +32,7 @@ POLARIS is an offline-first polar logistics and asset management platform engine
 
 ---
 
-## Architecture Overview
+## 🏗️ 1. Architecture Overview & Tech Stack
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -62,63 +62,9 @@ POLARIS is an offline-first polar logistics and asset management platform engine
 └─────────────────────────────────────────────────────────────┘
 ```
 
----
-
-## Tech Stack
-
 - **Backend**: Python 3.11+, FastAPI, SQLAlchemy, SQLite, Pydantic, Scikit-Learn, XGBoost
 - **Frontend**: React 19, TypeScript, Vite, Tailwind CSS, TanStack React Query, Lucide Icons
 - **Offline & GIS**: IndexedDB, Service Workers, Leaflet Polar Projections
-
----
-
-## Quickstart
-
-### Backend Setup
-
-```bash
-# 1. Navigate to backend directory and install dependencies
-cd backend
-pip install -r requirements.txt
-
-# 2. Run API server
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-```
-
-### Frontend Setup
-
-```bash
-# 1. Navigate to client directory
-cd client
-
-# 2. Install dependencies
-npm install
-
-# 3. Start development server
-npm run dev
-
-# 4. Build for production
-npm run build
-```
-
-
-    subgraph ML_Engine ["4. POLARIS ML Predictive Engine (Scikit-Learn + XGBoost)"]
-        BlizzardMdl["1. XGBoost Blizzard Classifier (91.5% Acc)"]
-        FuelMdl["2. XGBoost Fuel Regressor (R² = 0.94)"]
-        CryoMdl["3. Isolation Forest Cryo Anomaly Detector"]
-        SARMdl["4. SAR Risk Classifier + Weighted Ranker"]
-    end
-
-    subgraph Database_Layer ["5. Persistence & Cryptographic Ledger"]
-        RelationalDB[("Relational DB: SQLite / PostgreSQL")]
-        AuditChain[("Append-Only SHA-256 Hash Chained Audit Log")]
-    end
-
-    UI_Layer --> State_Security
-    State_Security --> API_Layer
-    API_Layer --> ML_Engine
-    API_Layer --> Database_Layer
-```
 
 ---
 
