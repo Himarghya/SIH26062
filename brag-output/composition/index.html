@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>POLARIS · Polar Expedition Logistics & Life Support Command</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="root" data-composition-id="polaris-launch" data-no-timeline data-width="1920" data-height="1080" data-duration="60">
+    
+    <!-- Audio Elements: Dynamic Music Track (60s Duration) -->
+    <audio id="music" class="clip" data-start="0" data-duration="60" data-track-index="0" data-volume="0.85" src="assets/music/track.mp3"></audio>
+
+    <!-- Global Grid & Scanline Atmosphere -->
+    <div class="hud-scanlines"></div>
+    <div class="hud-grid-overlay"></div>
+    
+    <!-- Top Global Header -->
+    <header class="hud-top-bar">
+      <div class="hud-badge-live">
+        <span class="live-dot"></span>
+        <span>POLARIS · NCPOR / MoES MISSION CONTROL</span>
+      </div>
+      <div class="hud-sys-time">ANTARCTICA & ARCTIC EXPEDITIONS // 2.4 kbps IRIDIUM SBD ACTIVE</div>
+      <div class="hud-nodes-online">BHARATI · MAITRI · HIMADRI · IndARC ONLINE</div>
+    </header>
+
+    <!-- ========================================================
+         SCENE 1: THE POLAR CHALLENGE & EXPEDITION COMMAND (0s - 10.0s)
+         ======================================================== -->
+    <section id="scene-1" class="clip scene scene-1" data-start="0" data-duration="10.0" data-track-index="2">
+      <div class="scene-content">
+        <div class="scene-header-row">
+          <div class="alert-pill">
+            <span class="pill-icon">❄️</span>
+            <span class="pill-text">STAGE 01 // EXTREME POLAR ENVIRONMENT & OFFLINE-FIRST ARCHITECTURE</span>
+          </div>
+          <div class="pipeline-badge">8-MONTH WINTER ISOLATION · -50°C WIND CHILL · 150 KM/H GALES</div>
+        </div>
+
+        <div class="polaris-hero-grid">
+          <!-- Station Telemetry Gauge -->
+          <div class="station-hud-box">
+            <div class="station-crest">
+              <div class="station-icon">❄️</div>
+              <div class="station-title font-mono font-bold text-cyan">BHARATI & MAITRI</div>
+              <div class="text-sub">East Antarctica · 69°24'S, 76°11'E</div>
+            </div>
+            <div class="telemetry-rows">
+              <div class="tel-item">
+                <span class="tel-label">AMBIENT TEMP:</span>
+                <span class="tel-val text-rose">-28.5°C</span>
+              </div>
+              <div class="tel-item">
+                <span class="tel-label">WIND SPEED:</span>
+                <span class="tel-val text-teal">68 km/h Gale</span>
+              </div>
+              <div class="tel-item">
+                <span class="tel-label">WINTERING CREW:</span>
+                <span class="tel-val text-indigo">25 Personnel</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Highlights -->
+          <div class="streams-panel">
+            <h1 class="hero-headline">
+              <span class="text-gradient">POLARIS Operating System</span>
+            </h1>
+            <p class="scene-subhead">Integrated Polar Expedition Logistics, Cryogenic Tracking & Life Support Command.</p>
+            
+            <div class="source-cards-grid">
+              <div class="stream-card">
+                <div class="card-tag tag-cyan">OFFLINE AUTONOMY</div>
+                <div class="stream-title">IndexedDB + Edge PWA</div>
+                <div class="stream-desc">Continuous operation without internet during total solar storm blackouts.</div>
+              </div>
+              <div class="stream-card">
+                <div class="card-tag tag-purple">SATELLITE SYNC</div>
+                <div class="stream-title">2.4 kbps Micro-Deltas</div>
+                <div class="stream-desc">Transmits ~280-byte mutation diffs reliably over Iridium SBD channels.</div>
+              </div>
+              <div class="stream-card highlight-card">
+                <div class="card-tag tag-emerald">PAN-POLAR FLEET</div>
+                <div class="stream-title">4 Bases & 16 NDRF Links</div>
+                <div class="stream-desc">Bharati, Maitri, Himadri Arctic Base, and IndARC deep mooring telemetry.</div>
+              </div>
+            </div>
+
+            <div class="meta-tickers-row">
+              <span class="ticker-pill">● FASTAPI ASYNC ENGINE</span>
+              <span class="ticker-pill">● REACT 19 SPA + TAILWIND</span>
+              <span class="ticker-pill">● ZERO-LATENCY LOCAL DISPATCH</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SCENE 2: LIVE AMBIENT AUTONOMY & LEONTIEF SOLVER (10.0s - 20.0s)
+         ======================================================== -->
+    <section id="scene-2" class="clip scene scene-2" data-start="10.0" data-duration="10.0" data-track-index="3">
+      <div class="scene-content">
+        <div class="ai-header-block">
+          <div class="section-tag">STAGE 02 // PHYSICS-BASED AUTONOMY DERIVATION</div>
+          <h2 class="section-title">Coupled Thermal Loss & Leontief Bottleneck Solver</h2>
+          <p class="scene-subhead">Deterministic survival calculations evaluated at live sub-zero ambient telemetry in &lt;180ms.</p>
+        </div>
+
+        <div class="autonomy-formula-grid">
+          <!-- Formula Box -->
+          <div class="formula-card">
+            <div class="card-header">
+              <span class="badge badge-cyan">LEONTIEF SURVIVAL FORMULA</span>
+              <span class="mono-code">Convective Heat Loss Model</span>
+            </div>
+            <div class="math-display-box">
+              <code>Autonomy = min [ Stock_i / (Burn_i × Crew × M_weather,i) ]</code>
+            </div>
+            <div class="derivation-metrics-list">
+              <div class="d-metric-row">
+                <span>Apparent Wind Chill (T_wc):</span>
+                <strong class="text-rose">-49.13°C</strong>
+              </div>
+              <div class="d-metric-row">
+                <span>Fuel Surge Multiplier (M_Fuel):</span>
+                <strong class="text-amber">1.768x (+76.8% Heating)</strong>
+              </div>
+              <div class="d-metric-row">
+                <span>Caloric Intake Multiplier (M_Food):</span>
+                <strong class="text-teal">1.171x (+17.1% Intake)</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Solver Results HUD -->
+          <div class="autonomy-result-gauge">
+            <div class="gauge-ring">
+              <div class="gauge-score text-amber">39.8</div>
+              <div class="gauge-label">AUTONOMY DAYS</div>
+            </div>
+            <div class="status-badge warning">
+              <span>⚠️ FOOD RATION BOTTLENECK</span>
+            </div>
+            <div class="autonomy-sub-breakdown">
+              <div class="breakdown-item">Fuel: <strong class="text-cyan">119.8 Days</strong></div>
+              <div class="breakdown-item">Food: <strong class="text-rose">39.8 Days</strong></div>
+              <div class="breakdown-item">O2: <strong class="text-emerald">62.9 Days</strong></div>
+            </div>
+          </div>
+
+          <!-- Predictive Safety Buffer -->
+          <div class="formula-card">
+            <div class="card-header">
+              <span class="badge badge-emerald">PROACTIVE BUFFERING</span>
+              <span class="mono-code">Reorder Point (ROP)</span>
+            </div>
+            <div class="buffer-pills-list">
+              <div class="bpill">
+                <span class="bpill-title">🚨 Safety Buffer Trigger:</span>
+                <span class="bpill-val">Auto-alerts logistics hub 45 days prior to critical exhaustion.</span>
+              </div>
+              <div class="bpill">
+                <span class="bpill-title">📊 Dynamic Generator Load:</span>
+                <span class="bpill-val">Modulates diesel generator burn across Bharati Station modules.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SCENE 3: 9-STAGE COLD CHAIN & QR OPTICAL GATEWAY (20.0s - 30.0s)
+         ======================================================== -->
+    <section id="scene-3" class="clip scene scene-3" data-start="20.0" data-duration="10.0" data-track-index="4">
+      <div class="scene-content">
+        <div class="dual-view-header">
+          <div class="section-tag tag-cyan">STAGE 03 // -80°C CRYOGENIC CUSTODY & OPTICAL QR GATEWAY</div>
+          <h2 class="section-title">Zero-Loss Preservation of Antarctic Ice Cores & Biologicals</h2>
+          <p class="scene-subhead">End-to-end temperature tracing from sub-ice drill sites to Goa NCPOR repositories.</p>
+        </div>
+
+        <div class="coldchain-grid">
+          <!-- 9-Stage Pipeline Card -->
+          <div class="chain-pipeline-card">
+            <div class="card-header">
+              <span class="badge badge-cyan">9-STAGE CUSTODY PIPELINE</span>
+              <span class="mono-code">-80°C Cryo Verification</span>
+            </div>
+            <div class="stages-stepper">
+              <div class="stage-step active">1. Field Drill</div>
+              <div class="stage-step active">2. Base Freezer</div>
+              <div class="stage-step active">3. Helo Transit</div>
+              <div class="stage-step active">4. Vessel Reefer</div>
+              <div class="stage-step active">5. Cape Town Port</div>
+              <div class="stage-step active">6. Air Freight</div>
+              <div class="stage-step active">7. Goa NCPOR Hub</div>
+            </div>
+            <div class="chain-features">
+              <div class="c-feat">✓ Real-time thermal telemetry logs with ±0.1°C precision</div>
+              <div class="c-feat">✓ Instant automated quarantine trigger upon temperature excursion</div>
+            </div>
+          </div>
+
+          <!-- Scanner & Verification Card -->
+          <div class="scanner-card">
+            <div class="card-header">
+              <span class="badge badge-emerald">2D DATAMATRIX SCANNER</span>
+              <span class="mono-code">Camera Optical Gateway</span>
+            </div>
+            <div class="mock-qr-scan">
+              <div class="qr-laser"></div>
+              <div class="qr-badge">BIO-CRYO-SAMPLE #9824 · -79.6°C VALIDATED</div>
+            </div>
+            <div class="scanner-details">
+              <div class="s-row"><span>Sample Type:</span> <strong>Deep Ice Core (3.2km)</strong></div>
+              <div class="s-row"><span>Cold-Chain Status:</span> <strong class="text-emerald">UNBROKEN (100%)</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SCENE 4: 4-MODEL ML PREDICTIVE ENGINE (30.0s - 40.0s)
+         ======================================================== -->
+    <section id="scene-4" class="clip scene scene-4" data-start="30.0" data-duration="10.0" data-track-index="5">
+      <div class="scene-content">
+        <div class="impact-header-block">
+          <div class="section-tag tag-purple">STAGE 04 // 4-MODEL ML PREDICTIVE INTELLIGENCE</div>
+          <h2 class="section-title">Sub-Zero Machine Learning Inference in Under 2ms</h2>
+          <p class="scene-subhead">Trained on 14,000 Antarctic transit records and 10 years of polar meteorological data.</p>
+        </div>
+
+        <div class="ml-models-hero-grid">
+          <!-- Model 1 -->
+          <div class="ml-card">
+            <div class="ml-score text-cyan">91.5%</div>
+            <div class="ml-name">XGBoost Blizzard Classifier</div>
+            <div class="ml-desc">Forecasts severe katabatic blizzards using 3-hour barometric pressure drops (ΔP3h).</div>
+          </div>
+
+          <!-- Model 2 -->
+          <div class="ml-card">
+            <div class="ml-score text-emerald">R² 0.94</div>
+            <div class="ml-name">Fuel Burn Regressor</div>
+            <div class="ml-desc">Predicts daily diesel generator consumption based on thermal convection and crew size.</div>
+          </div>
+
+          <!-- Model 3 -->
+          <div class="ml-card">
+            <div class="ml-score text-amber">0.99 AUC</div>
+            <div class="ml-name">Isolation Forest Cryo Detector</div>
+            <div class="ml-desc">Unsupervised thermal anomaly detection preventing cryogenic biological degradation.</div>
+          </div>
+
+          <!-- Model 4 -->
+          <div class="ml-card">
+            <div class="ml-score text-rose">&lt; 2ms</div>
+            <div class="ml-name">Weighted SAR Ranker</div>
+            <div class="ml-desc">Calculates safest helicopter vs snowcat evacuation corridors during blizzard alerts.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SCENE 5: SAR TACTICAL & SATELLITE DELTA-SYNC (40.0s - 50.0s)
+         ======================================================== -->
+    <section id="scene-5" class="clip scene scene-5" data-start="40.0" data-duration="10.0" data-track-index="6">
+      <div class="scene-content">
+        <div class="arch-header-block">
+          <div class="section-tag tag-cyan">STAGE 05 // TACTICAL SAR EMERGENCY & NARROWBAND SYNC</div>
+          <h2 class="section-title">8-Stage Incident Escalation & Cryptographic Audit Chains</h2>
+          <p class="scene-subhead">Ensuring life safety, mission continuity, and Antarctic Treaty inspection compliance.</p>
+        </div>
+
+        <div class="sar-sync-grid">
+          <!-- SAR Command Card -->
+          <div class="sar-box">
+            <div class="box-title text-rose">8-STAGE SAR INCIDENT COMMANDER</div>
+            <div class="sar-features-list">
+              <div class="s-feat-row">
+                <span class="sf-tag">STAGE 1-3</span>
+                <span>Automated distress beacon triangulation & weather envelope evaluation</span>
+              </div>
+              <div class="s-feat-row">
+                <span class="sf-tag">STAGE 4-6</span>
+                <span>Real-time asset dispatch: Snowcats vs PistenBullys vs Helo sort operations</span>
+              </div>
+              <div class="s-feat-row">
+                <span class="sf-tag">STAGE 7-8</span>
+                <span>Medical stabilization, field triage, and automated incident debrief</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Satellite Sync & Ledger Card -->
+          <div class="sync-ledger-box">
+            <div class="box-title text-emerald">2.4 kbps SATELLITE DELTA-SYNC & SHA-256 LEDGER</div>
+            <div class="sync-pills-list">
+              <div class="sync-pill">
+                <strong>🛰️ Micro-Delta Packets:</strong> ~280-byte compressed mutation diffs via Iridium SBD.
+              </div>
+              <div class="sync-pill">
+                <strong>🔒 Append-Only Ledger:</strong> Cryptographic SHA-256 hash chains for Antarctic Treaty audits.
+              </div>
+              <div class="sync-pill">
+                <strong>💾 Air-Gap USB Fallback:</strong> Signed manifest export/import for multi-month comms blackouts.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SCENE 6: SCALABLE POLAR RESILIENCE OUTRO (50.0s - 60.0s)
+         ======================================================== -->
+    <section id="scene-6" class="clip scene scene-6" data-start="50.0" data-duration="10.0" data-track-index="7">
+      <div class="scene-content outro-content">
+        <div class="outro-crest">
+          <div class="crest-icon">❄️</div>
+        </div>
+        
+        <h1 class="outro-brand">POLARIS</h1>
+        <p class="outro-tagline">
+          Integrated Polar Expedition Logistics, Cryogenic Tracking & Life Support Command
+        </p>
+
+        <div class="tech-stack-strip">
+          <div class="stack-badge">FASTAPI ASYNC</div>
+          <div class="stack-badge">REACT 19 SPA</div>
+          <div class="stack-badge">XGBOOST ML ENGINE</div>
+          <div class="stack-badge">2.4 kbps IRIDIUM SYNC</div>
+          <div class="stack-badge">OFFLINE-FIRST PWA</div>
+        </div>
+
+        <div class="outro-footer-call">
+          <span class="mono-code">NATIONAL CENTRE FOR POLAR AND OCEAN RESEARCH (NCPOR) • MoES (GOA)</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

@@ -9,6 +9,15 @@
 
 ---
 
+<div align="center">
+  <a href="https://raw.githubusercontent.com/Himarghya/SIH26062/main/brag-output/brag.mp4">
+    <img src="https://raw.githubusercontent.com/Himarghya/SIH26062/main/brag-output/brag.gif" alt="POLARIS 60-Second Technical Overview Video" width="100%" style="border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);" />
+  </a>
+  <p><em>🎬 <b>60-Second Autonomous Polar Logistics & Cryogenic Telemetry Demonstration</b> — <a href="https://raw.githubusercontent.com/Himarghya/SIH26062/main/brag-output/brag.mp4">Download / Watch HD MP4 (with Soundtrack)</a></em></p>
+</div>
+
+---
+
 POLARIS is an offline-first polar logistics and asset management platform engineered for Indian research bases in Antarctica (Bharati, Maitri) and the Arctic (Himadri, IndARC Mooring). When narrowband satellite connections drop, the platform keeps inventory, life support survival curves, cold-chain temperature logs, and search-and-rescue dispatch functioning entirely offline.
 
 ---
@@ -30,7 +39,7 @@ POLARIS is an offline-first polar logistics and asset management platform engine
 │                 Client & Field Applications                 │
 │    • Desktop Mission Control (React 19 + TypeScript)        │
 │    • Field Operator PWA (Offline IndexedDB + QR Scanner)    │
-│    • Flat Dark Design (#0b0f19, single cyan #06b6d4 accent) │
+│    • Clean Polar Light Design (#f8fafc slate background)    │
 └─────────────────────────────┬───────────────────────────────┘
                               │
                   2.4 kbps Iridium SBD Sync
