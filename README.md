@@ -1,6 +1,13 @@
-# POLARIS
+# ❄️ POLARIS
 
 ### Polar Expedition Logistics, Cryogenic Tracking, and Life Support Command
+
+**🌐 Live Deployed Platform:** [https://sih26062.onrender.com](https://sih26062.onrender.com/)  
+**🚀 Production Endpoint:** `https://sih26062.onrender.com`
+
+[![Live Website](https://img.shields.io/badge/🌐_LIVE_DEPLOYED_WEBSITE-VISIT_NOW-00C49F?style=for-the-badge&logo=render&logoColor=white)](https://sih26062.onrender.com/)
+
+---
 
 POLARIS is an offline-first polar logistics and asset management platform engineered for Indian research bases in Antarctica (Bharati, Maitri) and the Arctic (Himadri, IndARC Mooring). When narrowband satellite connections drop, the platform keeps inventory, life support survival curves, cold-chain temperature logs, and search-and-rescue dispatch functioning entirely offline.
 
@@ -281,6 +288,8 @@ npm run dev
 ## 🚀 14. Deploying to Render
 
 POLARIS is fully configured for **1-Click / Blueprint deployment on [Render](https://render.com)** as a unified single service (serving both FastAPI REST endpoints and the React SPA):
+
+* **🌐 Live Production URL**: [https://sih26062.onrender.com](https://sih26062.onrender.com/)
 
 1. Fork or push this repository to GitHub: `https://github.com/Himarghya/SIH26062.git`.
 2. Open the **[Render Dashboard](https://dashboard.render.com/)**.
