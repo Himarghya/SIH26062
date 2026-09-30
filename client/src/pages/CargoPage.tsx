@@ -129,7 +129,7 @@ export const CargoPage: React.FC<{
             <span>Cargo Manifest & Cold-Chain IoT Telemetry</span>
           </h2>
           <p className="text-xs text-slate-500 mt-1">
-            Multimodal container tracking (Goa Port $\rightarrow$ Icebreaker Hold $\rightarrow$ Kamov Helo $\rightarrow$ Station Vault)
+            Multimodal container tracking (Goa Port &rarr; Icebreaker Hold &rarr; Kamov Helo &rarr; Station Vault)
           </p>
         </div>
 

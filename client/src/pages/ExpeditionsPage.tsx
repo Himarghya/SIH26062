@@ -109,7 +109,7 @@ export const ExpeditionsPage: React.FC<{
             <span>National Polar Expedition Programs (MoES / NCPOR)</span>
           </h2>
           <p className="text-xs text-slate-600 font-medium mt-1">
-            End-to-End Mission Lifecycles: Planning $\rightarrow$ Mobilization $\rightarrow$ Overwintering $\rightarrow$ Demobilization
+            End-to-End Mission Lifecycles: Planning &rarr; Mobilization &rarr; Overwintering &rarr; Demobilization
           </p>
         </div>
 
