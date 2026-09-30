@@ -547,7 +547,11 @@ export const LandingPage: React.FC = () => {
             <div>
               &copy; {new Date().getFullYear()} National Centre for Polar and Ocean Research. Ministry of Earth Sciences, Govt. of India.
             </div>
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-3 flex-wrap">
+              <span className="text-amber-300 font-semibold tracking-wide">
+                Engineered &amp; Developed by <span className="text-white font-bold underline decoration-amber-400">Team TechTonic</span>
+              </span>
+              <span>|</span>
               <span className="text-cyan-300">Powered by POLARIS Logistics Command Engine</span>
               <span>|</span>
               <span>Last Updated: 30 Sep 2026</span>
