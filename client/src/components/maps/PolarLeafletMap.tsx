@@ -315,7 +315,7 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
             Himadri
           </button>
           <button
-            onClick={() => flyToPreset([-20, 50], 2)}
+            onClick={() => flyToPreset([-25, 45], 3)}
             className="px-2.5 py-1 rounded-lg bg-slate-50 hover:bg-cyan-50 border border-slate-200 hover:border-cyan-300 text-slate-700 hover:text-cyan-800 font-medium transition text-[11px] whitespace-nowrap shadow-2xs"
           >
             Global
@@ -404,17 +404,25 @@ export const PolarLeafletMap: React.FC<PolarLeafletMapProps> = ({
         <MapContainer
           center={mapCenter}
           zoom={mapZoom}
+          minZoom={2}
+          maxZoom={18}
+          maxBounds={[[-85, -180], [85, 180]]}
+          maxBoundsViscosity={1.0}
+          worldCopyJump={false}
           scrollWheelZoom={true}
-          style={{ height: '100%', width: '100%', backgroundColor: '#090d16' }}
+          style={{ height: '100%', width: '100%', backgroundColor: '#071526' }}
         >
           <MapViewController center={mapCenter} zoom={mapZoom} />
 
-          {/* Crisp, high-contrast polar basemap (No paid API key/watermark required) */}
+          {/* Crisp, high-contrast polar basemap (No repeating world tiles) */}
           <TileLayer
             key={selectedBasemap}
             attribution={POLAR_BASEMAPS[selectedBasemap]?.attribution || POLAR_BASEMAPS.dark.attribution}
             url={tileUrl || POLAR_BASEMAPS[selectedBasemap]?.url || POLAR_BASEMAPS.dark.url}
             maxZoom={POLAR_BASEMAPS[selectedBasemap]?.maxZoom || 16}
+            minZoom={2}
+            noWrap={true}
+            bounds={[[-85, -180], [85, 180]]}
           />
 
           {/* Planned Antarctic & Arctic Voyage Routes with Risk Colors */}
