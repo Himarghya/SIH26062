@@ -31,7 +31,6 @@ import {
 export const LandingPage: React.FC = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [isNewsPlaying, setIsNewsPlaying] = useState(true);
-  const [fontSize, setFontSize] = useState<'normal' | 'large' | 'xlarge'>('normal');
 
   const slides = [
     {
@@ -62,44 +61,9 @@ export const LandingPage: React.FC = () => {
   }, [slides.length]);
 
   return (
-    <div className={`min-h-screen bg-[#f4f7fa] text-slate-800 flex flex-col font-sans selection:bg-[#006399] selection:text-white ${
-      fontSize === 'large' ? 'text-[15px]' : fontSize === 'xlarge' ? 'text-[16px]' : 'text-[14px]'
-    }`}>
+    <div className="min-h-screen bg-[#f4f7fa] text-slate-800 flex flex-col font-sans selection:bg-[#006399] selection:text-white text-[14px]">
       
-      {/* 1. Top Accessibility & Utility Ribbon (Govt of India Standard) */}
-      <div className="bg-[#02517d] text-white px-4 py-1 text-xs border-b border-[#013f63]">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-[11px]">
-          <div className="flex items-center space-x-3">
-            <span className="cursor-pointer hover:underline">Screen Reader Access</span>
-            <span className="text-white/40">|</span>
-            <a href="#main-content" className="hover:underline">Skip to : main content / navigation</a>
-          </div>
-
-          <div className="flex items-center space-x-3 font-medium">
-            <div className="flex items-center space-x-1">
-              <span className="w-3 h-3 bg-white inline-block border border-slate-400 cursor-pointer" title="Light Theme" />
-              <span className="w-3 h-3 bg-black inline-block border border-slate-400 cursor-pointer" title="High Contrast" />
-            </div>
-            <span className="text-white/40">|</span>
-            <div className="flex items-center space-x-1">
-              <span>Text Size</span>
-              <button onClick={() => setFontSize('normal')} className="px-1 hover:bg-white/20 rounded">-</button>
-              <button onClick={() => setFontSize('large')} className="px-1 font-bold hover:bg-white/20 rounded">A</button>
-              <button onClick={() => setFontSize('xlarge')} className="px-1 font-bold hover:bg-white/20 rounded">+</button>
-            </div>
-            <span className="text-white/40">|</span>
-            <span className="hover:underline cursor-pointer">Home</span>
-            <span className="text-white/40">|</span>
-            <span className="hover:underline cursor-pointer">Sitemap</span>
-            <span className="text-white/40">|</span>
-            <span className="hover:underline cursor-pointer">Contact us</span>
-            <span className="text-white/40">|</span>
-            <span className="font-bold text-amber-300 hover:underline cursor-pointer">हिंदी</span>
-          </div>
-        </div>
-      </div>
-
-      {/* 2. Official NCPOR Government Header (Cyan-Blue Ocean Banner) */}
+      {/* Official NCPOR Government Header (Cyan-Blue Ocean Banner) */}
       <header className="bg-gradient-to-r from-[#005c8f] via-[#026f9e] to-[#01517c] text-white py-4 px-4 sm:px-6 shadow-md border-b-2 border-[#e59b19]">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           
