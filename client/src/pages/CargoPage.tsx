@@ -146,7 +146,7 @@ export const CargoPage: React.FC<{
               if (onOpenScanner) onOpenScanner();
               else setShowQrModal(true);
             }}
-            className="px-4 py-2 rounded-xl bg-slate-900   hover: hover: text-white font-bold text-xs flex items-center space-x-2 shadow-lg shadow-emerald-600/25 transition"
+            className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center space-x-2 shadow-lg shadow-emerald-600/25 transition cursor-pointer"
           >
             <QrCode className="w-4 h-4" />
             <span>Launch Optical QR/RFID Scanner</span>
@@ -479,7 +479,7 @@ export const CargoPage: React.FC<{
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-slate-900   hover: hover: text-white font-bold shadow-md shadow-emerald-600/20"
+                  className="px-5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold shadow-md shadow-emerald-600/20 cursor-pointer transition"
                 >
                   Register Manifest
                 </button>

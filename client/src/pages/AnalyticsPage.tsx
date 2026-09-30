@@ -109,7 +109,7 @@ export const AnalyticsPage: React.FC = () => {
 
         <button
           onClick={() => setShowMlModal(true)}
-          className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-slate-900   hover: hover: text-white font-bold font-mono text-xs shadow-md shadow-emerald-600/20 transition"
+          className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold font-mono text-xs shadow-md shadow-emerald-600/20 transition cursor-pointer"
         >
           <Cpu className="w-4 h-4 animate-pulse" />
           <span>LAUNCH ML COMMAND CONSOLE</span>
@@ -117,26 +117,28 @@ export const AnalyticsPage: React.FC = () => {
       </div>
 
       {/* ML Capabilities Interactive Banner */}
-      <div className="p-4 rounded-2xl bg-slate-900    border border-emerald-200/90 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xs">
-        <div className="flex items-center space-x-3">
-          <div className="p-3 rounded-xl bg-emerald-100 text-emerald-700 border border-emerald-200">
-            <Sparkles className="w-6 h-6 animate-pulse" />
+      <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50/70 to-white border border-emerald-200 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xs">
+        <div className="flex items-center space-x-3.5">
+          <div className="p-2.5 rounded-xl bg-emerald-600 text-white shadow-sm shrink-0">
+            <Sparkles className="w-5 h-5" />
           </div>
           <div>
-            <div className="text-sm font-bold text-slate-900 font-mono">
-              POLARIS ML Predictive Models Active
+            <div className="text-sm font-bold text-slate-900 font-mono flex items-center gap-2">
+              <span>POLARIS ML Predictive Models Active</span>
+              <span className="px-2 py-0.5 rounded-md text-[10px] font-bold font-mono bg-emerald-100 text-emerald-800 border border-emerald-300">4 Models Ready</span>
             </div>
-            <div className="text-xs text-slate-600 font-medium">
-              4 production ML components: XGBoost Blizzard Classifier (91% acc), XGBoost Fuel Burn Regressor, Isolation Forest Cryo Anomaly & SAR Weighted Ranker.
+            <div className="text-xs text-slate-600 font-medium mt-0.5">
+              Production ML components: XGBoost Blizzard Classifier (91% acc), XGBoost Fuel Burn Regressor, Isolation Forest Cryo Anomaly & SAR Weighted Ranker.
             </div>
           </div>
         </div>
 
         <button
           onClick={() => setShowMlModal(true)}
-          className="shrink-0 px-3.5 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-mono font-bold shadow-xs transition"
+          className="shrink-0 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-mono font-bold shadow-sm shadow-emerald-600/20 transition active:scale-98 cursor-pointer flex items-center gap-1.5"
         >
-          Test Live Predictions →
+          <span>Test Live Predictions</span>
+          <span className="font-sans">&rarr;</span>
         </button>
       </div>
 

@@ -109,7 +109,7 @@ export const LoginPage: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3.5 rounded-xl bg-slate-900    hover: hover: disabled:opacity-50 text-white font-black text-xs flex items-center justify-center space-x-2 shadow-xl shadow-emerald-600/25 transition transform hover:-translate-y-0.5"
+              className="w-full py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white font-black text-xs flex items-center justify-center space-x-2 shadow-xl shadow-emerald-600/25 transition transform hover:-translate-y-0.5 cursor-pointer"
             >
               <span>{isLoading ? "Authenticating Session..." : "Sign In to Command Center"}</span>
               <ArrowRight className="w-4 h-4" />

@@ -194,7 +194,7 @@ export const QRScannerModal: React.FC<QRScannerModalProps> = ({
 
                 <button
                   onClick={handleApplyUpdate}
-                  className="px-5 py-2 rounded-xl bg-slate-900   hover: hover: text-white font-bold text-xs flex items-center space-x-1.5 shadow-md shadow-emerald-600/20 transition"
+                  className="px-5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center space-x-1.5 shadow-md shadow-emerald-600/20 transition cursor-pointer"
                 >
                   <span>Apply Transfer</span>
                   <ArrowRight className="w-3.5 h-3.5" />

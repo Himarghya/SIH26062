@@ -399,7 +399,7 @@ export const PersonnelPage: React.FC<{
                 if (filterStation !== 'all') setSelectedStation(filterStation);
                 setShowAddModal(true);
               }}
-              className="px-4 py-2 rounded-xl bg-slate-900   hover: hover: text-white font-mono text-xs font-bold transition flex items-center space-x-1.5 shadow-md shadow-emerald-600/20"
+              className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-mono text-xs font-bold transition flex items-center space-x-1.5 shadow-md shadow-emerald-600/20 cursor-pointer"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Deploy Personnel Here</span>
@@ -548,7 +548,7 @@ export const PersonnelPage: React.FC<{
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-5 py-2 rounded-xl bg-slate-900   hover: hover: disabled:opacity-50 text-white font-bold transition flex items-center space-x-1.5 shadow-md shadow-emerald-600/20"
+                  className="px-5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white font-bold transition flex items-center space-x-1.5 shadow-md shadow-emerald-600/20 cursor-pointer"
                 >
                   {isSubmitting ? (
                     <span>Enrolling...</span>
