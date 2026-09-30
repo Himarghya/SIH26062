@@ -1,431 +1,581 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Compass, 
   ArrowRight, 
   Radio, 
-  Cpu,
-  Thermometer,
-  Wifi,
-  Activity,
-  QrCode,
-  BarChart3,
-  CheckCircle2,
-  Clock,
-  Database,
-  HardDrive,
-  Shield,
-  Snowflake,
-  Wind,
-  Navigation,
-  Fuel,
-  Package,
-  Layers,
-  Sparkles,
+  Thermometer, 
+  Activity, 
+  QrCode, 
+  Snowflake, 
+  Wind, 
+  Navigation, 
+  Fuel, 
+  Package, 
+  Shield, 
   ExternalLink,
-  ChevronRight
+  ChevronRight,
+  Pause,
+  Play,
+  FileText,
+  Search,
+  Globe,
+  Bell,
+  CheckCircle2,
+  Calendar,
+  Layers,
+  MapPin,
+  Cpu
 } from 'lucide-react';
 
 export const LandingPage: React.FC = () => {
-  const [selectedStation, setSelectedStation] = useState<'bharati' | 'maitri' | 'himadri'>('bharati');
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isNewsPlaying, setIsNewsPlaying] = useState(true);
+  const [fontSize, setFontSize] = useState<'normal' | 'large' | 'xlarge'>('normal');
 
-  const stationsData = {
-    bharati: {
-      name: 'Bharati Station',
-      region: 'Larsemann Hills, East Antarctica',
-      coords: '69°24′S, 76°11′E',
-      temp: '-28.4°C',
-      wind: '38 kt ESE',
-      fuelDays: 184,
-      foodDays: 210,
-      o2Level: '100%',
-      crew: '23 Personnel',
-      status: 'Normal Ops',
-      statusColor: 'text-emerald-400 bg-emerald-950/60 border-emerald-800/80',
-      satLink: 'Iridium-Next SBD 2.4kbps'
+  const slides = [
+    {
+      title: "45th Indian Scientific Expedition to Antarctica",
+      subtitle: "BRICS Polar Working Group & Joint Multi-Station Life Support Initiatives",
+      tag: "MoES / NCPOR International Collaboration",
+      image: "https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&w=1200&q=80"
     },
-    maitri: {
-      name: 'Maitri Station',
-      region: 'Schirmacher Oasis, Antarctica',
-      coords: '70°45′S, 11°44′E',
-      temp: '-34.1°C',
-      wind: '56 kt S',
-      fuelDays: 142,
-      foodDays: 195,
-      o2Level: '98%',
-      crew: '25 Personnel',
-      status: 'Stage 1 Blizzard Watch',
-      statusColor: 'text-amber-400 bg-amber-950/60 border-amber-800/80',
-      satLink: 'Narrowband Failover'
+    {
+      title: "Bharati Station - Larsemann Hills, East Antarctica",
+      subtitle: "Wintering Over Operations, Zero-Bandwidth Polar Logistics & Satellite Feeds",
+      tag: "Permanent Antarctic Research Base",
+      image: "https://images.unsplash.com/photo-1483181957632-8bda974cbc91?auto=format&fit=crop&w=1200&q=80"
     },
-    himadri: {
-      name: 'Himadri Research Base',
-      region: 'Ny-Ålesund, Svalbard (Arctic)',
-      coords: '78°55′N, 11°56′E',
-      temp: '-12.8°C',
-      wind: '18 kt WNW',
-      fuelDays: 240,
-      foodDays: 310,
-      o2Level: '100%',
-      crew: '8 Personnel',
-      status: 'Normal Ops',
-      statusColor: 'text-emerald-400 bg-emerald-950/60 border-emerald-800/80',
-      satLink: 'Fiber / Low-Orbit Sync'
+    {
+      title: "Himadri Station - Ny-Ålesund, Svalbard (Arctic)",
+      subtitle: "High-Latitude Long-Term Atmosphere, Glaciology & Marine Ecosystem Studies",
+      tag: "Indian Arctic Research Station",
+      image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
     }
-  };
+  ];
 
-  const activeSt = stationsData[selectedStation];
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % slides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [slides.length]);
 
   return (
-    <div className="min-h-screen bg-[#050914] text-slate-100 flex flex-col selection:bg-cyan-500 selection:text-slate-950 overflow-x-hidden relative font-sans">
+    <div className={`min-h-screen bg-[#f4f7fa] text-slate-800 flex flex-col font-sans selection:bg-[#006399] selection:text-white ${
+      fontSize === 'large' ? 'text-[15px]' : fontSize === 'xlarge' ? 'text-[16px]' : 'text-[14px]'
+    }`}>
       
-      {/* Arctic Ambient Aurora Glow & Subtle Grid Background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-15%,rgba(6,182,212,0.16),rgba(255,255,255,0))] pointer-events-none" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b10_1px,transparent_1px),linear-gradient(to_bottom,#1e293b10_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
-
-      {/* Top Navigation */}
-      <header className="px-6 py-3.5 flex items-center justify-between border-b border-slate-800/80 bg-[#050914]/90 backdrop-blur-md sticky top-0 z-50">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 via-sky-500/10 to-blue-600/20 border border-cyan-500/40 flex items-center justify-center font-mono font-black text-cyan-300 text-lg shadow-lg shadow-cyan-500/10">
-            <Compass className="w-5 h-5 text-cyan-400" />
+      {/* 1. Top Accessibility & Utility Ribbon (Govt of India Standard) */}
+      <div className="bg-[#02517d] text-white px-4 py-1 text-xs border-b border-[#013f63]">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-[11px]">
+          <div className="flex items-center space-x-3">
+            <span className="cursor-pointer hover:underline">Screen Reader Access</span>
+            <span className="text-white/40">|</span>
+            <a href="#main-content" className="hover:underline">Skip to : main content / navigation</a>
           </div>
-          <div>
-            <div className="flex items-center space-x-2">
-              <span className="font-extrabold text-lg tracking-wider text-white font-mono">
-                POLARIS
-              </span>
-              <span className="text-[10px] text-cyan-300 font-mono uppercase bg-cyan-950/60 px-2 py-0.5 rounded-md border border-cyan-800/60 font-bold">
-                NCPOR / MoES
-              </span>
+
+          <div className="flex items-center space-x-3 font-medium">
+            <div className="flex items-center space-x-1">
+              <span className="w-3 h-3 bg-white inline-block border border-slate-400 cursor-pointer" title="Light Theme" />
+              <span className="w-3 h-3 bg-black inline-block border border-slate-400 cursor-pointer" title="High Contrast" />
             </div>
-            <span className="block text-[10px] text-slate-400 font-mono">
-              National Centre for Polar and Ocean Research • Expedition Command
-            </span>
-          </div>
-        </div>
-
-        {/* Header Right Actions */}
-        <div className="flex items-center space-x-3">
-          <div className="hidden lg:flex items-center space-x-2 px-3 py-1 rounded-full bg-slate-900/80 border border-slate-800 text-[11px] font-mono text-slate-300">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Iridium Sat-Link Active</span>
-          </div>
-
-          <Link
-            to="/pwa"
-            className="px-3.5 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/70 hover:border-cyan-500/40 text-slate-200 hover:text-white font-semibold text-xs flex items-center space-x-1.5 transition shadow-xs"
-          >
-            <QrCode className="w-3.5 h-3.5 text-cyan-400" />
-            <span className="hidden sm:inline">Field PWA</span>
-          </Link>
-          
-          <Link
-            to="/login"
-            className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black text-xs flex items-center space-x-1.5 transition shadow-md shadow-cyan-500/20 hover:shadow-cyan-500/35 hover:scale-[1.02] active:scale-[0.98]"
-          >
-            <span>Mission Control</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-      </header>
-
-      {/* Live Polar Station Telemetry Ribbon */}
-      <div className="bg-slate-950/90 border-b border-slate-800/80 px-6 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs font-mono relative z-10">
-        <div className="flex items-center space-x-2 text-slate-400 text-[11px]">
-          <span className="p-1 rounded bg-cyan-500/10 text-cyan-400">
-            <Activity className="w-3.5 h-3.5" />
-          </span>
-          <span className="font-bold text-slate-300 uppercase tracking-wider text-[10px]">Real-Time Station Telemetry</span>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2.5 text-[11px]">
-          <div 
-            onClick={() => setSelectedStation('bharati')}
-            className={`flex items-center space-x-1.5 px-3 py-1 rounded-lg border transition-all cursor-pointer ${
-              selectedStation === 'bharati'
-                ? 'bg-cyan-950/60 border-cyan-500/60 text-white shadow-xs'
-                : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
-            }`}
-          >
-            <Snowflake className="w-3 h-3 text-cyan-400" />
-            <span className="font-medium">Bharati (Antarctica):</span>
-            <span className="text-white font-bold font-mono">-28.4°C</span>
-            <span className="text-slate-600">|</span>
-            <span className="text-emerald-400 font-bold">Normal</span>
-          </div>
-
-          <div 
-            onClick={() => setSelectedStation('maitri')}
-            className={`flex items-center space-x-1.5 px-3 py-1 rounded-lg border transition-all cursor-pointer ${
-              selectedStation === 'maitri'
-                ? 'bg-amber-950/60 border-amber-500/60 text-white shadow-xs'
-                : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
-            }`}
-          >
-            <Wind className="w-3 h-3 text-amber-400" />
-            <span className="font-medium">Maitri (Antarctica):</span>
-            <span className="text-white font-bold font-mono">-34.1°C</span>
-            <span className="text-slate-600">|</span>
-            <span className="text-amber-400 font-bold">Stage 1 Advisory</span>
-          </div>
-
-          <div 
-            onClick={() => setSelectedStation('himadri')}
-            className={`flex items-center space-x-1.5 px-3 py-1 rounded-lg border transition-all cursor-pointer ${
-              selectedStation === 'himadri'
-                ? 'bg-cyan-950/60 border-cyan-500/60 text-white shadow-xs'
-                : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
-            }`}
-          >
-            <Compass className="w-3 h-3 text-cyan-400" />
-            <span className="font-medium">Himadri (Arctic):</span>
-            <span className="text-white font-bold font-mono">-12.8°C</span>
-            <span className="text-slate-600">|</span>
-            <span className="text-emerald-400 font-bold">Normal</span>
+            <span className="text-white/40">|</span>
+            <div className="flex items-center space-x-1">
+              <span>Text Size</span>
+              <button onClick={() => setFontSize('normal')} className="px-1 hover:bg-white/20 rounded">-</button>
+              <button onClick={() => setFontSize('large')} className="px-1 font-bold hover:bg-white/20 rounded">A</button>
+              <button onClick={() => setFontSize('xlarge')} className="px-1 font-bold hover:bg-white/20 rounded">+</button>
+            </div>
+            <span className="text-white/40">|</span>
+            <span className="hover:underline cursor-pointer">Home</span>
+            <span className="text-white/40">|</span>
+            <span className="hover:underline cursor-pointer">Sitemap</span>
+            <span className="text-white/40">|</span>
+            <span className="hover:underline cursor-pointer">Contact us</span>
+            <span className="text-white/40">|</span>
+            <span className="font-bold text-amber-300 hover:underline cursor-pointer">हिंदी</span>
           </div>
         </div>
       </div>
 
-      {/* Hero Section */}
-      <section className="px-6 pt-16 pb-12 md:pt-20 md:pb-16 max-w-5xl mx-auto text-center space-y-6 relative z-10">
-        
-        {/* Release Pill Badge */}
-        <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-cyan-500/30 text-cyan-300 text-xs font-mono shadow-sm shadow-cyan-500/10">
-          <Radio className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-          <span className="font-semibold tracking-wide">Polar Station Supply Chain &amp; Asset Management OS</span>
-          <span className="text-[10px] bg-cyan-500/20 text-cyan-300 px-1.5 py-0.2 rounded font-bold">v2.4</span>
-        </div>
-
-        {/* Main Headline */}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.15]">
-          Logistics and life support for{' '}
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-200 via-sky-300 to-blue-400 drop-shadow-sm">
-            isolated polar stations
-          </span>
-        </h1>
-
-        {/* Lead Paragraph */}
-        <p className="max-w-2xl mx-auto text-slate-300 text-base md:text-lg leading-relaxed font-normal">
-          Polaris tracks fuel burn curves, cold-chain rations, mission equipment, and rescue sorties across Indian research bases in Antarctica and the Arctic. Engineered with zero-bandwidth offline sync when satellite channels drop.
-        </p>
-
-        {/* Primary Call-to-Action Buttons */}
-        <div className="pt-2 flex flex-wrap items-center justify-center gap-3.5">
-          <Link
-            to="/login"
-            className="px-7 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black text-sm flex items-center space-x-2 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all"
-          >
-            <span>Open Desktop Command</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+      {/* 2. Official NCPOR Government Header (Cyan-Blue Ocean Banner) */}
+      <header className="bg-gradient-to-r from-[#005c8f] via-[#026f9e] to-[#01517c] text-white py-4 px-4 sm:px-6 shadow-md border-b-2 border-[#e59b19]">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           
-          <Link
-            to="/pwa"
-            className="px-6 py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800/90 border border-slate-700/80 hover:border-cyan-500/50 text-slate-100 text-sm font-bold transition flex items-center space-x-2 shadow-sm"
-          >
-            <QrCode className="w-4 h-4 text-cyan-400" />
-            <span>Field Operator PWA</span>
-          </Link>
-        </div>
-
-        {/* Interactive Live Polar Station Status Card Preview */}
-        <div className="pt-6 max-w-4xl mx-auto text-left">
-          <div className="p-5 rounded-2xl bg-gradient-to-b from-slate-900/90 to-slate-950/90 border border-slate-800 shadow-2xl backdrop-blur-md space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
-              <div className="flex items-center space-x-3">
-                <div className="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                  <Navigation className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="flex items-center space-x-2">
-                    <h3 className="font-extrabold text-white text-base font-sans">{activeSt.name}</h3>
-                    <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold border ${activeSt.statusColor}`}>
-                      {activeSt.status}
-                    </span>
-                  </div>
-                  <span className="text-xs text-slate-400 font-mono">{activeSt.region} • {activeSt.coords}</span>
-                </div>
-              </div>
-
-              <div className="flex items-center space-x-4 text-xs font-mono">
-                <div>
-                  <span className="text-slate-500 block text-[10px]">Ambient Temp</span>
-                  <span className="font-bold text-cyan-300 text-sm">{activeSt.temp}</span>
-                </div>
-                <div>
-                  <span className="text-slate-500 block text-[10px]">Wind Velocity</span>
-                  <span className="font-bold text-white text-sm">{activeSt.wind}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Station Autonomy Resource Bars */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono">
-              <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/90 space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-slate-400 flex items-center gap-1.5 font-sans font-semibold">
-                    <Fuel className="w-3.5 h-3.5 text-cyan-400" />
-                    Diesel / Fuel Autonomy
-                  </span>
-                  <span className="font-bold text-white">{activeSt.fuelDays} Days</span>
-                </div>
-                <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-gradient-to-r from-cyan-500 to-blue-500 h-full rounded-full" style={{ width: `${Math.min(100, (activeSt.fuelDays / 200) * 100)}%` }} />
-                </div>
-                <span className="text-[10px] text-slate-500">180-day winter buffer verified</span>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/90 space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-slate-400 flex items-center gap-1.5 font-sans font-semibold">
-                    <Package className="w-3.5 h-3.5 text-emerald-400" />
-                    Food Rations Autonomy
-                  </span>
-                  <span className="font-bold text-white">{activeSt.foodDays} Days</span>
-                </div>
-                <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full" style={{ width: `${Math.min(100, (activeSt.foodDays / 250) * 100)}%` }} />
-                </div>
-                <span className="text-[10px] text-slate-500">High-calorie ration vaults full</span>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/90 space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-slate-400 flex items-center gap-1.5 font-sans font-semibold">
-                    <Shield className="w-3.5 h-3.5 text-purple-400" />
-                    Life Support / O2 Level
-                  </span>
-                  <span className="font-bold text-white">{activeSt.o2Level}</span>
-                </div>
-                <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-gradient-to-r from-purple-500 to-indigo-400 h-full rounded-full" style={{ width: '100%' }} />
-                </div>
-                <span className="text-[10px] text-slate-500">{activeSt.crew} onboard</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Real Proof & Concrete Metrics Section */}
-      <section className="px-6 py-14 max-w-5xl mx-auto border-t border-slate-800/80 space-y-8 relative z-10">
-        <div>
-          <div className="flex items-center space-x-2 mb-1">
-            <Sparkles className="w-4 h-4 text-cyan-400" />
-            <span className="text-xs font-mono uppercase text-cyan-400 font-bold tracking-wider">Mission Benchmarks</span>
-          </div>
-          <h2 className="text-2xl font-black text-white font-sans tracking-tight">
-            Measured performance in field conditions
-          </h2>
-          <p className="text-xs text-slate-400 font-mono mt-1">
-            Benchmarks tested on simulated Antarctic transit datasets and low-bandwidth satellite links
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-5 rounded-2xl bg-gradient-to-b from-slate-900/80 to-slate-950/80 border border-slate-800/80 hover:border-cyan-500/40 transition-all space-y-2.5 shadow-sm group">
-            <div className="text-3xl font-black font-mono text-cyan-400 group-hover:scale-105 transition-transform origin-left">
-              R² = 0.94
-            </div>
-            <h3 className="text-sm font-bold text-white font-sans">Fuel Burn Accuracy</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              LSTM model trained on 14,000 polar transit records to predict diesel consumption under severe wind resistance.
-            </p>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-gradient-to-b from-slate-900/80 to-slate-950/80 border border-slate-800/80 hover:border-cyan-500/40 transition-all space-y-2.5 shadow-sm group">
-            <div className="text-3xl font-black font-mono text-cyan-400 group-hover:scale-105 transition-transform origin-left">
-              1.2 KB
-            </div>
-            <h3 className="text-sm font-bold text-white font-sans">Satellite Delta Size</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Compact JSON patch synchronization engineered for 2.4 kbps Iridium narrowband channels with zero data loss.
-            </p>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-gradient-to-b from-slate-900/80 to-slate-950/80 border border-slate-800/80 hover:border-cyan-500/40 transition-all space-y-2.5 shadow-sm group">
-            <div className="text-3xl font-black font-mono text-cyan-400 group-hover:scale-105 transition-transform origin-left">
-              180 ms
-            </div>
-            <h3 className="text-sm font-bold text-white font-sans">Survival Solver Speed</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Calculates 180-day wintering Leontief bottlenecks across fuel, food, and medical oxygen in under 200 milliseconds.
-            </p>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-gradient-to-b from-slate-900/80 to-slate-950/80 border border-slate-800/80 hover:border-cyan-500/40 transition-all space-y-2.5 shadow-sm group">
-            <div className="text-3xl font-black font-mono text-cyan-400 group-hover:scale-105 transition-transform origin-left">
-              8-Stage
-            </div>
-            <h3 className="text-sm font-bold text-white font-sans">Deterministic SAR</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Search and rescue dispatch algorithm that ranks helicopters versus snowcats based on live blizzard wind triggers.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Core Workflows */}
-      <section className="px-6 py-14 max-w-5xl mx-auto border-t border-slate-800/80 space-y-8 relative z-10">
-        <div>
-          <div className="flex items-center space-x-2 mb-1">
-            <Layers className="w-4 h-4 text-cyan-400" />
-            <span className="text-xs font-mono uppercase text-cyan-400 font-bold tracking-wider">Architecture</span>
-          </div>
-          <h2 className="text-2xl font-black text-white font-sans tracking-tight">
-            How the system works
-          </h2>
-          <p className="text-xs text-slate-400 font-mono mt-1">
-            Built for winter station isolation and strict Antarctic Treaty environmental compliance
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <div className="p-6 rounded-2xl bg-gradient-to-b from-slate-900/90 to-slate-950/90 border border-slate-800/80 hover:border-cyan-500/40 transition-all space-y-3.5 shadow-sm">
-            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
-              <HardDrive className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-base text-white font-sans">Offline IndexedDB Storage</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Field personnel scan cargo QR codes and update inventory locally. When connectivity returns, changes merge automatically with zero conflicts.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-gradient-to-b from-slate-900/90 to-slate-950/90 border border-slate-800/80 hover:border-cyan-500/40 transition-all space-y-3.5 shadow-sm">
-            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
-              <Thermometer className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-base text-white font-sans">Cold-Chain Temperature Logs</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Tracks biological samples and temperature-sensitive supplies across all 9 transport stages from Goa to Antarctic vaults.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-gradient-to-b from-slate-900/90 to-slate-950/90 border border-slate-800/80 hover:border-cyan-500/40 transition-all space-y-3.5 shadow-sm">
-            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
-              <Database className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-base text-white font-sans">SHA-256 Audit Trail</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Every supply adjustment, sortie approval, and hazardous waste disposal is logged with a cryptographic hash for Antarctic Treaty audits.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="mt-auto px-6 py-6 border-t border-slate-800/80 bg-[#040711] text-xs text-slate-500 font-mono relative z-10">
-        <div className="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 rounded-full bg-cyan-400" />
-            <span>POLARIS &bull; National Centre for Polar and Ocean Research &bull; Ministry of Earth Sciences, Govt. of India</span>
-          </div>
+          {/* Left: ESSO Swirl Logo + NCPOR Acronym */}
           <div className="flex items-center space-x-4">
-            <Link to="/pwa" className="hover:text-cyan-400 transition">Field PWA</Link>
-            <Link to="/login" className="hover:text-cyan-400 transition">Mission Control</Link>
+            <div className="flex items-center space-x-3">
+              {/* ESSO Globe Swirl Logo */}
+              <div className="relative w-14 h-14 rounded-full bg-gradient-to-br from-cyan-400 via-teal-300 to-sky-600 p-0.5 shadow-lg border-2 border-white/80 flex items-center justify-center">
+                <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#004d77] to-[#0083b3] flex flex-col items-center justify-center text-center">
+                  <Globe className="w-6 h-6 text-cyan-200 animate-pulse" />
+                  <span className="text-[7px] font-black tracking-widest text-white uppercase mt-0.5 font-mono">ESSO</span>
+                </div>
+              </div>
+              <div className="border-l border-white/20 pl-3">
+                <span className="font-black text-2xl sm:text-3xl tracking-wider text-white block font-serif leading-none">
+                  NCPOR
+                </span>
+                <span className="text-[10px] text-cyan-200 tracking-widest uppercase font-mono block mt-0.5">
+                  GOA, INDIA
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Center: Official Bilingual Titles (Hindi & English) */}
+          <div className="text-center md:text-left flex-1 md:pl-6 border-t md:border-t-0 md:border-l border-white/20 pt-2 md:pt-0">
+            <h1 className="text-sm sm:text-base md:text-lg font-bold text-white leading-tight font-serif tracking-wide drop-shadow-xs">
+              राष्ट्रीय ध्रुवीय एवं समुद्री अनुसंधान केन्द्र
+            </h1>
+            <h2 className="text-xs sm:text-sm text-cyan-100 leading-tight font-medium font-serif">
+              पृथ्वी विज्ञान मंत्रालय, भारत सरकार
+            </h2>
+            <div className="mt-1">
+              <span className="text-sm sm:text-base md:text-lg font-extrabold uppercase text-white tracking-wider block font-serif leading-tight">
+                NATIONAL CENTRE FOR POLAR AND OCEAN RESEARCH
+              </span>
+              <span className="text-xs sm:text-sm text-cyan-200 font-serif block">
+                Ministry of Earth Sciences, Government of India
+              </span>
+            </div>
+          </div>
+
+          {/* Right: NCPOR Seal & National Emblem */}
+          <div className="hidden lg:flex items-center space-x-4 shrink-0">
+            {/* NCPOR Circular Seal */}
+            <div className="w-16 h-16 rounded-full bg-white p-1 shadow-lg border-2 border-amber-400 flex items-center justify-center">
+              <div className="w-full h-full rounded-full bg-[#004d77] border border-slate-300 flex flex-col items-center justify-center text-center p-0.5">
+                <Compass className="w-5 h-5 text-amber-300" />
+                <span className="text-[7px] font-bold text-white uppercase font-mono">NCPOR</span>
+              </div>
+            </div>
+
+            {/* Ashoka Emblem Placeholder / Emblem Badge */}
+            <div className="w-12 h-16 flex flex-col items-center justify-center text-center">
+              <div className="w-10 h-10 rounded-full bg-amber-400/20 border border-amber-300 flex items-center justify-center text-amber-300">
+                <Shield className="w-6 h-6" />
+              </div>
+              <span className="text-[8px] text-amber-200 font-serif font-bold uppercase mt-1">सत्यमेव जयते</span>
+            </div>
+          </div>
+
+        </div>
+      </header>
+
+      {/* 3. Golden-Amber Navigation Bar (Authentic NCPOR Top Menu) */}
+      <nav className="bg-[#f3a826] border-b-2 border-[#d48c13] shadow-sm sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto flex items-center justify-between overflow-x-auto scrollbar-none font-sans text-xs font-bold text-[#1f2937]">
+          <div className="flex items-center flex-wrap">
+            <Link to="/" className="px-4 py-2.5 bg-[#c2410c] text-white hover:bg-[#9a3412] transition flex items-center gap-1 shrink-0">
+              Home
+            </Link>
+            <span className="px-3.5 py-2.5 hover:bg-[#e0991e] transition cursor-pointer shrink-0">
+              About NCPOR
+            </span>
+            <span className="px-3.5 py-2.5 hover:bg-[#e0991e] transition cursor-pointer shrink-0">
+              Expeditions
+            </span>
+            <span className="px-3.5 py-2.5 hover:bg-[#e0991e] transition cursor-pointer shrink-0">
+              Management &amp; Support
+            </span>
+            <span className="px-3.5 py-2.5 hover:bg-[#e0991e] transition cursor-pointer shrink-0">
+              Data Center
+            </span>
+            <span className="px-3.5 py-2.5 hover:bg-[#e0991e] transition cursor-pointer shrink-0">
+              Information Services
+            </span>
+            <span className="px-3.5 py-2.5 hover:bg-[#e0991e] transition cursor-pointer shrink-0">
+              Tender
+            </span>
+            <span className="px-3.5 py-2.5 hover:bg-[#e0991e] transition cursor-pointer shrink-0">
+              Careers
+            </span>
+            <span className="px-3.5 py-2.5 hover:bg-[#e0991e] transition cursor-pointer shrink-0">
+              Webmail
+            </span>
+          </div>
+
+          {/* POLARIS Mission Control Quick Jump Launcher */}
+          <div className="flex items-center space-x-1.5 px-3 shrink-0 py-1.5">
+            <Link
+              to="/pwa"
+              className="px-3 py-1.5 rounded bg-[#004d77] hover:bg-[#003857] text-white font-mono text-[11px] font-bold flex items-center gap-1 transition shadow-xs"
+            >
+              <QrCode className="w-3 h-3 text-cyan-300" />
+              <span>Field PWA</span>
+            </Link>
+            <Link
+              to="/login"
+              className="px-3.5 py-1.5 rounded bg-[#0f766e] hover:bg-[#115e59] text-white font-mono text-[11px] font-extrabold flex items-center gap-1 transition shadow-xs"
+            >
+              <Radio className="w-3 h-3 text-emerald-300 animate-pulse" />
+              <span>POLARIS Mission Control →</span>
+            </Link>
+          </div>
+        </div>
+      </nav>
+
+      {/* 4. Main Body with Antarctic Iceberg Fjord Side Margins */}
+      <div className="flex-1 bg-gradient-to-b from-[#eaf2f8] to-[#f4f7fa] relative" id="main-content">
+        
+        {/* Subtle Polar Watermark Side Banners */}
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6 grid grid-cols-1 lg:grid-cols-12 gap-5">
+          
+          {/* Main Left/Center Column (8 or 9 cols) */}
+          <div className="lg:col-span-8 space-y-6">
+            
+            {/* Banner Photo Carousel (Matches NCPOR BRICS / Expedition Photo Banner) */}
+            <div className="relative rounded-lg overflow-hidden border border-slate-300 shadow-md bg-slate-900 aspect-[21/9] sm:aspect-[21/8]">
+              <img 
+                src={slides[activeSlide].image} 
+                alt={slides[activeSlide].title}
+                className="w-full h-full object-cover transition-all duration-700 brightness-90"
+              />
+              
+              {/* Carousel Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 sm:p-6 text-white">
+                <span className="text-[10px] font-mono bg-[#005c8f] text-cyan-200 px-2.5 py-0.5 rounded w-fit uppercase font-bold mb-1 shadow">
+                  {slides[activeSlide].tag}
+                </span>
+                <h2 className="text-base sm:text-xl md:text-2xl font-bold font-serif leading-tight drop-shadow-md">
+                  {slides[activeSlide].title}
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-200 font-sans mt-0.5 line-clamp-1 drop-shadow">
+                  {slides[activeSlide].subtitle}
+                </p>
+              </div>
+
+              {/* Dot Indicators */}
+              <div className="absolute bottom-2.5 right-4 flex items-center space-x-1.5 z-10">
+                {slides.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveSlide(i)}
+                    className={`w-2.5 h-2.5 rounded-full transition-all ${
+                      activeSlide === i ? 'bg-emerald-400 scale-125 ring-1 ring-white' : 'bg-white/60 hover:bg-white'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Welcome to NCPOR Headline & Introduction Section */}
+            <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs space-y-3">
+              <div className="border-b border-slate-200 pb-2 flex items-center justify-between">
+                <h2 className="text-lg sm:text-xl font-bold text-[#004d77] font-serif">
+                  Welcome to NCPOR <span className="text-xs font-normal text-slate-500 font-sans">(erstwhile NCAOR)</span>
+                </h2>
+                <span className="text-xs text-[#006399] font-bold hover:underline cursor-pointer flex items-center gap-1">
+                  Read More &rsaquo;
+                </span>
+              </div>
+              <p className="text-xs sm:text-[13px] text-slate-700 leading-relaxed font-sans">
+                National Centre for Polar and Ocean Research (NCPOR) is India's premier R&amp;D institution responsible for the country's research activities in the polar and Southern Ocean realms. The Centre coordinates and steers the Indian Antarctic Programme, the Indian Arctic Programme, the Southern Ocean Programme, and the Cryosphere &amp; Climate studies across the Indian Himalayas.
+              </p>
+            </div>
+
+            {/* 🚀 FEATURED PORTAL SPOTLIGHT: POLARIS LOGISTICS & EXPEDITION OS */}
+            <div className="bg-gradient-to-r from-[#003857] via-[#004d77] to-[#025a87] text-white p-5 rounded-xl border-2 border-cyan-400 shadow-md space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center space-x-3">
+                  <div className="p-2.5 rounded-lg bg-cyan-400/20 text-cyan-300 border border-cyan-400/40 shrink-0">
+                    <Radio className="w-6 h-6 animate-pulse" />
+                  </div>
+                  <div>
+                    <div className="flex items-center space-x-2">
+                      <span className="font-mono font-black text-lg text-white tracking-wide">POLARIS</span>
+                      <span className="bg-cyan-900/80 text-cyan-300 text-[10px] font-mono font-bold px-2 py-0.5 rounded border border-cyan-400/30">
+                        OFFLINE FIELD &amp; MISSION OS v2.4
+                      </span>
+                    </div>
+                    <p className="text-xs text-cyan-100 font-sans mt-0.5">
+                      Integrated Polar Station Supply Chain, Fuel Autonomy &amp; Search &amp; Rescue Command System
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-2 shrink-0">
+                  <Link
+                    to="/pwa"
+                    className="px-3.5 py-2 rounded-lg bg-slate-900/80 hover:bg-slate-900 text-white font-bold text-xs border border-cyan-400/40 hover:border-cyan-400 transition flex items-center gap-1.5 shadow"
+                  >
+                    <QrCode className="w-3.5 h-3.5 text-cyan-300" />
+                    <span>Field PWA</span>
+                  </Link>
+                  <Link
+                    to="/login"
+                    className="px-4 py-2 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black text-xs transition flex items-center gap-1.5 shadow-md shadow-cyan-900/40"
+                  >
+                    <span>Open Desktop Command</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* Real-time Telemetry Snapshot Inside Spotlight */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2 border-t border-white/15 text-xs font-mono">
+                <div className="p-2.5 rounded-lg bg-black/30 border border-white/10 flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Snowflake className="w-4 h-4 text-cyan-300" />
+                    <div>
+                      <span className="text-[10px] text-slate-300 block font-sans">Bharati (Antarctica)</span>
+                      <strong className="text-white font-bold">-28.4°C</strong>
+                    </div>
+                  </div>
+                  <span className="text-[10px] text-emerald-400 font-bold bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-800">
+                    Normal Ops
+                  </span>
+                </div>
+
+                <div className="p-2.5 rounded-lg bg-black/30 border border-white/10 flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Wind className="w-4 h-4 text-amber-300" />
+                    <div>
+                      <span className="text-[10px] text-slate-300 block font-sans">Maitri (Antarctica)</span>
+                      <strong className="text-white font-bold">-34.1°C</strong>
+                    </div>
+                  </div>
+                  <span className="text-[10px] text-amber-400 font-bold bg-amber-950/80 px-1.5 py-0.5 rounded border border-amber-800">
+                    Blizzard Watch
+                  </span>
+                </div>
+
+                <div className="p-2.5 rounded-lg bg-black/30 border border-white/10 flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Compass className="w-4 h-4 text-cyan-300" />
+                    <div>
+                      <span className="text-[10px] text-slate-300 block font-sans">Himadri (Arctic)</span>
+                      <strong className="text-white font-bold">-12.8°C</strong>
+                    </div>
+                  </div>
+                  <span className="text-[10px] text-emerald-400 font-bold bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-800">
+                    Normal Ops
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* 4 Scientific Divisions Cards (Exact replica of NCPOR cards) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+              
+              {/* Card 1 */}
+              <div className="bg-white p-3 rounded-lg border border-slate-200 shadow-xs hover:border-[#004d77] transition group cursor-pointer flex flex-col justify-between">
+                <div>
+                  <h3 className="font-bold text-[#004d77] text-xs pb-1.5 border-b border-slate-100 flex items-center justify-between">
+                    <span>Polar Science &amp; Cryosphere</span>
+                    <span className="text-slate-400 group-hover:translate-x-0.5 transition">&rsaquo;</span>
+                  </h3>
+                  <div className="my-2 rounded overflow-hidden aspect-video bg-slate-100 border border-slate-200">
+                    <img src="https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&w=400&q=80" alt="Cryosphere" className="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+                  </div>
+                  <p className="text-[11px] text-slate-600 leading-relaxed">
+                    Long-term monitoring of Antarctic ice sheets, sea ice dynamics, and polar atmospheric chemistry.
+                  </p>
+                </div>
+              </div>
+
+              {/* Card 2 */}
+              <div className="bg-white p-3 rounded-lg border border-slate-200 shadow-xs hover:border-[#004d77] transition group cursor-pointer flex flex-col justify-between">
+                <div>
+                  <h3 className="font-bold text-[#004d77] text-xs pb-1.5 border-b border-slate-100 flex items-center justify-between">
+                    <span>Geoscience</span>
+                    <span className="text-slate-400 group-hover:translate-x-0.5 transition">&rsaquo;</span>
+                  </h3>
+                  <div className="my-2 rounded overflow-hidden aspect-video bg-slate-100 border border-slate-200">
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=400&q=80" alt="Geoscience" className="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+                  </div>
+                  <p className="text-[11px] text-slate-600 leading-relaxed">
+                    Continental drift studies, Gondwana reconstruction, and deep crustal seismology under ice sheets.
+                  </p>
+                </div>
+              </div>
+
+              {/* Card 3 */}
+              <div className="bg-white p-3 rounded-lg border border-slate-200 shadow-xs hover:border-[#004d77] transition group cursor-pointer flex flex-col justify-between">
+                <div>
+                  <h3 className="font-bold text-[#004d77] text-xs pb-1.5 border-b border-slate-100 flex items-center justify-between">
+                    <span>Exploration Mineral Resources</span>
+                    <span className="text-slate-400 group-hover:translate-x-0.5 transition">&rsaquo;</span>
+                  </h3>
+                  <div className="my-2 rounded overflow-hidden aspect-video bg-slate-100 border border-slate-200">
+                    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=400&q=80" alt="Ocean Exploration" className="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+                  </div>
+                  <p className="text-[11px] text-slate-600 leading-relaxed">
+                    Hydrothermal polymetallic sulfides exploration along the Central and South West Indian Ridges.
+                  </p>
+                </div>
+              </div>
+
+              {/* Card 4 */}
+              <div className="bg-white p-3 rounded-lg border border-slate-200 shadow-xs hover:border-[#004d77] transition group cursor-pointer flex flex-col justify-between">
+                <div>
+                  <h3 className="font-bold text-[#004d77] text-xs pb-1.5 border-b border-slate-100 flex items-center justify-between">
+                    <span>Science Updates</span>
+                    <span className="text-slate-400 group-hover:translate-x-0.5 transition">&rsaquo;</span>
+                  </h3>
+                  <div className="my-2 rounded overflow-hidden aspect-video bg-slate-100 border border-slate-200">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" alt="Science Update" className="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+                  </div>
+                  <p className="text-[11px] text-slate-600 leading-relaxed">
+                    Latest publications, ice-core temperature reconstructions, and oceanic paleoclimate records.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* Right Sidebar Column (4 cols) */}
+          <div className="lg:col-span-4 space-y-4">
+            
+            {/* Latest News Box (Exact NCPOR blue header style with Pause button) */}
+            <div className="bg-white rounded-lg border border-slate-200 shadow-xs overflow-hidden">
+              <div className="bg-[#005c8f] text-white px-4 py-2.5 flex items-center justify-between">
+                <h3 className="font-bold text-sm font-serif">Latest News &amp; Bulletins</h3>
+                <button
+                  onClick={() => setIsNewsPlaying(!isNewsPlaying)}
+                  className="p-1 rounded hover:bg-white/20 text-white transition"
+                  title={isNewsPlaying ? 'Pause News' : 'Play News'}
+                >
+                  {isNewsPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+                </button>
+              </div>
+
+              <div className="p-3.5 divide-y divide-slate-100 text-xs space-y-2.5">
+                <div className="pt-2 first:pt-0">
+                  <span className="text-[10px] font-mono text-cyan-700 font-bold block">18 SEP 2026</span>
+                  <a href="#" className="text-slate-800 hover:text-[#005c8f] font-semibold leading-snug block mt-0.5">
+                    AFops 2026 Opens in Kochi for pre-expedition logistics and survival trials.
+                  </a>
+                </div>
+
+                <div className="pt-2.5">
+                  <span className="text-[10px] font-mono text-emerald-700 font-bold block">15 SEP 2026</span>
+                  <a href="#" className="text-slate-800 hover:text-[#005c8f] font-semibold leading-snug block mt-0.5">
+                    POLARIS Polar Station Supply Chain OS v2.4 successfully deployed across Bharati &amp; Maitri stations.
+                  </a>
+                </div>
+
+                <div className="pt-2.5">
+                  <span className="text-[10px] font-mono text-slate-500 font-bold block">12 SEP 2026</span>
+                  <a href="#" className="text-slate-800 hover:text-[#005c8f] font-semibold leading-snug block mt-0.5">
+                    Unravelling Glacier-Lake Dynamics and GLOF hazards in the Higher Himalayas.
+                  </a>
+                </div>
+
+                <div className="pt-2.5">
+                  <span className="text-[10px] font-mono text-amber-700 font-bold block">10 AUG 2026</span>
+                  <a href="#" className="text-slate-800 hover:text-[#005c8f] font-serif leading-snug block mt-0.5">
+                    एनसीपीओआर में 45वें भारतीय अंटार्कटिक वैज्ञानिक अभियान हेतु विशेष शीतकालीन ईंधन निविदा आमंत्रित।
+                  </a>
+                </div>
+              </div>
+
+              <div className="bg-slate-50 px-4 py-2 border-t border-slate-100 text-right">
+                <span className="text-[11px] text-[#005c8f] font-bold hover:underline cursor-pointer">
+                  View All News &rsaquo;
+                </span>
+              </div>
+            </div>
+
+            {/* Quick Links & Direct Resources */}
+            <div className="bg-white rounded-lg border border-slate-200 shadow-xs p-4 space-y-2.5">
+              <h3 className="font-bold text-xs uppercase tracking-wider text-[#004d77] pb-1.5 border-b border-slate-200">
+                Quick Access &amp; Portals
+              </h3>
+
+              <div className="space-y-1.5 text-xs">
+                <Link
+                  to="/login"
+                  className="p-2 rounded bg-slate-50 hover:bg-[#004d77] hover:text-white transition flex items-center justify-between group border border-slate-100"
+                >
+                  <span className="font-bold flex items-center gap-2">
+                    <Radio className="w-3.5 h-3.5 text-cyan-600 group-hover:text-cyan-300" />
+                    POLARIS Desktop Command
+                  </span>
+                  <ArrowRight className="w-3 h-3 text-slate-400 group-hover:text-white" />
+                </Link>
+
+                <Link
+                  to="/pwa"
+                  className="p-2 rounded bg-slate-50 hover:bg-[#004d77] hover:text-white transition flex items-center justify-between group border border-slate-100"
+                >
+                  <span className="font-bold flex items-center gap-2">
+                    <QrCode className="w-3.5 h-3.5 text-teal-600 group-hover:text-teal-300" />
+                    Field Operator PWA (Offline)
+                  </span>
+                  <ArrowRight className="w-3 h-3 text-slate-400 group-hover:text-white" />
+                </Link>
+
+                <div className="p-2 rounded bg-slate-50 hover:bg-slate-100 transition flex items-center justify-between cursor-pointer border border-slate-100">
+                  <span className="font-medium text-slate-700">Indian Antarctic Stations Telemetry</span>
+                  <ExternalLink className="w-3 h-3 text-slate-400" />
+                </div>
+
+                <div className="p-2 rounded bg-slate-50 hover:bg-slate-100 transition flex items-center justify-between cursor-pointer border border-slate-100">
+                  <span className="font-medium text-slate-700">National Polar Data Centre (NPDC)</span>
+                  <ExternalLink className="w-3 h-3 text-slate-400" />
+                </div>
+              </div>
+            </div>
+
+            {/* Official Treaty Compliance Badge */}
+            <div className="p-3.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-950 text-xs space-y-1">
+              <div className="flex items-center space-x-1.5 font-bold text-emerald-800">
+                <Shield className="w-4 h-4 text-emerald-600" />
+                <span>Antarctic Treaty Environmental Compliance</span>
+              </div>
+              <p className="text-[11px] text-emerald-900/80 leading-relaxed font-sans">
+                All polar sorties, fuel decanting, and hazardous waste manifests adhere strictly to the Protocol on Environmental Protection to the Antarctic Treaty (Madrid Protocol).
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      {/* 5. Official Government Footer */}
+      <footer className="bg-[#003857] text-white text-xs border-t-4 border-[#e59b19] py-6 px-4">
+        <div className="max-w-7xl mx-auto space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-white/15">
+            <div>
+              <span className="font-bold text-sm block font-serif">
+                NATIONAL CENTRE FOR POLAR AND OCEAN RESEARCH (NCPOR)
+              </span>
+              <span className="text-[11px] text-cyan-200 block mt-0.5">
+                Headland Sada, Vasco-da-Gama, Goa - 403 804, India
+              </span>
+            </div>
+
+            <div className="flex items-center space-x-4 text-xs">
+              <span className="hover:underline cursor-pointer">Terms &amp; Conditions</span>
+              <span>&bull;</span>
+              <span className="hover:underline cursor-pointer">Privacy Policy</span>
+              <span>&bull;</span>
+              <span className="hover:underline cursor-pointer">RTI</span>
+              <span>&bull;</span>
+              <span className="hover:underline cursor-pointer">Copyright Policy</span>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-300 font-mono">
+            <div>
+              &copy; {new Date().getFullYear()} National Centre for Polar and Ocean Research. Ministry of Earth Sciences, Govt. of India.
+            </div>
+            <div className="flex items-center space-x-3">
+              <span className="text-cyan-300">Powered by POLARIS Logistics Command Engine</span>
+              <span>|</span>
+              <span>Last Updated: 30 Sep 2026</span>
+            </div>
           </div>
         </div>
       </footer>
+
     </div>
   );
 };
