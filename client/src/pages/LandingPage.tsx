@@ -144,58 +144,6 @@ export const LandingPage: React.FC = () => {
         </div>
       </header>
 
-      {/* 3. Golden-Amber Navigation Bar (Authentic NCPOR Top Menu) */}
-      <nav className="bg-[#f3a826] border-b-2 border-[#d48c13] shadow-sm sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto flex items-center justify-between overflow-x-auto scrollbar-none font-sans text-xs font-bold text-[#1f2937]">
-          <div className="flex items-center flex-wrap">
-            <Link to="/" className="px-4 py-2.5 bg-[#c2410c] text-white hover:bg-[#9a3412] transition flex items-center gap-1 shrink-0">
-              Home
-            </Link>
-            <span className="px-3.5 py-2.5 hover:bg-[#e0991e] transition cursor-pointer shrink-0">
-              About NCPOR
-            </span>
-            <span className="px-3.5 py-2.5 hover:bg-[#e0991e] transition cursor-pointer shrink-0">
-              Expeditions
-            </span>
-            <span className="px-3.5 py-2.5 hover:bg-[#e0991e] transition cursor-pointer shrink-0">
-              Management &amp; Support
-            </span>
-            <span className="px-3.5 py-2.5 hover:bg-[#e0991e] transition cursor-pointer shrink-0">
-              Data Center
-            </span>
-            <span className="px-3.5 py-2.5 hover:bg-[#e0991e] transition cursor-pointer shrink-0">
-              Information Services
-            </span>
-            <span className="px-3.5 py-2.5 hover:bg-[#e0991e] transition cursor-pointer shrink-0">
-              Tender
-            </span>
-            <span className="px-3.5 py-2.5 hover:bg-[#e0991e] transition cursor-pointer shrink-0">
-              Careers
-            </span>
-            <span className="px-3.5 py-2.5 hover:bg-[#e0991e] transition cursor-pointer shrink-0">
-              Webmail
-            </span>
-          </div>
-
-          {/* POLARIS Mission Control Quick Jump Launcher */}
-          <div className="flex items-center space-x-1.5 px-3 shrink-0 py-1.5">
-            <Link
-              to="/pwa"
-              className="px-3 py-1.5 rounded bg-[#004d77] hover:bg-[#003857] text-white font-mono text-[11px] font-bold flex items-center gap-1 transition shadow-xs"
-            >
-              <QrCode className="w-3 h-3 text-cyan-300" />
-              <span>Field PWA</span>
-            </Link>
-            <Link
-              to="/login"
-              className="px-3.5 py-1.5 rounded bg-[#0f766e] hover:bg-[#115e59] text-white font-mono text-[11px] font-extrabold flex items-center gap-1 transition shadow-xs"
-            >
-              <Radio className="w-3 h-3 text-emerald-300 animate-pulse" />
-              <span>POLARIS Mission Control →</span>
-            </Link>
-          </div>
-        </div>
-      </nav>
 
       {/* 4. Main Body with Antarctic Iceberg Fjord Side Margins */}
       <div className="flex-1 bg-gradient-to-b from-[#eaf2f8] to-[#f4f7fa] relative" id="main-content">
