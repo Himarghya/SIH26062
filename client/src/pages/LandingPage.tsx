@@ -34,22 +34,22 @@ export const LandingPage: React.FC = () => {
 
   const slides = [
     {
-      title: "45th Indian Scientific Expedition to Antarctica",
-      subtitle: "BRICS Polar Working Group & Joint Multi-Station Life Support Initiatives",
-      tag: "MoES / NCPOR International Collaboration",
-      image: "https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&w=1200&q=80"
-    },
-    {
       title: "Bharati Station - Larsemann Hills, East Antarctica",
       subtitle: "Wintering Over Operations, Zero-Bandwidth Polar Logistics & Satellite Feeds",
       tag: "Permanent Antarctic Research Base",
-      image: "https://images.unsplash.com/photo-1483181957632-8bda974cbc91?auto=format&fit=crop&w=1200&q=80"
+      image: "/images/bharati_station.png"
     },
     {
-      title: "Himadri Station - Ny-Ålesund, Svalbard (Arctic)",
-      subtitle: "High-Latitude Long-Term Atmosphere, Glaciology & Marine Ecosystem Studies",
-      tag: "Indian Arctic Research Station",
-      image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+      title: "Southern Ocean & Antarctic Marine Expedition",
+      subtitle: "Iceberg Tracking, Hydrographic Surveys & Cold-Chain Supply Routes",
+      tag: "Indian Antarctic Scientific Expedition",
+      image: "/images/antarctic_fjord.jpg"
+    },
+    {
+      title: "Transantarctic Mountains & Cryospheric Observations",
+      subtitle: "Glaciology, Deep Ice Core Drilling & Severe Blizzard Survival Tracking",
+      tag: "High-Latitude Field Research",
+      image: "/images/antarctic_peaks.png"
     }
   ];
 
