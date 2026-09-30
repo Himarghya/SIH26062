@@ -280,51 +280,190 @@ export const AutonomyDerivationPanel: React.FC<{
         </div>
       </div>
 
-      {/* Core Mathematical Model Equations Box - Clean Light Dashboard Aesthetic */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-3.5">
-        <div className="flex items-center justify-between text-xs font-mono font-bold border-b border-slate-100 pb-2.5">
-          <div className="flex items-center space-x-2">
-            <Sparkles className="w-4 h-4 text-amber-500" />
-            <span className="uppercase tracking-wide font-black text-slate-800 text-[11px] sm:text-xs">
-              MATHEMATICAL MODEL: POLAR AUTONOMY
-            </span>
-          </div>
-          <span className="text-[10px] text-slate-500 font-mono bg-slate-50 border border-slate-200 px-2.5 py-0.5 rounded-full font-semibold">
-            NCPOR Ops Model
-          </span>
-        </div>
-
-        {/* Primary Formula Display */}
-        <div className="py-1 flex justify-center">
-          <div className="w-full bg-slate-50/90 border border-indigo-100 rounded-xl p-3 sm:p-3.5 text-center shadow-2xs">
-            <div className="inline-block font-mono text-xs sm:text-sm md:text-base font-bold text-slate-900 tracking-wide">
-              <span className="text-indigo-800 font-black">Autonomy Days</span>
-              <span className="text-slate-600 mx-1.5">=</span>
-              <span className="text-cyan-800 font-black">min<sub>i ∈ &#123;Fuel, Food, O₂&#125;</sub></span>
-              <span className="text-slate-800 ml-2 text-[11px] sm:text-sm font-semibold">
-                [ Stock<sub>i</sub> / (Burn<sub>i</sub> × Crew × M<sub>weather,i</sub>) ]
+      {/* Core Mathematical Model Equations Box - High-Fidelity Scientific Mathematical Typesetting */}
+      <div className="p-4 sm:p-6 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-4">
+        
+        {/* Header */}
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+          <div className="flex items-center space-x-2.5">
+            <div className="p-2 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700">
+              <Calculator className="w-4 h-4 text-indigo-600" />
+            </div>
+            <div>
+              <div className="text-xs sm:text-sm font-bold font-mono tracking-wide text-slate-900 uppercase">
+                POLAR AUTONOMY GOVERNING EQUATION
+              </div>
+              <span className="text-[11px] text-slate-500 font-sans block">
+                Deterministic Multi-Factor Thermodynamic &amp; Consumable Depletion Engine
               </span>
             </div>
           </div>
+          <span className="text-[10px] font-mono font-bold text-indigo-800 bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-full shadow-2xs">
+            NCPOR Standard Ops Model
+          </span>
         </div>
 
-        {/* Multiplier Sub-equations Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs font-mono">
-          <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between shadow-2xs hover:border-amber-300 transition">
-            <span className="text-amber-700 font-bold text-[11px]">M_Fuel:</span>
-            <span className="text-slate-800 font-semibold text-[11px]">1.0 + 0.015·ΔT + 0.25·(V/50)</span>
-          </div>
+        {/* Primary Mathematical Fraction Formula Display */}
+        <div className="py-2 flex justify-center">
+          <div className="w-full max-w-3xl bg-gradient-to-br from-slate-50 via-indigo-50/30 to-slate-50 border border-indigo-200/80 rounded-2xl p-4 sm:p-6 shadow-xs">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-3 sm:gap-6 text-slate-900">
+              
+              {/* Left Term */}
+              <div className="flex items-baseline gap-2 shrink-0">
+                <span className="text-base sm:text-lg md:text-xl font-serif italic font-bold text-indigo-950">
+                  T<sub className="font-sans not-italic text-xs text-indigo-700">autonomy</sub>
+                </span>
+                <span className="text-xs font-mono text-slate-500 font-semibold">(Days)</span>
+                <span className="text-lg font-bold text-slate-400 mx-1">=</span>
+              </div>
 
-          <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between shadow-2xs hover:border-emerald-300 transition">
-            <span className="text-emerald-700 font-bold text-[11px]">M_Food:</span>
-            <span className="text-slate-800 font-semibold text-[11px]">1.0 + 0.006·ΔT</span>
-          </div>
+              {/* Min Operator */}
+              <div className="flex flex-col items-center shrink-0">
+                <span className="text-sm sm:text-base font-serif italic font-extrabold text-cyan-900">min</span>
+                <span className="text-[10px] font-mono text-cyan-800 font-bold tracking-tight">
+                  i &isin; &#123;Fuel, Food, O₂&#125;
+                </span>
+              </div>
 
-          <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between shadow-2xs hover:border-cyan-300 transition">
-            <span className="text-cyan-700 font-bold text-[11px]">M_O2:</span>
-            <span className="text-slate-800 font-semibold text-[11px]">1.0 + 0.10·(V/50)</span>
+              {/* Fraction with Square Brackets */}
+              <div className="flex items-center gap-1.5 shrink-0">
+                <span className="text-3xl sm:text-4xl md:text-5xl font-light text-slate-400 font-serif leading-none select-none">&#91;</span>
+                
+                <div className="flex flex-col items-center px-3 sm:px-5 py-1">
+                  {/* Numerator */}
+                  <div className="pb-1.5 font-serif text-sm sm:text-base md:text-lg font-bold text-slate-900 flex items-center gap-1">
+                    <span>Stock</span>
+                    <sub className="font-sans text-xs text-slate-600">i</sub>
+                  </div>
+
+                  {/* Horizontal Fraction Divider Line */}
+                  <div className="w-full h-0.5 bg-indigo-900/40 rounded-full" />
+
+                  {/* Denominator */}
+                  <div className="pt-1.5 font-serif text-xs sm:text-sm md:text-base text-slate-800 flex items-center gap-1.5 flex-wrap justify-center font-medium">
+                    <span>Burn<sub className="font-sans text-[10px] text-slate-600">i</sub></span>
+                    <span className="text-slate-400 font-sans font-bold">&times;</span>
+                    <span>Crew</span>
+                    <span className="text-slate-400 font-sans font-bold">&times;</span>
+                    <span>M<sub className="font-sans text-[10px] text-slate-600">weather, i</sub></span>
+                  </div>
+                </div>
+
+                <span className="text-3xl sm:text-4xl md:text-5xl font-light text-slate-400 font-serif leading-none select-none">&#93;</span>
+              </div>
+
+            </div>
+
+            {/* Variable Legend Chips */}
+            <div className="mt-4 pt-3 border-t border-indigo-100 grid grid-cols-1 sm:grid-cols-3 gap-2 text-[10px] font-mono text-slate-600">
+              <div className="flex items-center gap-1.5 bg-white p-1.5 rounded-lg border border-slate-200">
+                <span className="w-2 h-2 rounded-full bg-indigo-600 shrink-0" />
+                <span><strong className="text-slate-800">Stock<sub>i</sub>:</strong> Usable Tank / Depot Level</span>
+              </div>
+              <div className="flex items-center gap-1.5 bg-white p-1.5 rounded-lg border border-slate-200">
+                <span className="w-2 h-2 rounded-full bg-cyan-600 shrink-0" />
+                <span><strong className="text-slate-800">Burn<sub>i</sub> &times; Crew:</strong> Nominal Baseline</span>
+              </div>
+              <div className="flex items-center gap-1.5 bg-white p-1.5 rounded-lg border border-slate-200">
+                <span className="w-2 h-2 rounded-full bg-amber-600 shrink-0" />
+                <span><strong className="text-slate-800">M<sub>weather, i</sub>:</strong> Weather Multiplier</span>
+              </div>
+            </div>
+
           </div>
         </div>
+
+        {/* 3 Mathematical Multiplier Formulations with Fractions & Live Computed Output */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          
+          {/* M_Fuel Card */}
+          <div className="p-3.5 rounded-xl bg-amber-50/40 border border-amber-200 shadow-2xs flex flex-col justify-between space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-1.5 text-amber-900 font-bold text-xs font-mono">
+                <Fuel className="w-3.5 h-3.5 text-amber-700" />
+                <span>Thermal Fuel Multiplier</span>
+              </div>
+              <span className="text-[10px] font-mono font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-md">
+                M<sub>Fuel</sub> = {(1.0 + 0.015 * Math.abs(ambientTemp) + 0.25 * (windSpeed / 50)).toFixed(3)}
+              </span>
+            </div>
+
+            {/* Formula display with small fraction */}
+            <div className="p-2 rounded-lg bg-white border border-amber-200 font-serif text-xs text-amber-950 flex items-center justify-center gap-1.5 font-medium shadow-2xs">
+              <span className="font-bold">M<sub>Fuel</sub> = 1.0</span>
+              <span>+</span>
+              <span>0.015 &middot; &Delta;T</span>
+              <span>+</span>
+              <span className="inline-flex items-center gap-0.5">
+                0.25 &middot;
+                <span className="inline-flex flex-col items-center font-sans text-[10px] leading-tight px-1">
+                  <span className="border-b border-amber-400 pb-0.5 font-bold">V</span>
+                  <span className="pt-0.5 text-slate-600">50</span>
+                </span>
+              </span>
+            </div>
+
+            <div className="text-[10px] font-sans text-slate-600 leading-tight">
+              Calculates generator load &amp; thermal losses from temperature drop (&Delta;T) and katabatic wind speed (V).
+            </div>
+          </div>
+
+          {/* M_Food Card */}
+          <div className="p-3.5 rounded-xl bg-emerald-50/40 border border-emerald-200 shadow-2xs flex flex-col justify-between space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-1.5 text-emerald-900 font-bold text-xs font-mono">
+                <Utensils className="w-3.5 h-3.5 text-emerald-700" />
+                <span>Caloric Food Multiplier</span>
+              </div>
+              <span className="text-[10px] font-mono font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-md">
+                M<sub>Food</sub> = {(1.0 + 0.006 * Math.abs(ambientTemp)).toFixed(3)}
+              </span>
+            </div>
+
+            {/* Formula display */}
+            <div className="p-2 rounded-lg bg-white border border-emerald-200 font-serif text-xs text-emerald-950 flex items-center justify-center gap-1.5 font-medium shadow-2xs">
+              <span className="font-bold">M<sub>Food</sub> = 1.0</span>
+              <span>+</span>
+              <span>0.006 &middot; &Delta;T</span>
+            </div>
+
+            <div className="text-[10px] font-sans text-slate-600 leading-tight">
+              Elevates daily caloric requirement up to 4,500+ kcal per personnel in sub-zero survival environments.
+            </div>
+          </div>
+
+          {/* M_O2 Card */}
+          <div className="p-3.5 rounded-xl bg-cyan-50/40 border border-cyan-200 shadow-2xs flex flex-col justify-between space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-1.5 text-cyan-900 font-bold text-xs font-mono">
+                <Activity className="w-3.5 h-3.5 text-cyan-700" />
+                <span>Life-Support O₂ Multiplier</span>
+              </div>
+              <span className="text-[10px] font-mono font-bold text-cyan-800 bg-cyan-100 px-2 py-0.5 rounded-md">
+                M<sub>O₂</sub> = {(1.0 + 0.10 * (windSpeed / 50)).toFixed(3)}
+              </span>
+            </div>
+
+            {/* Formula display with small fraction */}
+            <div className="p-2 rounded-lg bg-white border border-cyan-200 font-serif text-xs text-cyan-950 flex items-center justify-center gap-1.5 font-medium shadow-2xs">
+              <span className="font-bold">M<sub>O₂</sub> = 1.0</span>
+              <span>+</span>
+              <span className="inline-flex items-center gap-0.5">
+                0.10 &middot;
+                <span className="inline-flex flex-col items-center font-sans text-[10px] leading-tight px-1">
+                  <span className="border-b border-cyan-400 pb-0.5 font-bold">V</span>
+                  <span className="pt-0.5 text-slate-600">50</span>
+                </span>
+              </span>
+            </div>
+
+            <div className="text-[10px] font-sans text-slate-600 leading-tight">
+              Accounts for hermetic habitat overpressure ventilation and blizzard particulate filtration load.
+            </div>
+          </div>
+
+        </div>
+
       </div>
 
       {/* Step-by-Step Live Derivation Cards */}
