@@ -75,14 +75,9 @@ export const LandingPage: React.FC = () => {
               </div>
             </div>
             <div>
-              <div className="flex items-center space-x-2">
-                <span className="font-black text-2xl sm:text-3xl tracking-widest text-white block font-mono leading-none">
-                  POLARIS
-                </span>
-                <span className="text-[9px] text-cyan-300 font-mono uppercase bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-400/40 font-bold">
-                  v2.4.0
-                </span>
-              </div>
+              <span className="font-black text-2xl sm:text-3xl tracking-widest text-white block font-mono leading-none">
+                POLARIS
+              </span>
               <span className="text-[10px] text-cyan-200 tracking-wider uppercase font-mono block mt-1">
                 NCPOR &bull; MOES &bull; GOVT. OF INDIA
               </span>
