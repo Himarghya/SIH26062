@@ -63,65 +63,81 @@ export const LandingPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#f4f7fa] text-slate-800 flex flex-col font-sans selection:bg-[#006399] selection:text-white text-[14px]">
       
-      {/* Official NCPOR Government Header (Cyan-Blue Ocean Banner) */}
-      <header className="bg-gradient-to-r from-[#005c8f] via-[#026f9e] to-[#01517c] text-white py-4 px-4 sm:px-6 shadow-md border-b-2 border-[#e59b19]">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      {/* Official POLARIS Government Header (Cyan-Blue Ocean Banner) */}
+      <header className="bg-gradient-to-r from-[#004f7c] via-[#016590] to-[#014970] text-white py-4 px-4 sm:px-6 shadow-md border-b-2 border-[#e59b19]">
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-4">
           
-          {/* Left: ESSO Swirl Logo + NCPOR Acronym */}
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-3">
-              {/* ESSO Globe Swirl Logo */}
-              <div className="relative w-14 h-14 rounded-full bg-gradient-to-br from-cyan-400 via-teal-300 to-sky-600 p-0.5 shadow-lg border-2 border-white/80 flex items-center justify-center">
-                <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#004d77] to-[#0083b3] flex flex-col items-center justify-center text-center">
-                  <Globe className="w-6 h-6 text-cyan-200 animate-pulse" />
-                  <span className="text-[7px] font-black tracking-widest text-white uppercase mt-0.5 font-mono">ESSO</span>
-                </div>
+          {/* Left: POLARIS Compass Emblem & Logo */}
+          <div className="flex items-center space-x-3.5 shrink-0">
+            <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-400 via-teal-300 to-sky-600 p-0.5 shadow-lg border-2 border-white/80 flex items-center justify-center">
+              <div className="w-full h-full rounded-xl bg-gradient-to-tr from-[#003857] to-[#005c8f] flex flex-col items-center justify-center text-center">
+                <Compass className="w-7 h-7 text-cyan-200 animate-pulse" />
               </div>
-              <div className="border-l border-white/20 pl-3">
-                <span className="font-black text-2xl sm:text-3xl tracking-wider text-white block font-serif leading-none">
-                  NCPOR
+            </div>
+            <div>
+              <div className="flex items-center space-x-2">
+                <span className="font-black text-2xl sm:text-3xl tracking-widest text-white block font-mono leading-none">
+                  POLARIS
                 </span>
-                <span className="text-[10px] text-cyan-200 tracking-widest uppercase font-mono block mt-0.5">
-                  GOA, INDIA
+                <span className="text-[9px] text-cyan-300 font-mono uppercase bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-400/40 font-bold">
+                  v2.4.0
                 </span>
               </div>
+              <span className="text-[10px] text-cyan-200 tracking-wider uppercase font-mono block mt-1">
+                NCPOR &bull; MOES &bull; GOVT. OF INDIA
+              </span>
             </div>
           </div>
 
-          {/* Center: Official Bilingual Titles (Hindi & English) */}
-          <div className="text-center md:text-left flex-1 md:pl-6 border-t md:border-t-0 md:border-l border-white/20 pt-2 md:pt-0">
-            <h1 className="text-sm sm:text-base md:text-lg font-bold text-white leading-tight font-serif tracking-wide drop-shadow-xs">
-              राष्ट्रीय ध्रुवीय एवं समुद्री अनुसंधान केन्द्र
+          {/* Center: System Explanation & Official Bilingual Titles */}
+          <div className="text-center lg:text-left flex-1 lg:pl-5 lg:border-l border-white/20">
+            <h1 className="text-xs sm:text-sm md:text-base font-bold text-white leading-tight font-serif tracking-wide drop-shadow-xs">
+              पोलारिस: राष्ट्रीय ध्रुवीय अनुसंधान रसद एवं अभियान कमान प्रणाली
             </h1>
-            <h2 className="text-xs sm:text-sm text-cyan-100 leading-tight font-medium font-serif">
-              पृथ्वी विज्ञान मंत्रालय, भारत सरकार
-            </h2>
-            <div className="mt-1">
+            <div className="mt-0.5">
               <span className="text-sm sm:text-base md:text-lg font-extrabold uppercase text-white tracking-wider block font-serif leading-tight">
-                NATIONAL CENTRE FOR POLAR AND OCEAN RESEARCH
+                POLAR RESEARCH LOGISTICS &amp; EXPEDITION COMMAND OS
               </span>
-              <span className="text-xs sm:text-sm text-cyan-200 font-serif block">
-                Ministry of Earth Sciences, Government of India
+              <span className="text-xs text-cyan-200 font-serif block">
+                National Centre for Polar and Ocean Research &bull; Ministry of Earth Sciences, Govt. of India
               </span>
             </div>
+            <p className="text-[11px] text-cyan-100/90 font-sans mt-1 leading-relaxed hidden sm:block">
+              Integrated multi-station life support autonomy, cold-chain supply chain, zero-bandwidth offline sync, and deterministic SAR dispatch across Bharati, Maitri &amp; Himadri stations.
+            </p>
           </div>
 
-          {/* Right: NCPOR Seal & National Emblem */}
-          <div className="hidden lg:flex items-center space-x-4 shrink-0">
-            {/* NCPOR Circular Seal */}
-            <div className="w-16 h-16 rounded-full bg-white p-1 shadow-lg border-2 border-amber-400 flex items-center justify-center">
-              <div className="w-full h-full rounded-full bg-[#004d77] border border-slate-300 flex flex-col items-center justify-center text-center p-0.5">
-                <Compass className="w-5 h-5 text-amber-300" />
-                <span className="text-[7px] font-bold text-white uppercase font-mono">NCPOR</span>
+          {/* Right: Direct Login & Field Operator Access Options */}
+          <div className="flex items-center space-x-3 shrink-0 flex-wrap justify-center">
+            <div className="flex flex-col items-end gap-1.5">
+              <div className="flex items-center gap-2">
+                <Link
+                  to="/pwa"
+                  className="px-3.5 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-cyan-400/40 hover:border-cyan-400 text-cyan-200 hover:text-white font-mono text-xs font-bold transition flex items-center gap-1.5 shadow"
+                >
+                  <QrCode className="w-3.5 h-3.5 text-cyan-300" />
+                  <span>Field PWA</span>
+                </Link>
+
+                <Link
+                  to="/login"
+                  className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-slate-950 font-mono text-xs font-black transition flex items-center gap-1.5 shadow-md shadow-black/20 hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <Radio className="w-3.5 h-3.5 text-slate-950 animate-pulse" />
+                  <span>Mission Control Login &rarr;</span>
+                </Link>
               </div>
+              <span className="text-[10px] font-mono text-cyan-200/80 hidden sm:block">
+                Secure NDMA / NCPOR Credentials Required
+              </span>
             </div>
 
-            {/* Ashoka Emblem Placeholder / Emblem Badge */}
-            <div className="w-12 h-16 flex flex-col items-center justify-center text-center">
-              <div className="w-10 h-10 rounded-full bg-amber-400/20 border border-amber-300 flex items-center justify-center text-amber-300">
-                <Shield className="w-6 h-6" />
+            {/* Emblem Badge */}
+            <div className="hidden xl:flex w-11 h-14 border-l border-white/20 pl-3 flex-col items-center justify-center text-center">
+              <div className="w-8 h-8 rounded-full bg-amber-400/20 border border-amber-300 flex items-center justify-center text-amber-300">
+                <Shield className="w-4 h-4" />
               </div>
-              <span className="text-[8px] text-amber-200 font-serif font-bold uppercase mt-1">सत्यमेव जयते</span>
+              <span className="text-[7px] text-amber-200 font-serif font-bold uppercase mt-0.5">सत्यमेव जयते</span>
             </div>
           </div>
 
