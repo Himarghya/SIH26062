@@ -257,9 +257,6 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                 <h2 className="text-base font-bold text-white uppercase font-mono tracking-wider">
                   POLARIS ML Predictive Engine
                 </h2>
-                <span className="px-2 py-0.5 rounded-md text-[10px] font-bold font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                  v1.0.0 Active
-                </span>
               </div>
               <p className="text-xs text-slate-300 font-mono font-medium mt-0.5">
                 XGBoost Classifiers · XGBoost Regressors · Isolation Forests · Multi-Criteria SAR Ranker
