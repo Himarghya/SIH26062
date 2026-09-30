@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { 
   Compass, 
   Layers, 
-  Box, 
-  Anchor, 
+  Package, 
+  HardDrive, 
   Users, 
   Truck, 
   Map, 
@@ -14,7 +14,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Radio,
-  Sparkles,
+  Smartphone,
   X
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
@@ -58,10 +58,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const allNavigationItems = [
     { name: 'Dashboard', path: '/dashboard', icon: Compass },
-    { name: 'Field Operator PWA', path: '/field-pwa', icon: Box },
+    { name: 'Field Operator PWA', path: '/field-pwa', icon: Smartphone },
     { name: 'Expeditions', path: '/expeditions', icon: Layers },
-    { name: 'Cargo & 9-Stage Cold Chain', path: '/cargo', icon: Box },
-    { name: 'Station Inventory', path: '/inventory', icon: Anchor },
+    { name: 'Cargo & 9-Stage Cold Chain', path: '/cargo', icon: Package },
+    { name: 'Station Inventory', path: '/inventory', icon: HardDrive },
     { name: 'Personnel & Muster', path: '/personnel', icon: Users },
     { name: 'Asset Management', path: '/assets', icon: Truck },
     { name: 'Polar Map & GIS', path: '/map', icon: Map },
@@ -96,11 +96,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="h-16 flex items-center justify-between px-4 border-b border-slate-200 bg-slate-50/90">
           {(!collapsed || mobileOpen) && (
             <div className="flex items-center space-x-2.5">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-600 flex items-center justify-center font-black text-white shadow-xs text-sm shrink-0">
-                ❄️
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#004d77] to-cyan-600 flex items-center justify-center font-black text-white shadow-xs text-sm shrink-0 border border-cyan-400/40">
+                <Compass className="w-4 h-4 text-cyan-200 animate-spin-slow" />
               </div>
               <div>
-                <span className="font-black text-sm tracking-wider text-slate-900">
+                <span className="font-black text-sm tracking-widest text-slate-900 font-mono">
                   POLARIS
                 </span>
                 <span className="block text-[8.5px] text-cyan-700 font-mono uppercase tracking-widest font-bold">
@@ -111,8 +111,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
           )}
 
           {collapsed && !mobileOpen && (
-            <div className="mx-auto w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-600 flex items-center justify-center font-black text-white shadow-xs text-sm">
-              ❄️
+            <div className="mx-auto w-8 h-8 rounded-xl bg-gradient-to-tr from-[#004d77] to-cyan-600 flex items-center justify-center font-black text-white shadow-xs border border-cyan-400/40" title="POLARIS">
+              <Compass className="w-4 h-4 text-cyan-200" />
             </div>
           )}
 
@@ -151,7 +151,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 className={({ isActive }) =>
                   `flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 group relative ${
                     isActive
-                      ? 'bg-cyan-50 text-cyan-800 border border-cyan-300/80 shadow-xs'
+                      ? 'bg-gradient-to-r from-cyan-50 to-sky-50/60 text-cyan-950 border border-cyan-300/90 shadow-xs'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 border border-transparent'
                   } ${collapsed && !mobileOpen ? 'justify-center px-0' : ''}`
                 }
