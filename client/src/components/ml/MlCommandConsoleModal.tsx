@@ -270,13 +270,12 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
           <div className="flex items-center space-x-3">
             {/* Live Model Health Indicator */}
             <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-slate-800/80 border border-slate-700 text-xs font-mono shadow-xs">
-              <span className={`w-2 h-2 rounded-full ${healthStatus ? 'bg-emerald-400 animate-pulse' : 'bg-rose-400'}`} />
-              <span className="text-slate-300 font-medium text-[11px]">
+              <span className={`font-medium text-[11px] ${healthStatus ? 'text-emerald-400' : 'text-rose-400'}`}>
                 {healthStatus ? `ML Ready (${healthStatus.models_loaded.length} models)` : 'Connecting ML...'}
               </span>
               <button 
                 onClick={checkHealth} 
-                className="text-slate-400 hover:text-emerald-400 p-0.5 transition" 
+                className="text-slate-400 hover:text-emerald-400 p-0.5 transition cursor-pointer" 
                 title="Refresh health"
               >
                 <RefreshCw className={`w-3 h-3 ${isHealthLoading ? 'animate-spin' : ''}`} />
