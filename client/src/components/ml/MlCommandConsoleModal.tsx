@@ -221,26 +221,22 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
   const renderBadge = (level: string) => {
     const l = (level || '').toUpperCase();
     if (l === 'CRITICAL') return (
-      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-rose-50 text-rose-700 border border-rose-200">
-        <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span>
+      <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-rose-50 text-rose-700 border border-rose-200">
         CRITICAL
       </span>
     );
     if (l === 'HIGH') return (
-      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-amber-50 text-amber-700 border border-amber-200">
-        <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+      <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-amber-50 text-amber-700 border border-amber-200">
         HIGH
       </span>
     );
     if (l === 'MODERATE') return (
-      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-teal-50 text-teal-700 border border-teal-200">
-        <span className="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
+      <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-teal-50 text-teal-700 border border-teal-200">
         MODERATE
       </span>
     );
     return (
-      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+      <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
         LOW / NORMAL
       </span>
     );
@@ -383,9 +379,8 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                       setWStation('Bharati'); setWTemp(-38); setWWind(95); setWGust(130);
                       setWPres(955); setWDPres(-6); setWVis(250); setWHum(88); setWChill(-55);
                     }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-800 text-xs font-mono font-bold rounded-xl border border-rose-200/80 shadow-2xs transition active:scale-95"
+                    className="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-800 text-xs font-mono font-bold rounded-xl border border-rose-200/80 shadow-2xs transition active:scale-95 cursor-pointer"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
                     Severe Blizzard
                   </button>
                   <button 
@@ -393,9 +388,8 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                       setWStation('Maitri'); setWTemp(-12); setWWind(25); setWGust(35);
                       setWPres(992); setWDPres(1.2); setWVis(8000); setWHum(65); setWChill(-18);
                     }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-mono font-bold rounded-xl border border-emerald-200/80 shadow-2xs transition active:scale-95"
+                    className="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-mono font-bold rounded-xl border border-emerald-200/80 shadow-2xs transition active:scale-95 cursor-pointer"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                     Clear Weather
                   </button>
                 </div>
@@ -650,9 +644,8 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                       setFStation('Bharati'); setFStock(72400); setFResupply(26); setFTemp(-32);
                       setFWind(60); setFPers(55); setFLoad(70); setFBliz(0); setFEquip(12);
                     }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-mono font-bold rounded-xl border border-amber-200/80 shadow-2xs transition active:scale-95"
+                    className="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-mono font-bold rounded-xl border border-amber-200/80 shadow-2xs transition active:scale-95 cursor-pointer"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
                     Normal Winter Baseline
                   </button>
                 </div>
@@ -923,9 +916,8 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                       setCId('ICE-CORE-204'); setCTarget(-80);
                       setCStream('-80,-79,-80,-81,-80,-79,-77,-74,-70,-68');
                     }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-800 text-xs font-mono font-bold rounded-xl border border-rose-200/80 shadow-2xs transition active:scale-95"
+                    className="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-800 text-xs font-mono font-bold rounded-xl border border-rose-200/80 shadow-2xs transition active:scale-95 cursor-pointer"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
                     Warming Trend Breach
                   </button>
                   <button 
@@ -933,9 +925,8 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                       setCId('BIO-PLASMA-09'); setCTarget(-80);
                       setCStream('-80.1,-79.8,-80.2,-80.0,-80.1,-79.9,-80.0,-80.1');
                     }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-mono font-bold rounded-xl border border-emerald-200/80 shadow-2xs transition active:scale-95"
+                    className="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-mono font-bold rounded-xl border border-emerald-200/80 shadow-2xs transition active:scale-95 cursor-pointer"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                     Stable Cryo Stream
                   </button>
                 </div>
@@ -1094,9 +1085,8 @@ export const MlCommandConsoleModal: React.FC<MlCommandConsoleModalProps> = ({ is
                       setSId('Field-Team-07'); setSDist(43); setSVis(180); setSWind(104);
                       setSTemp(-39); setSPers(6); setSFuel(70); setSContact(5); setSType('snowcat');
                     }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-800 text-xs font-mono font-bold rounded-xl border border-rose-200/80 shadow-2xs transition active:scale-95"
+                    className="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-800 text-xs font-mono font-bold rounded-xl border border-rose-200/80 shadow-2xs transition active:scale-95 cursor-pointer"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
                     Field Team 07 Distress
                   </button>
                 </div>
